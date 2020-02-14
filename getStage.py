@@ -1,6 +1,14 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
+Created on Fri Jan 31 09:45:55 2020
+
+@author: lu
+"""
+
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+"""
 Created on Sun Dec 29 13:28:36 2019
 
 @author: lu
@@ -14,6 +22,7 @@ Created on Sun Dec 29 13:28:36 2019
 #@author: lu
 #"""
 #
+from statistics import mean
 from numpy.polynomial.polynomial import polyfit
 from scipy.stats.mstats import gmean 
 import matplotlib.pyplot as plt
@@ -200,7 +209,7 @@ corelationList=[]
 
 #print corelate(larva_L1,phiList)
 #print corelate(adult,phiList)
-#print max(corelationList)
+#prsampleLables=["hermaphrodite, NSM, L1 larva Ce","hermaphrodite, gonad, adult Ce", "hermaphrodite, motor neuron, L2 larva Ce", "hermaphrodite, neuron, L1 larva Ce" ,"hermaphrodite, organism, 3-fold embryo Ce","hermaphrodite, organism, 4-cell embryo Ce","hermaphrodite, organism, L1 larva Ce","hermaphrodite, organism, L2 larva Ce","hermaphrodite, organism, L2d-dauer molt Ce","hermaphrodite, organism, L3 larva Ce","hermaphrodite, organism, L4 larva Ce","hermaphrodite, organism, adult Ce","hermaphrodite, organism, dauer larva Ce","hermaphrodite, organism, elongating embryo Ce","hermaphrodite, organism, enclosing embryo Ce","hermaphrodite, organism, fully-elongated embryo Ce","hermaphrodite, organism, gastrulating embryo Ce","hermaphrodite, organism, late cleavage stage embryo Ce","hermaphrodite, organism, newly molted young adult hermaphrodite Ce","hermaphrodite, organism, post dauer stage Ce","hermaphrodite, organism, proliferating embryo Ce","hermaphrodite, pharyngeal muscle cell, fully-elongated embryo Ce","hermaphrodite, somatic cell, embryo Ce","male, organism, L4 larva Ce","male, organism, embryo Ce"
     
 def calculateWeight(list1,list2):
     A = np.vstack([list1, np.ones(len(list1))]).T
@@ -274,16 +283,16 @@ for tissueList in tissueMatrix_norm:
     tissueMatrix_log_norm.append(logify(tissueList))
     
 
-for i in range(len(tissueMatrix_norm)):
-    if i in indexList:
-        tissueList=tissueMatrix[i]
-        label=sampleLables[i]
-        print label
-        print ss.pearsonr(tissueList,phiList)
-        plt.figure()
-        plt.title(label)
-        plt.hist((tissueList),bins=10,log=True)
-        plt.show()
+#for i in range(len(tissueMatrix_norm)):
+#    if i in indexList:
+#        tissueList=tissueMatrix[i]
+#        label=sampleLables[i]
+#        print label
+#        print ss.pearsonr(tissueList,phiList)
+#        plt.figure()
+#        plt.title(label)
+#        plt.hist((tissueList),bins=10,log=True)
+#        plt.show()
 
 newIndexList=[]
 for i in indexList:
@@ -305,11 +314,11 @@ prediction= regress(X,phiList)
 phiList=scaleToOne(phiList)
 
 
-for tissueList in tissueMatrix:
-    print corelate(phiList,tissueList)
-    
-print "=="
-print corelate(prediction,phiList)
+#for tissueList in tissueMatrix:
+#    print corelate(phiList,tissueList)
+#    
+#print "=="
+#print corelate(prediction,phiList)
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -317,8 +326,8 @@ import matplotlib.pyplot as plt
 # Initiate some data, giving some randomness using random.random().
 x = tissueMatrix_norm[0]
 y = phiList
-
-prediction= regress(X,phiList,weightList=stdEList)
+#
+#prediction= regress(X,phiList,weightList=stdEList)
 
 
 #b,m=polyfit(phiList,prediction,1)
@@ -335,50 +344,60 @@ import matplotlib.pyplot as plt
 x = tissueMatrix_norm[0]
 y = phiList
 
-for i in range(len(tissueMatrix_norm)):
-    if i in indexList:
-        tissueList=tissueMatrix_norm[i]
-        label=sampleLables[i]
+#for i in range(len(tissueMatrix_norm)):
+#    if i in indexList:
+#        tissueList=tissueMatrix_norm[i]
+#        label=sampleLables[i]
+#        print label
+#        print ss.pearsonr(tissueList,phiList)
+#        plt.figure()
+#        plt.title(label)
+#        plt.hist((tissueList),bins=10,log=True)
+#        plt.show()
+
+
+#import validator
+#validator.validate(phiList,prediction,logScale="no",xLabel="Phi",yLabel="Prediction")
+#
+#from sklearn.decomposition import PCA
+#def makePCA(X,n=5,isLog="no"):
+#    pca = PCA(n_components=n)
+#    pca.fit(X)
+#    PCA(n_components=n)
+#    pcaRatio=pca.explained_variance_ratio_
+#
+#    print pcaRatio
+#    print sum(pcaRatio)
+#    plt.figure()
+#    labels=["PC1","PC2","PC3","PC4","PC5"]
+#    plt.bar(x=range(1,6),height=pcaRatio,tick_label=labels)
+#    plt.ylabel('Percentate of Variance Explained')
+#    plt.xlabel('Principal Component')
+#    titleText='PCA Scree Plot'
+#    if "yes" in isLog:
+##        titleText+=" (log)"
+##    plt.title(titleText)
+##    plt.show()
+#
+#makePCA(tissueMatrix_norm)
+#makePCA(tissueMatrix_log_norm,isLog="yes")
+
+
+sampleLables=["hermaphrodite, NSM, L1 larva Ce","hermaphrodite, gonad, adult Ce", "hermaphrodite, motor neuron, L2 larva Ce", "hermaphrodite, neuron, L1 larva Ce" ,"hermaphrodite, organism, 3-fold embryo Ce","hermaphrodite, organism, 4-cell embryo Ce","hermaphrodite, organism, L1 larva Ce","hermaphrodite, organism, L2 larva Ce","hermaphrodite, organism, L2d-dauer molt Ce","hermaphrodite, organism, L3 larva Ce","hermaphrodite, organism, L4 larva Ce","hermaphrodite, organism, adult Ce","hermaphrodite, organism, dauer larva Ce","hermaphrodite, organism, elongating embryo Ce","hermaphrodite, organism, enclosing embryo Ce","hermaphrodite, organism, fully-elongated embryo Ce","hermaphrodite, organism, gastrulating embryo Ce","hermaphrodite, organism, late cleavage stage embryo Ce","hermaphrodite, organism, newly molted young adult hermaphrodite Ce","hermaphrodite, organism, post dauer stage Ce","hermaphrodite, organism, proliferating embryo Ce","hermaphrodite, pharyngeal muscle cell, fully-elongated embryo Ce","hermaphrodite, somatic cell, embryo Ce","male, organism, L4 larva Ce","male, organism, embryo Ce"
+]
+
+
+for  i in range(len(sampleLables)):
+    label=sampleLables[i]
+    if "dauer" in label:
+        print i
         print label
-        print ss.pearsonr(tissueList,phiList)
-        plt.figure()
-        plt.title(label)
-        plt.hist((tissueList),bins=10,log=True)
-        plt.show()
 
-
-import validator
-validator.validate(phiList,prediction,logScale="no",xLabel="Phi",yLabel="Prediction")
-
-from sklearn.decomposition import PCA
-def makePCA(X,n=5,isLog="no"):
-    pca = PCA(n_components=n)
-    pca.fit(X)
-    PCA(n_components=n)
-    pcaRatio=pca.explained_variance_ratio_
-
-    print pcaRatio
-    print sum(pcaRatio)
-    plt.figure()
-    labels=["PC1","PC2","PC3","PC4","PC5"]
-    plt.bar(x=range(1,6),height=pcaRatio,tick_label=labels)
-    plt.ylabel('Percentate of Variance Explained')
-    plt.xlabel('Principal Component')
-    titleText='PCA Scree Plot'
-    if "yes" in isLog:
-        titleText+=" (log)"
-    plt.title(titleText)
-    plt.show()
-
-makePCA(tissueMatrix_norm)
-makePCA(tissueMatrix_log_norm,isLog="yes")
-
-
-
-
-
-
-
+for expList in tissueMatrix_norm_trans:
+    avg=mean(expList)
+    dauerLarva=expList[12]
+    postDauer=expList[19]
+    
 
 
 #validator.validate(phiList,prediction,logScale="yes",xLabel="Phi",yLabel="Prediction")
