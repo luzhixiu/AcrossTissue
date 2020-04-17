@@ -11,21 +11,41 @@ from numpy.polynomial.polynomial import polyfit
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import minmax_scale
 import findSequenceById
-import windowPhi as methods
 import numpy as np
 import scipy.stats as ss
 import math
 import random as rd
 import statsmodels.api as sm
-import time
+
 rd.seed(0)
 tissueSamples=25
 
-methods.deltaEtaFile="/home/lu/Desktop/data_modified/Crei_Selection.csv"
-methods.deltaMFile="/home/lu/Desktop/data_modified/Crei_Mutation.csv"
+
 sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
+geneNameList=[]
 
-
+def loadSequence(sequence):
+    startCodon="ATG"
+    stopCodonList=["TAG","TAA","TGA"]
+    codonList=[]
+    i=0
+    while(i<len(sequence)):
+        codon=sequence[i:i+3]
+        if len(codon)==3:
+            codonList.append(codon)
+        i+=3
+    actualCodonList=[]
+    started=False
+    for codon in codonList:
+        if codon in stopCodonList:
+            break
+        if started:
+            actualCodonList.append(codon)
+        if codon==startCodon:
+            started=True
+    codonList=actualCodonList
+   # print "codon readed successful, the number of codon in this sequence is %d"%(len(codonList))
+    return codonList
 
 f=open("cEl.csv","r+")
 lines=f.readlines()
@@ -39,21 +59,18 @@ for i in range(tissueSamples):
     tissueMatrix.append([])
 
 for line in lines:
-    randomN=rd.randrange(1,101)
-    if randomN>=5:
-        continue
+    
+#..............This line is for fasting testings, uncomment when running    
+#    randomN=rd.randrange(1,101)
+#    if randomN>=5:
+#        continue
     line=line.rstrip()
     splitList=line.split(",")
     geneName=splitList[0]
     if geneName in sequenceDict:
+        geneNameList.append(geneName)
         sequence=sequenceDict[geneName]
-        codonList=methods.loadSequence(sequence)
-        if not len(codonList)==0:
-            phi=methods.calPhiForGene(sequence)
-        if math.isnan(phi):
-            phiList.append(0)  
-        else:
-            phiList.append(phi)
+        codonList=loadSequence(sequence)
     else:
         continue
     for i in range(1,len(splitList)):
@@ -62,13 +79,47 @@ for line in lines:
         else:
             tissueMatrix[i-1].append(float(splitList[i]))
 
+tissueMatrix=np.asarray(tissueMatrix)
+indexList=[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+tissueMatrix=tissueMatrix[indexList]
+print tissueMatrix.shape
+
+print len(tissueMatrix)
+
+
+
+codontable = {
+'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
+'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
+'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
+'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',
+'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L',
+'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCT':'P',
+'CAC':'H', 'CAT':'H', 'CAA':'Q', 'CAG':'Q',
+'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGT':'R',
+'GTA':'V', 'GTC':'V', 'GTG':'V', 'GTT':'V',
+'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCT':'A',
+'GAC':'D', 'GAT':'D', 'GAA':'E', 'GAG':'E',
+'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
+'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
+'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
+'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
+'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W',
+}
+
+codonList=codontable.keys()
+
+
+
+
+
+
 
 
 def corelate(list1,list2):
     return ss.pearsonr(list1,list2)[0]
 
-for tissueList in tissueMatrix:
-    print ss.pearsonr(tissueList,phiList)
 
 larva_L1=tissueMatrix[7]
 adult=tissueMatrix[12]
@@ -86,6 +137,9 @@ def calculateWeight(list1,list2):
     A = np.vstack([list1, np.ones(len(list1))]).T
     m, c = np.linalg.lstsq(A,list2, rcond=None)[0]
     return m
+
+
+
 
 #def regress(list1,list2):
 #    b=list2
@@ -119,8 +173,16 @@ def testWeights(list1,list2,phiList):
     print "max I: %f"%(maxI)
     print "max J: %f"%(maxJ)
     print "max Corelation: %f"%(maxCorelation)
-                    
+                  
 
+def average(lst):
+    return float(sum(lst))/len(lst)
+
+
+def scaleToOne(lst):
+    avg=average(lst)
+    result=[x/avg for x in lst]
+    return result
 
 def getWeights(list1,list2,phiList):
     list1=minmax_scale(list1)
@@ -152,7 +214,8 @@ a= np.array(phiList)
 #print phiList
 b= np.array(adult)
 
-
+sampleLables=["hermaphrodite, NSM, L1 larva Ce","hermaphrodite, gonad, adult Ce", "hermaphrodite, motor neuron, L2 larva Ce", "hermaphrodite, neuron, L1 larva Ce" ,"hermaphrodite, organism, 3-fold embryo Ce","hermaphrodite, organism, 4-cell embryo Ce","hermaphrodite, organism, L1 larva Ce","hermaphrodite, organism, L2 larva Ce","hermaphrodite, organism, L2d-dauer molt Ce","hermaphrodite, organism, L3 larva Ce","hermaphrodite, organism, L4 larva Ce","hermaphrodite, organism, adult Ce","hermaphrodite, organism, dauer larva Ce","hermaphrodite, organism, elongating embryo Ce","hermaphrodite, organism, enclosing embryo Ce","hermaphrodite, organism, fully-elongated embryo Ce","hermaphrodite, organism, gastrulating embryo Ce","hermaphrodite, organism, late cleavage stage embryo Ce","hermaphrodite, organism, newly molted young adult hermaphrodite Ce","hermaphrodite, organism, post dauer stage Ce","hermaphrodite, organism, proliferating embryo Ce","hermaphrodite, pharyngeal muscle cell, fully-elongated embryo Ce","hermaphrodite, somatic cell, embryo Ce","male, organism, L4 larva Ce","male, organism, embryo Ce"
+]
 #
 #import numpy as np
 #from sklearn import preprocessing
@@ -169,6 +232,12 @@ b= np.array(adult)
 
 
 
+#find the percent of a cutoff in a list, returns the value at that cutoff,
+#f should be something like 0.25, which is the cut off for bot 25 percent or top 75
+def findPercent(lst,f):
+    lst=sorted(lst)
+    return lst[int(len(lst)*f)]
+
 def logify(lst):
     logList=[]
     for i in lst:
@@ -178,9 +247,7 @@ def logify(lst):
     return logList
     
 
-a= np.array(phiList)
 #print phiList
-b= np.array(adult)
 
 def regress(list1,list2,weightList=[]):
     if len(weightList)==0:
@@ -195,52 +262,132 @@ def regress(list1,list2,weightList=[]):
 #Y = [1,3,4,5,2,3]
 #X = [[0,1,2],[0,2,3],[0,3,3],[0,5,5],[0,3,1],[0,4,4]]
 #print regress(X,Y)
-
-indexList=[3,4,5,6,8,9,11,15,18,19,20,21,22,23,24,25,26]
-
-
-tempMatrix=[]
-for i in range(len(tissueMatrix)):
-    if i in indexList:
-        tempMatrix.append(tissueMatrix[i])
-        
-tissueMatrix=tempMatrix
-
+    
 
 tissueMatrix_norm=[]
 for tissueList in tissueMatrix:
-    tissueMatrix_norm.append((minmax_scale(tissueList)))
-
-
-
-newIndexList=[]
-for i in indexList:
-    newIndexList.append(i-1)
+    tissueMatrix_norm.append(scaleToOne(tissueList))
+    
+tissueMatrix_log_norm=[]
+for tissueList in tissueMatrix_norm:
+    tissueMatrix_log_norm.append(logify(tissueList))
+    
 
 tissueMatrix_norm_trans=np.transpose(tissueMatrix_norm)
-print "*****"
-print tissueMatrix_norm_trans.shape 
-phiList=minmax_scale(phiList)
+chosenLables=np.asarray(sampleLables)[indexList]
 
-X=sm.add_constant(tissueMatrix_norm_trans)
 
-prediction= regress(X,phiList)
+genomeList=[]
 
-b,m=polyfit(phiList,prediction,1)
-plt.plot(phiList, b + m * phiList, '-')
-plt.show()
 
-for tissueList in tissueMatrix:
-    print corelate(phiList,tissueList)
-print "=="
-print corelate(prediction,phiList)
 
-import numpy as np
-import matplotlib.pyplot as plt
 
-# Initiate some data, giving some randomness using random.random().
-x = tissueMatrix_norm[0]
-y = phiList
+for k in range(len(tissueMatrix_log_norm)):
+    wholeGenomeSeq=""
+    tissueList=tissueMatrix_log_norm[k]
+#for tissueList in tissueMatrix_norm:
+    geneNameSelect=[]
+    cutOff=findPercent(tissueList,0.9)
+    for i in range(len(tissueList)):
+        if tissueList[i]>=cutOff:
+            wholeGenomeSeq+= sequenceDict[geneNameList[i]]
+    genomeList.append(wholeGenomeSeq)
+print len(genomeList)
+    
+
+
+
+import calculateRSCU as RSCU
+
+SynonymousCodons ={
+'CYS': ['TGT', 'TGC'],
+'ASP': ['GAT', 'GAC'],
+'SER': ['TCT', 'TCG', 'TCA', 'TCC', 'AGC', 'AGT'],
+'GLN': ['CAA', 'CAG'],
+'MET': ['ATG'],
+'ASN': ['AAC', 'AAT'],
+'PRO': ['CCT', 'CCG', 'CCA', 'CCC'],
+'LYS': ['AAG', 'AAA'],
+'THR': ['ACC', 'ACA', 'ACG', 'ACT'],
+'PHE': ['TTT', 'TTC'],
+'ALA': ['GCA', 'GCC', 'GCG', 'GCT'],
+'GLY': ['GGT', 'GGG', 'GGA', 'GGC'],
+'ILE': ['ATC', 'ATA', 'ATT'],
+'LEU': ['TTA', 'TTG', 'CTC', 'CTT', 'CTG', 'CTA'], 'HIS': ['CAT', 'CAC'],
+'ARG': ['CGA', 'CGC', 'CGG', 'CGT', 'AGG', 'AGA'],
+'TRP': ['TGG'],
+'VAL': ['GTA', 'GTC', 'GTG', 'GTT'],
+'GLU': ['GAG', 'GAA'],
+'TYR': ['TAT', 'TAC']}
+
+#f=open("CUB_ByLifeStage.txt","w")
+#for i in range(len(genomeList)):
+#    genomeString=genomeList[i]
+#    result=RSCU.getRSCU(genomeString)
+#    f.write(chosenLables[i])
+#    f.write("\n")
+#    for j in result:
+#        for t in j:
+#            print str(t)
+#            f.write(str(t))
+#            f.write("\n")
+#f.close()
+##    for key in SynonymousCodons:
+##        print key
+#    
+
+
+emb=tissueMatrix[4]
+larvae_L1=tissueMatrix[6]
+L3_L4=tissueMatrix[9]
+dauer=tissueMatrix[12]
+adult=tissueMatrix[11]
+
+
+meanExpressionList=[]
+
+
+embList=[]
+larvaList=[]
+L3_L4List=[]
+dauerList=[]
+adultList=[]
+
+
+
+print len(emb)
+print len(geneNameList)
+for i in range(len(emb)):
+    mean=average([emb[i],larvae_L1[i],L3_L4[i],dauer[i],adult[i]])
+    threshold=2*mean
+    if emb[i]>threshold:
+        embList.append(geneNameList[i])
+    if larvae_L1[i]>threshold:
+        larvaList.append(geneNameList[i])    
+    if L3_L4[i]>threshold:
+        L3_L4List.append(geneNameList[i])        
+    if dauer[i]>threshold:
+        dauerList.append(geneNameList[i])                
+    if adult[i]>threshold:
+        adultList.append(geneNameList[i])            
+
+#sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
+
+def writeToFasta(geneTagList,fName):
+    global sequenceDict
+    f=open(fName,"w+")
+    for i in range(len(geneTagList)):
+        f.write(">%d \n"%i)
+        sequence=sequenceDict[geneTagList[i]]
+        f.write(sequence)
+        f.write("\n")
+        
+#writeToFasta(embList,"emb.fasta")
+#writeToFasta(larvaList,"larvae.fasta")
+#writeToFasta(L3_L4List,"L3_L4.fasta")
+#writeToFasta(dauerList,"dauer.fasta")
+#writeToFasta(adultList,"adult.fasta")
+#
 
 
 

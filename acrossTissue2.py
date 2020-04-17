@@ -26,7 +26,7 @@ import random as rd
 import statsmodels.api as sm
 import time
 import sys
-
+import seaborn as sns; sns.set()
 rd.seed(0)
 tissueSamples=25
 
@@ -134,7 +134,28 @@ for line in lines:
 
 #print geneEstDict
 print geneEstDict["homt-1"]
-
+def loadSequence(sequence):
+    startCodon="ATG"
+    stopCodonList=["TAG","TAA","TGA"]
+    codonList=[]
+    i=0
+    while(i<len(sequence)):
+        codon=sequence[i:i+3]
+        if len(codon)==3:
+            codonList.append(codon)
+        i+=3
+    actualCodonList=[]
+    started=False
+    for codon in codonList:
+        if codon in stopCodonList:
+            break
+        if started:
+            actualCodonList.append(codon)
+        if codon==startCodon:
+            started=True
+    codonList=actualCodonList
+   # print "codon readed successful, the number of codon in this sequence is %d"%(len(codonList))
+    return codonList
 f=open("cEl.csv","r+")
 lines=f.readlines()
 
@@ -222,6 +243,8 @@ def getCorelation(a,b):
 def average(lst):
     return float(sum(lst))/len(lst)
 
+
+
 def scaleToOne(lst):
     avg=average(lst)
     result=[x/avg for x in lst]
@@ -273,17 +296,20 @@ tissueMatrix_log_norm=[]
 for tissueList in tissueMatrix_norm:
     tissueMatrix_log_norm.append(logify(tissueList))
     
+    
 
-for i in range(len(tissueMatrix_norm)):
-    if i in indexList:
-        tissueList=tissueMatrix[i]
-        label=sampleLables[i]
-        print label
-        print ss.pearsonr(tissueList,phiList)
-        plt.figure()
-        plt.title(label)
-        plt.hist((tissueList),bins=10,log=True)
-        plt.show()
+    
+
+#for i in range(len(tissueMatrix_norm)):
+#    if i in indexList:
+#        tissueList=tissueMatrix[i]
+#        label=sampleLables[i]
+#        print label
+#        print ss.pearsonr(tissueList,phiList)
+#        plt.figure()
+#        plt.title(label)
+#        plt.hist((tissueList),bins=10,log=True)
+#        plt.show()
 
 newIndexList=[]
 for i in indexList:
@@ -335,54 +361,88 @@ import matplotlib.pyplot as plt
 x = tissueMatrix_norm[0]
 y = phiList
 
-for i in range(len(tissueMatrix_norm)):
-    if i in indexList:
-        tissueList=tissueMatrix_norm[i]
-        label=sampleLables[i]
-        print label
-        print ss.pearsonr(tissueList,phiList)
-        plt.figure()
-        plt.title(label)
-        plt.hist((tissueList),bins=10,log=True)
-        plt.show()
+#for i in range(len(tissueMatrix_norm)):
+#    if i in indexList:
+#        tissueList=tissueMatrix_norm[i]
+#        label=sampleLables[i]
+#        print label
+#        print ss.pearsonr(tissueList,phiList)
+#        plt.figure()
+#        plt.title(label)
+#        plt.hist((tissueList),bins=10,log=True)
+#        plt.show()
 
 
 import validator
-validator.validate(phiList,prediction,logScale="no",xLabel="Phi",yLabel="Prediction")
+#validator.validate(phiList,prediction,logScale="no",xLabel="Phi",yLabel="Prediction")
 
-from sklearn.decomposition import PCA
-def makePCA(X,n=5,isLog="no"):
-    pca = PCA(n_components=n)
-    pca.fit(X)
-    PCA(n_components=n)
-    pcaRatio=pca.explained_variance_ratio_
-
-    print pcaRatio
-    print sum(pcaRatio)
-    plt.figure()
-    labels=["PC1","PC2","PC3","PC4","PC5"]
-    plt.bar(x=range(1,6),height=pcaRatio,tick_label=labels)
-    plt.ylabel('Percentate of Variance Explained')
-    plt.xlabel('Principal Component')
-    titleText='PCA Scree Plot'
-    if "yes" in isLog:
-        titleText+=" (log)"
-    plt.title(titleText)
-    plt.show()
-
-makePCA(tissueMatrix_norm)
-makePCA(tissueMatrix_log_norm,isLog="yes")
-
-
+#from sklearn.decomposition import PCA
+#def makePCA(X,n=5,isLog="no"):
+#    pca = PCA(n_components=n)
+#    pca.fit(X)
+#    PCA(n_components=n)
+#    pcaRatio=pca.explained_variance_ratio_
+#
+#    print pcaRatio
+#    print sum(pcaRatio)
+#    plt.figure()
+#    labels=["PC1","PC2","PC3","PC4","PC5"]
+#    plt.bar(x=range(1,6),height=pcaRatio,tick_label=labels)
+#    plt.ylabel('Percentate of Variance Explained')
+#    plt.xlabel('Principal Component')
+#    titleText='PCA Scree Plot'
+#    if "yes" in isLog:
+#        titleText+=" (log)"
+#    plt.title(titleText)
+#    plt.show()
+#
+#makePCA(tissueMatrix_norm)
+#makePCA(tissueMatrix_log_norm,isLog="yes")  
 
 
+print sampleLables[9]
+
+emb=tissueMatrix[4]
+larvae_L1=tissueMatrix[6]
+L3_L4=tissueMatrix[9]
+dauer=tissueMatrix[12]
+adult=tissueMatrix[11]
+
+testList=[]
+testList.append(emb)
+testList.append(larvae_L1)
+testList.append(L3_L4)
+testList.append(dauer)
+testList.append(adult)
+
+import scipy.stats as ss
+
+corelationMatrix=[[[0] for i in range(5)] for i in range(5)]
+for i in range(0,5):
+    for j in range(0,5):
+        corelationMatrix[i][j]= ss.spearmanr(testList[i],testList[j])[0]
 
 
 
+print tissueMatrix_norm_trans.shape
+#ax=sns.heatmap(tissueMatrix_norm_trans)
+
+import numpy as np; np.random.seed(0)
+import seaborn as sns; sns.set()
 
 
-#validator.validate(phiList,prediction,logScale="yes",xLabel="Phi",yLabel="Prediction")
+#fix the scale of this heatmap
 
+#MIN= min(tissueMatrix_log_norm[0])
+#MAX=max(tissueMatrix_log_norm[0])
+#tissueMatrix_log_norm_trans=np.transpose(tissueMatrix_log_norm)
+#ax = sns.heatmap(tissueMatrix_log_norm_trans,vmin=MIN, vmax=MAX)
+#
+#log_mean_amongSamples=[]
+#for lst in tissueMatrix_log_norm_trans:
+#    log_mean_amongSamples.append(gmean(lst))
+#
+#heatMatrix=np.concatenate((np.squeeze(np.asarray(log_mean_amongSamples)),tissueMatrix_log_norm_trans),axis=1)
 
 
 
