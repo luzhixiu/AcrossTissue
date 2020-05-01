@@ -133,6 +133,7 @@ for line in lines:
     geneEstDict[geneTag]=[phi,stdE]
 
 #print geneEstDict
+print "=========="
 print geneEstDict["homt-1"]
 def loadSequence(sequence):
     startCodon="ATG"

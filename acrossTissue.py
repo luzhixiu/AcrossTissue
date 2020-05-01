@@ -353,6 +353,11 @@ L3_L4List=[]
 dauerList=[]
 adultList=[]
 
+embExp=[]
+larvaeExp=[]
+L3L4Exp=[]
+dauerExp=[]
+adultExp=[]
 
 
 print len(emb)
@@ -362,15 +367,19 @@ for i in range(len(emb)):
     threshold=2*mean
     if emb[i]>threshold:
         embList.append(geneNameList[i])
+        embExp.append(emb[i])
     if larvae_L1[i]>threshold:
         larvaList.append(geneNameList[i])    
+        larvaeExp.append(larva_L1[i])
     if L3_L4[i]>threshold:
-        L3_L4List.append(geneNameList[i])        
+        L3_L4List.append(geneNameList[i])  
+        L3L4Exp.append(L3L4Exp[i])
     if dauer[i]>threshold:
-        dauerList.append(geneNameList[i])                
+        dauerList.append(geneNameList[i])
+        dauerExp.append(dauerExp[i])                
     if adult[i]>threshold:
         adultList.append(geneNameList[i])            
-
+        adultExp.append(adultExp[i])
 #sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
 
 def writeToFasta(geneTagList,fName):
