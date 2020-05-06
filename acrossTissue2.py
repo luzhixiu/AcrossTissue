@@ -296,10 +296,6 @@ for tissueList in tissueMatrix:
 tissueMatrix_log_norm=[]
 for tissueList in tissueMatrix_norm:
     tissueMatrix_log_norm.append(logify(tissueList))
-    
-    
-
-    
 
 #for i in range(len(tissueMatrix_norm)):
 #    if i in indexList:
@@ -317,8 +313,12 @@ for i in indexList:
     newIndexList.append(i-1)
 
 tissueMatrix_norm_trans=np.transpose(tissueMatrix_norm)
-print "*****"
-print tissueMatrix_norm_trans.shape 
+import statistics
+medianList=[]
+for lst in tissueMatrix_norm_trans:
+    medianList.append(statistics.median(lst))
+    
+
 #phiList=minmax_scale(phiList)
 
 X=sm.add_constant(tissueMatrix_norm_trans)
@@ -409,27 +409,25 @@ L3_L4=tissueMatrix[9]
 dauer=tissueMatrix[12]
 adult=tissueMatrix[11]
 
+
+
+
 testList=[]
 testList.append(emb)
 testList.append(larvae_L1)
 testList.append(L3_L4)
 testList.append(dauer)
 testList.append(adult)
+testList.append(medianList)
 
 import scipy.stats as ss
 
-corelationMatrix=[[[0] for i in range(5)] for i in range(5)]
-for i in range(0,5):
-    for j in range(0,5):
+corelationMatrix=[[[0] for i in range(6)] for i in range(6)]
+for i in range(0,6):
+    for j in range(0,6):
         corelationMatrix[i][j]= ss.spearmanr(testList[i],testList[j])[0]
 
-
-
-print tissueMatrix_norm_trans.shape
-#ax=sns.heatmap(tissueMatrix_norm_trans)
-
-import numpy as np; np.random.seed(0)
-import seaborn as sns; sns.set()
+print corelationMatrix
 
 
 #fix the scale of this heatmap

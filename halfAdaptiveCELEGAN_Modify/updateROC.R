@@ -218,7 +218,7 @@ while((!done) && (run_number <= 3))
   
   model <- initializeModelObject(parameter, "ROC", with.phi)
   setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
-  sys.runtime <- system.time(	
+  sys.runtime <- system.time(
     runMCMC(mcmc, genome, model, num_threads,div=0)
   )
   sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))

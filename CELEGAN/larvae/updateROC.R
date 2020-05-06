@@ -11,7 +11,7 @@ parser$add_argument("-i","--input",type="character",default="./")
 parser$add_argument("-o","--output",type="character",default="./")
 parser$add_argument("-d","--div",type="integer",default=0)
 parser$add_argument("-s","--samp",type="integer",default=5000)
-parser$add_argument("-a","--adapt",type="integer",default=50)
+parser$add_argument("-a","--adapt",type="integer",default=100)
 parser$add_argument("-t","--thin",type="integer",default=20)
 parser$add_argument("-n","--threads",type="integer",default=1)
 
@@ -130,6 +130,8 @@ setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"),
 sys.runtime<-system.time(
   runMCMC(mcmc, genome, model, num_threads,divergence.iteration = div)
 )
+
+
 sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
 write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
 
@@ -166,7 +168,7 @@ for(a in aa)
 acfCSP(parameter,csp="Selection",numMixtures = numMixtures,samples=samples*percent.to.keep)
 acfCSP(parameter,csp="Mutation",numMixtures = numMixtures,samples=samples*percent.to.keep)
 dev.off()
-
+Step
 
 for (i in 1:numMixtures)
 {
@@ -307,7 +309,11 @@ dir.create(paste(dir_name,"R_objects",sep="/"))
 mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
                              est.expression=TRUE, est.csp=TRUE, est.hyper=TRUE,est.mix=FALSE)
 
-mcmc$setStepsToAdapt(0)
+
+#this part set steps 
+adptiveRatio=0.5
+adaptiveSamples=samples*thinning*adaptiveRatio
+mcmc$setStepsToAdapt(adaptiveSamples)
 
 model <- initializeModelObject(parameter, "ROC", with.phi)
 setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
