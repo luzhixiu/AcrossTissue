@@ -21,7 +21,7 @@ rd.seed(0)
 tissueSamples=25
 
 
-sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
+sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan_.cds_from_genomic",idType="gene")
 geneNameList=[]
 
 def loadSequence(sequence):
