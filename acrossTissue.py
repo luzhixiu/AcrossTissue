@@ -21,7 +21,7 @@ rd.seed(0)
 tissueSamples=25
 
 
-sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan_.cds_from_genomic",idType="gene")
+sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
 geneNameList=[]
 
 def loadSequence(sequence):
@@ -352,6 +352,7 @@ larvaList=[]
 L3_L4List=[]
 dauerList=[]
 adultList=[]
+allList=[]
 
 embExp=[]
 larvaeExp=[]
@@ -363,6 +364,7 @@ adultExp=[]
 print len(emb)
 print len(geneNameList)
 for i in range(len(emb)):
+    allList.append(geneNameList[i])
     mean=average([emb[i],larvae_L1[i],L3_L4[i],dauer[i],adult[i]])
     threshold=2*mean
     if emb[i]>threshold:
@@ -373,30 +375,31 @@ for i in range(len(emb)):
         larvaeExp.append(larva_L1[i])
     if L3_L4[i]>threshold:
         L3_L4List.append(geneNameList[i])  
-        L3L4Exp.append(L3L4Exp[i])
+        L3L4Exp.append(L3_L4[i])
     if dauer[i]>threshold:
         dauerList.append(geneNameList[i])
-        dauerExp.append(dauerExp[i])                
+        dauerExp.append(dauer[i])                
     if adult[i]>threshold:
         adultList.append(geneNameList[i])            
-        adultExp.append(adultExp[i])
+        adultExp.append(adult[i])
 #sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
 
 def writeToFasta(geneTagList,fName):
     global sequenceDict
     f=open(fName,"w+")
     for i in range(len(geneTagList)):
-        f.write(">%d \n"%i)
-        sequence=sequenceDict[geneTagList[i]]
-        f.write(sequence)
-        f.write("\n")
+        f.write(">%d %s\n"%(i,geneTagList[i]))
+#        sequence=sequenceDict[geneTagList[i]]
+#        f.write(sequence)
+#        f.write("\n")
         
 #writeToFasta(embList,"emb.fasta")
 #writeToFasta(larvaList,"larvae.fasta")
 #writeToFasta(L3_L4List,"L3_L4.fasta")
 #writeToFasta(dauerList,"dauer.fasta")
 #writeToFasta(adultList,"adult.fasta")
-#
+writeToFasta(allList,"wholeGenome.seqName")
+
 
 
 
