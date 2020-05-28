@@ -15,14 +15,16 @@ import numpy as np
 import scipy.stats as ss
 import math
 import random as rd
-import statsmodels.api as sm
 
 rd.seed(0)
 tissueSamples=25
 
 
-sequenceDict=findSequenceById.findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
+sequenceDict=findSequenceById.findSequenceByID("c_elegan.fasta",idType="gene")
 geneNameList=[]
+
+wholeGenome=[]
+
 
 def loadSequence(sequence):
     startCodon="ATG"
@@ -389,17 +391,34 @@ def writeToFasta(geneTagList,fName):
     f=open(fName,"w+")
     for i in range(len(geneTagList)):
         f.write(">%d %s\n"%(i,geneTagList[i]))
-#        sequence=sequenceDict[geneTagList[i]]
-#        f.write(sequence)
-#        f.write("\n")
+        sequence=sequenceDict[geneTagList[i]]
+        f.write(sequence)
+        f.write("\n")
+
+
+#split a list into n random chunks
+def splitListRandomly(lst,n):
+    splitedLists=[]
+    for i in range(0,n):
+        splitedLists.append([])
+    for item in lst:
+        randomIndex=rd.randint(0,n-1)
+        splitedLists[randomIndex].append(item)
+    return splitedLists
+        
+        
         
 #writeToFasta(embList,"emb.fasta")
 #writeToFasta(larvaList,"larvae.fasta")
 #writeToFasta(L3_L4List,"L3_L4.fasta")
 #writeToFasta(dauerList,"dauer.fasta")
 #writeToFasta(adultList,"adult.fasta")
-writeToFasta(allList,"wholeGenome.seqName")
 
+
+splitedLists=splitListRandomly(allList,4)
+
+for i in range(len(splitedLists)):
+    writeToFasta(splitedLists[i],"c_elegan_wholegenom_random_split%d.fasta"%(i+1))
 
 
 
