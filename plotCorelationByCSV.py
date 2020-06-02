@@ -8,7 +8,7 @@ Created on Thu May 28 11:40:32 2020
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as ss
-inputFile="/home/lu/AcrossTissue/betweenRuns.csv"
+inputFile="/home/lu/AcrossTissue/ComparisonLSG/fiveLSandWG.csv"
 headers=[]
 
 
@@ -70,22 +70,15 @@ def plotCorelation(x,y,a,b,xLabel="list1",yLabel="list2",logScale="no",showCorel
     subAxis.plot(x, y_pred, color = "g",linewidth=1)
     subAxis.scatter(x,y,s=0.5)
 
-print "="
+
 csvMatrix=parseInputFile(inputFile)
-print "="
+
 matrix=np.transpose(np.asarray(csvMatrix))
-print "="
-n=len(headers)
-print n
+
+
 
 plt.figure()
-
-
-
-
-
-
-fig, ax = plt.subplots(n, n,figsize=(10, 6))
+fig, ax = plt.subplots(n, n,figsize=(20, 12))
 fig.tight_layout(pad=1.5)
 
 
@@ -95,7 +88,7 @@ fig.tight_layout(pad=1.5)
 #ax[1, 1].plot(range(10), 'k') #row=1, col=1
 
 
-print len(headers)
+print headers
 for a in range(len(headers)):
     for b in range(len(headers)):
         print matrix[a]
