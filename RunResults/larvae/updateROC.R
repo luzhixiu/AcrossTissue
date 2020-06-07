@@ -1,5 +1,7 @@
 
 
+
+
 library(AnaCoDa)
 library(profmem)
 library(argparse)
@@ -10,7 +12,7 @@ parser <- ArgumentParser()
 parser$add_argument("-i","--input",type="character",default="./")
 parser$add_argument("-o","--output",type="character",default="./")
 parser$add_argument("-d","--div",type="integer",default=0)
-parser$add_argument("-s","--samp",type="integer",default=5000)
+parser$add_argument("-s","--samp",type="integer",default=1000)
 parser$add_argument("-a","--adapt",type="integer",default=100)
 parser$add_argument("-t","--thin",type="integer",default=20)
 parser$add_argument("-n","--threads",type="integer",default=1)
@@ -102,7 +104,7 @@ geneAssignment <- rep(1:numMixtures, mixture.sizes)
 
 
 parameter <- initializeParameterObject(genome,model="ROC",sphi_init,numMixtures, geneAssignment, split.serine = TRUE, mixture.definition = mixDef)
-parameter$initMutationCategories("/home/lu/CELEGAN/Crei_Mutation_Average.csv",1,TRUE)
+parameter$initMutationCategories("/data1/compbio/zlu21/AcrossTissue/RunResults/Crei_Mutation_NoRef.csv",1,TRUE)
 # parameter$initSelectionCategories(c(sel),1)
 
 
