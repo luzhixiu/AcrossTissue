@@ -20,13 +20,12 @@ from numbers import Number
 #list1=random.sample(range(100), 100)
 #list2=random.sample(range(100), 100)
 
-print "!!!!!"
+
 
 
 def testCorelation(x,y,corelationFunction):
-    print ("this changed")
     if "pearson" in corelationFunction:
-        print ("p value %f"%stats.pearsonr(x, y)[1])
+#        print ("p value %f"%stats.pearsonr(x, y)[1])
         return  stats.pearsonr(x, y)[0]
     elif "spearman" in corelationFunction:
         return stats.spearmanr(x,y,nan_policy="omit")[0]
