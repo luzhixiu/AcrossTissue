@@ -13,11 +13,16 @@ cp ./run.sh emb/
 
 
 
-adult/run.sh &
-dauer/run.sh &
-L3L4/run.sh &
-larvae/run.sh &
-emb/run.sh &
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/adult"
+./run.sh &
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/dauer"
+./run.sh &
+cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/L3L4"
+./run.sh &
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/larvae"
+./run.sh &
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/emb"
+./run.sh &
 
 
 
