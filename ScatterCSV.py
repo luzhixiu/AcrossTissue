@@ -3,8 +3,12 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+from cycler import cycler
 import scipy.stats as ss
 import validator
+import matplotlib as mpl
+mpl.rcsetup.cycler = cycler(color=[])
+colorCycleList=['red', 'green','#e6e600','purple','#3377ff','pink']
 headers=[]
 inputFile="/home/lu/AcrossTissue/ComparisonLSG/selectionParameterBetweenLS_WithoutReferenceCodon.csv"
 
@@ -87,19 +91,29 @@ def divideListByList(lst1,lst2):
 
 #works, but the proportion is not clear in visualization
 def plotMatrixStackedBar(matrix):
+    global colorCycleList
     fig=plt.figure()
     plotGroupLS=[]
     meanList=getMeanListFromMatrix(matrix,transpose=True)
     medianList=getMedianListFromMatrix(matrix,transpose=True)
+    
+    
     corelation=validator.testCorelation(medianList,meanList,"pearson" )
     if corelation<0.99:
         print "Warning! Mean and Median has a corelation less than 0.99, choice of mean of median might make a difference"
 #    plotMean=plt.bar(range(1,len(meanList)+1),meanList)
 #    plotGroupLS.append(plotMean)
     
-    for ls in matrix:
+    for i in range(len(matrix)):
+        ls=matrix[i]
         proportionLS=divideListByList(ls,meanList)
-        plotGroup=plt.bar(range(1,len(proportionLS)+1),proportionLS)
+        #default color map
+#        plotGroup=plt.bar(range(1,len(proportionLS)+1),proportionLS,linewidth=0.1,edgecolor='b')
+#        #specifiend color map
+        pickedColor=colorCycleList[i%len(matrix)]
+        plotGroup=plt.bar(range(1,len(proportionLS)+1),proportionLS,color=pickedColor,alpha=0.5,edgecolor=pickedColor,linewidth=0.1)
+#        
+        
         plotGroupLS.append(plotGroup)
     
     global codonNames
@@ -116,6 +130,7 @@ def plotMatrixStackedBar(matrix):
         legendGroup.append(plotGroupLS[i][0])
     plt.legend(legendGroup,headers,fancybox=True,fontsize=5)
     plt.ylabel("Selection Estimate Proportion")
+    plt.axhline(y=1, color='grey', linestyle='--',linewidth=0.5)
 
     plt.show()
     fig.savefig("test.pdf",bbox_inches='tight')
