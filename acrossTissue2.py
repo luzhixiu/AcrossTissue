@@ -443,5 +443,5 @@ print corelationMatrix
 #
 #heatMatrix=np.concatenate((np.squeeze(np.asarray(log_mean_amongSamples)),tissueMatrix_log_norm_trans),axis=1)
 
-result=
+
 

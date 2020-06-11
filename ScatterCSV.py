@@ -8,7 +8,7 @@ import scipy.stats as ss
 import validator
 import matplotlib as mpl
 mpl.rcsetup.cycler = cycler(color=[])
-colorCycleList=['red', 'green','#e6e600','purple','#3377ff','orange']
+colorCycleList=['red', 'green','#e6e600','purple','#3377ff','pink']
 headers=[]
 inputFile="/home/lu/AcrossTissue/ComparisonLSG/selectionParameterBetweenLS_WithoutReferenceCodon.csv"
 
@@ -96,6 +96,8 @@ def plotMatrixStackedBar(matrix):
     plotGroupLS=[]
     meanList=getMeanListFromMatrix(matrix,transpose=True)
     medianList=getMedianListFromMatrix(matrix,transpose=True)
+    
+    
     corelation=validator.testCorelation(medianList,meanList,"pearson" )
     if corelation<0.99:
         print "Warning! Mean and Median has a corelation less than 0.99, choice of mean of median might make a difference"

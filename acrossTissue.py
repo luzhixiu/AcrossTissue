@@ -346,11 +346,16 @@ dauer=tissueMatrix[12]
 adult=tissueMatrix[11]
 
 
-meanExpressionList=[]
+
+
+
+
+
+
 
 
 embList=[]
-larvaList=[]
+larvaeList=[]
 L3_L4List=[]
 dauerList=[]
 adultList=[]
@@ -361,20 +366,23 @@ larvaeExp=[]
 L3L4Exp=[]
 dauerExp=[]
 adultExp=[]
-
+meanExp=[]
 
 print len(emb)
 print len(geneNameList)
+
+
 for i in range(len(emb)):
     allList.append(geneNameList[i])
     mean=average([emb[i],larvae_L1[i],L3_L4[i],dauer[i],adult[i]])
+    meanExp.append(mean)
     threshold=2*mean
     if emb[i]>threshold:
         embList.append(geneNameList[i])
         embExp.append(emb[i])
     if larvae_L1[i]>threshold:
-        larvaList.append(geneNameList[i])    
-        larvaeExp.append(larva_L1[i])
+        larvaeList.append(geneNameList[i])    
+        larvaeExp.append(larvae_L1[i])
     if L3_L4[i]>threshold:
         L3_L4List.append(geneNameList[i])  
         L3L4Exp.append(L3_L4[i])
@@ -394,6 +402,17 @@ def writeToFasta(geneTagList,fName):
         sequence=sequenceDict[geneTagList[i]]
         f.write(sequence)
         f.write("\n")
+        
+def createExpressionMap(geneTagList,fName):
+    global sequenceDict
+    global meanExp
+    f=open(fName,"w+")
+    for i in range(len(geneTagList)):
+        f.write(geneTagList[i])
+        f.write(",")
+        exp=meanExp[i]
+        f.write(str(exp))
+        f.write("\n")
 
 
 #split a list into n random chunks
@@ -406,7 +425,8 @@ def splitListRandomly(lst,n):
         splitedLists[randomIndex].append(item)
     return splitedLists
         
-        
+ 
+       
         
 #writeToFasta(embList,"emb.fasta")
 #writeToFasta(larvaList,"larvae.fasta")
@@ -415,11 +435,12 @@ def splitListRandomly(lst,n):
 #writeToFasta(adultList,"adult.fasta")
 
 
-splitedLists=splitListRandomly(allList,4)
-
-for i in range(len(splitedLists)):
-    writeToFasta(splitedLists[i],"c_elegan_wholegenom_random_split%d.fasta"%(i+1))
-
+#splitedLists=splitListRandomly(allList,10)
+#
+#for i in range(len(splitedLists)):
+#    writeToFasta(splitedLists[i],"c_elegan_wholegenom_random_split%d.fasta"%(i+1))
+    
+createExpressionMap(allList,"empiricalMeanExp.csv")
 
 
 
