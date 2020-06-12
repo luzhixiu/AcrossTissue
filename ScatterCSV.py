@@ -9,8 +9,9 @@ import validator
 import matplotlib as mpl
 mpl.rcsetup.cycler = cycler(color=[])
 colorCycleList=['red', 'green','#e6e600','purple','#3377ff','pink']
+colorCycleList=['green','#e6e600','purple','#3377ff','pink']
 headers=[]
-inputFile="/home/lu/AcrossTissue/ComparisonLSG/selectionParameterBetweenLS_WithoutReferenceCodon.csv"
+inputFile="/home/lu/AcrossTissue/ComparisonLSG/selectionParameterBetweenLS.csv"
 
 
 #format: first line should be the header, each column is a list
@@ -19,6 +20,7 @@ def parseInputFile(fname):
     f=open(fname)
     lines=f.readlines()
     global headers
+    print "Line 0 (Usually the header):",
     print lines[0]
     headers=lines[0].rstrip().split(",")
     for line in lines[1:]:
@@ -135,7 +137,85 @@ def plotMatrixStackedBar(matrix):
     plt.show()
     fig.savefig("test.pdf",bbox_inches='tight')
 
-plotMatrixStackedBar(matrix)
+#plotMatrixStackedBar(matrix)
+
+def minusAListByItsAvg(lst):
+    avg=np.mean(lst)
+    newLst=[]
+    for x in lst:
+        newLst.append(x-avg)
+    return newLst        
+    
+
+def plotHistogramByAA(matrix):
+    global AANames
+    global codonNames
+    n=len(headers)
+    fig, ax = plt.subplots(n, n,figsize=(20, 12))
+    for i in range(len(headers)):
+        for j in range(len(headers)):
+            if i<=j:
+                continue
+            print i
+            print headers[i]
+            print j
+            print headers[j]
+        #defining sub plots
+            subAxis=ax[i,j]
+            subAxis.set_title("%s VS %s"%(headers[i],headers[j]))
+            LSlist=matrix[i]
+            cl=colorCycleList[i%len(colorCycleList)]
+            aaPointer=AANames[0]
+            labelList=[]
+            xCounter=1
+            xList=[]
+            yList=[]
+            for k in range(len(AANames)):
+                aa=AANames[k]
+                codonName=codonNames[k]
+                if aa==aaPointer:      
+                    pass
+                else:
+                    yList=minusAListByItsAvg(yList)
+                    subAxis.bar(xList,yList,color=cl)
+                    xList=[]
+                    yList=[]
+                    xCounter+=1
+                    subAxis.bar(xCounter,0,color=cl)
+                    xCounter+=1
+                    subAxis.bar(xCounter,0,color=cl)
+            
+                newS=""
+                for c in codonName:
+                    newS+=c
+                    newS+="\n"
+                labelList.append(newS)
+                yList.append(LSlist[k])
+                xCounter+=1
+                xList.append(xCounter)
+                aaPointer=aa
+                
+                LSlist=matrix[j]
+                aaPointer=AANames[0]
+                labelList=[]
+                xCounter=1
+                xList=[]
+                yList=[]
+                
+
+
+                
+               
+
+
+    fig.savefig("test.pdf",bbox_inches='tight')       
+            
+#    plt.bar(xList,yList)
+#    plt.xticks(xList,labelList,rotation=-5, fontsize=5)
+
+
+
+plotHistogramByAA(matrix)
 
 
 
