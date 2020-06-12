@@ -8,7 +8,7 @@ Created on Thu May 28 11:40:32 2020
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as ss
-inputFile="/home/lu/AcrossTissue/ComparisonLSG/fiveLSandWG.csv"
+inputFile="/home/lu/AcrossTissue/ComparisonLSG/selectionParameterBetweenLS-source.csv"
 headers=[]
 
 
@@ -22,6 +22,7 @@ def parseInputFile(fname):
     headers=lines[0].rstrip().split(",")
     for line in lines[1:]:
         splitList=line.rstrip().split(",")
+        print splitList
         splitList = list(map(float, splitList)) 
         csvMatrix.append(splitList)
     return csvMatrix
@@ -78,6 +79,8 @@ matrix=np.transpose(np.asarray(csvMatrix))
 
 
 plt.figure()
+n=len(headers)
+
 fig, ax = plt.subplots(n, n,figsize=(20, 12))
 fig.tight_layout(pad=1.5)
 
@@ -94,8 +97,8 @@ for a in range(len(headers)):
         print matrix[a]
         print testCorelation(matrix[a],matrix[b],"pearson")
         plotCorelation(matrix[a],matrix[b],a,b,xLabel=headers[a],yLabel=headers[b])
-#plt.show()
-plt.savefig(inputFile+"_plot.pdf",bbox_inches='tight')
+plt.show()
+fig.savefig(inputFile+"_plot.pdf",bbox_inches='tight')
 
 
 
