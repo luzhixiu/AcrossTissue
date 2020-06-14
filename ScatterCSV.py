@@ -154,14 +154,18 @@ def plotHistogramByAA(matrix):
     fig, ax = plt.subplots(n, n,figsize=(40, 24))
     for i in range(len(headers)):
         for j in range(len(headers)):
+            
+            subAxis=ax[i,j]
             if i<=j:
+                subAxis.set_visible(False)
                 continue
+                
 #            print i
 #            print headers[i]
 #            print j
 #            print headers[j]
         #defining sub plots
-            subAxis=ax[i,j]
+            
             subAxis.set_title("%s VS %s"%(headers[i],headers[j]))
             LSlist=matrix[i]
             cl=colorCycleList[i%len(colorCycleList)]
@@ -178,16 +182,19 @@ def plotHistogramByAA(matrix):
                 if aa==aaPointer:      
                     cnt+=1
                 else:
-                    print xList
-                    print yList
+#                    print xList
+#                    print yList
                     yList=minusAListByItsAvg(yList)
-                    subAxis.bar(xList,yList,color=cl,alpha=0.5)
+                    subAxis.bar(xList,yList,color=cl,alpha=0.7)
                     xList=[]
                     yList=[]
                     xCounter+=1
                     subAxis.bar(xCounter,0,color=cl)
                     xCounter+=1
                     subAxis.bar(xCounter,0,color=cl)
+                    labelList.append("")
+                    labelList.append("")
+
             
                 newS=""
                 for c in codonName:
@@ -213,25 +220,28 @@ def plotHistogramByAA(matrix):
                 if aa==aaPointer:      
                     cnt+=1
                 else:
-                    print xList
-                    print yList
+#                    print xList
+#                    print yList
                     yList=minusAListByItsAvg(yList)
-                    subAxis.bar(xList,yList,color=cl,alpha=0.5)
+                    subAxis.bar(xList,yList,color=cl,alpha=0.7)
                     xList=[]
                     yList=[]
                     xCounter+=1
                     subAxis.bar(xCounter,0,color=cl)
                     xCounter+=1
                     subAxis.bar(xCounter,0,color=cl)
-            
+
 
                 yList.append(LSlist[k])
                 xCounter+=1
                 xList.append(xCounter)
                 aaPointer=aa
-
-    subAxis.set_xticklabels(labelList,rotation=-5, fontsize=5)
-
+            subAxis.bar(-1,0,label=headers[i],color=colorCycleList[i%len(colorCycleList)])
+            subAxis.bar(-1,0,label=headers[j],color=colorCycleList[j%len(colorCycleList)])
+            subAxis.set_xticks(range(len(labelList)))
+            subAxis.legend()
+            subAxis.set_xticklabels(labelList,rotation=-5, fontsize=5)
+            subAxis.set_ylabel("Delta Eta Relative to Mean Across AA Group")
 
                 
 
