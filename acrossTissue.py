@@ -426,7 +426,7 @@ def splitListRandomly(lst,n):
     return splitedLists
         
  
-       
+      
         
 #writeToFasta(embList,"emb.fasta")
 #writeToFasta(larvaList,"larvae.fasta")

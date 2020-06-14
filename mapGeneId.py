@@ -63,10 +63,13 @@ for geneName in geneExpDict:
         geneNameList.append(geneName)
         expList.append(float(geneExpDict[geneName]))
         phiList.append(float(phiDict[geneName]))
-        
+      
 import validator
 
-validator.validate(phiList,expList,xLabel="phi",yLabel="EmpiricalExpression")   
-
-
+validator.validate(phiList,expList,logScale="yes",xLabel="phi (log)",yLabel="EmpiricalExpression (log)")   
+cnt=0
+for item in expList:
+    if item==0:
+        cnt+=1
+print cnt
         

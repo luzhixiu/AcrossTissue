@@ -151,15 +151,15 @@ def plotHistogramByAA(matrix):
     global AANames
     global codonNames
     n=len(headers)
-    fig, ax = plt.subplots(n, n,figsize=(20, 12))
+    fig, ax = plt.subplots(n, n,figsize=(40, 24))
     for i in range(len(headers)):
         for j in range(len(headers)):
             if i<=j:
                 continue
-            print i
-            print headers[i]
-            print j
-            print headers[j]
+#            print i
+#            print headers[i]
+#            print j
+#            print headers[j]
         #defining sub plots
             subAxis=ax[i,j]
             subAxis.set_title("%s VS %s"%(headers[i],headers[j]))
@@ -170,14 +170,18 @@ def plotHistogramByAA(matrix):
             xCounter=1
             xList=[]
             yList=[]
+            
+            cnt=0
             for k in range(len(AANames)):
                 aa=AANames[k]
                 codonName=codonNames[k]
                 if aa==aaPointer:      
-                    pass
+                    cnt+=1
                 else:
+                    print xList
+                    print yList
                     yList=minusAListByItsAvg(yList)
-                    subAxis.bar(xList,yList,color=cl)
+                    subAxis.bar(xList,yList,color=cl,alpha=0.5)
                     xList=[]
                     yList=[]
                     xCounter+=1
@@ -189,18 +193,46 @@ def plotHistogramByAA(matrix):
                 for c in codonName:
                     newS+=c
                     newS+="\n"
+                    
                 labelList.append(newS)
                 yList.append(LSlist[k])
                 xCounter+=1
                 xList.append(xCounter)
                 aaPointer=aa
-                
-                LSlist=matrix[j]
-                aaPointer=AANames[0]
-                labelList=[]
-                xCounter=1
-                xList=[]
-                yList=[]
+
+            
+            LSlist=matrix[j]
+            cl=colorCycleList[j%len(colorCycleList)]
+            aaPointer=AANames[0]
+            xCounter=1
+            xList=[]
+            yList=[]
+            for k in range(len(AANames)):
+                aa=AANames[k]
+                codonName=codonNames[k]
+                if aa==aaPointer:      
+                    cnt+=1
+                else:
+                    print xList
+                    print yList
+                    yList=minusAListByItsAvg(yList)
+                    subAxis.bar(xList,yList,color=cl,alpha=0.5)
+                    xList=[]
+                    yList=[]
+                    xCounter+=1
+                    subAxis.bar(xCounter,0,color=cl)
+                    xCounter+=1
+                    subAxis.bar(xCounter,0,color=cl)
+            
+
+                yList.append(LSlist[k])
+                xCounter+=1
+                xList.append(xCounter)
+                aaPointer=aa
+
+    subAxis.set_xticklabels(labelList,rotation=-5, fontsize=5)
+
+
                 
 
 
@@ -208,7 +240,7 @@ def plotHistogramByAA(matrix):
                
 
 
-    fig.savefig("test.pdf",bbox_inches='tight')       
+    fig.savefig("test.pdf")       
             
 #    plt.bar(xList,yList)
 #    plt.xticks(xList,labelList,rotation=-5, fontsize=5)
