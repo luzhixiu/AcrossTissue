@@ -1,0 +1,1337 @@
+Loading required package: Rcpp
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+[1] "dauer.fasta"  "emb.fasta"    "L3_L4.fasta"  "larvae.fasta"
+WARNING: Gene: 441 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 521 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 570 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 640 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 683 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 723 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 726 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 795 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 864 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 991 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1053 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1054 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1064 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1186 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1217 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1221 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1222 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1225 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1226 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1270 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1352 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1519 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1562 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1590 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1609 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1614 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1619 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1631 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1635 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1724 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1754 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1788 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1813 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1821 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1828 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1845 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1898 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1967 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1991 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1993 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1995 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2053 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2057 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2065 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2066 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2099 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2137 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 152 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 208 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 493 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 504 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 559 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 593 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 600 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 603 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 613 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 617 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 621 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 655 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 663 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 680 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 685 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 690 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 714 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 755 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 762 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 867 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 873 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 895 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 931 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1038 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1100 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1173 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1189 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1249 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1358 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1379 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1415 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1423 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1446 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1460 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1507 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1554 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1609 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1614 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1621 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1654 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1663 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1667 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1682 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1721 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1858 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1888 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1926 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1937 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1950 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1965 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2013 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2089 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2144 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2146 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2147 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2150 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2151 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2155 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2160 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2166 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2167 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2168 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2169 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2170 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2171 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2173 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2176 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2178 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2179 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2250 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2264 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2268 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2270 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2344 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2346 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2382 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2396 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2428 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2434 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2453 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2462 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2468 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2535 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2575 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2608 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2638 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2713 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2835 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2851 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2863 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2937 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2940 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2969 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3033 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3060 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3116 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3157 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3219 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3269 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3370 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3373 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3402 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3483 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3522 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3538 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3541 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3546 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3547 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3574 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3594 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3598 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3610 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3625 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3669 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3688 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3698 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3713 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3716 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3717 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3718 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3748 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3750 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3751 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3754 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3755 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3757 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3767 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3769 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3772 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3773 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3776 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3777 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3780 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3781 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3867 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3880 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3904 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3914 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3934 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3941 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3946 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3958 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3960 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 3966 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 89 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 412 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 424 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 433 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 450 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 531 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 597 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 694 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 804 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 834 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 864 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 995 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1028 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1033 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1112 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1164 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1208 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1210 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1282 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1339 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1350 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1423 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1495 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1516 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1545 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1598 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1762 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1822 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1845 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1858 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1896 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1913 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1932 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1938 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1939 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1940 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1941 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1966 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2032 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2042 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2048 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2050 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2053 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2055 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2061 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2082 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2085 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2096 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2104 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2109 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2111 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2148 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2175 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 97 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 223 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 235 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 392 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 446 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 450 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 621 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 685 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 717 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 743 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 744 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 818 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 863 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1056 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1062 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1081 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1106 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1178 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1195 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1248 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1285 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1351 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1364 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1412 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1434 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1442 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1443 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1444 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1445 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1452 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1453 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1455 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1459 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1528 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1561 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1653 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1770 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1853 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1921 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1935 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1949 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1975 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 1982 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2019 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2072 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2074 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2087 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2156 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2158 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2159 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2169 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2235 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2263 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2287 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2332 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2372 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2390 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2408 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2410 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2435 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2446 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2453 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2455 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2486 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2511 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2512 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2518 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2520 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2526 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2539 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2557 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2562 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2566 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2574 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2576 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2602 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2603 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2644 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2661 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2687 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2727 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+WARNING: Gene: 2729 has sequence length NOT multiple of 3!
+Gene data is NOT processed!
+Valid characters are A,C,T,G
+
+[1] "FASTA successfully files loaded:"
+[1] "dauer.fasta"  "emb.fasta"    "L3_L4.fasta"  "larvae.fasta"
+Genome loaded
+11025 
+Warning messages:
+1: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+2: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+3: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+4: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+5: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+6: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+7: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+8: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+9: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+10: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+Error in parameter$initMutationCategories("c_elegan_Mutation.csv", 1,  : 
+  object 'TURE' not found
+Execution halted
