@@ -20,9 +20,8 @@ def readCSV(fname, hasHeader=True):
     f=open(fname,"r+")
     lines=f.readlines()
     header=lines[0]
-    headerList=header.rstrip.split(",")
+    headerList=header.rstrip().split(",")
     nSamples=len(headerList)
-    
     for i in range(nSamples):
         matrix.append([])
     
@@ -41,5 +40,5 @@ def readCSV(fname, hasHeader=True):
         
         
     
-result=readCSV("/home/lu/AcrossTissue/csvs/cEl.csv")
-print result
+#result=readCSV("/home/lu/AcrossTissue/csvs/cEl.csv")
+#print result
