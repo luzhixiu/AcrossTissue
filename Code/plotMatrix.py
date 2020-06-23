@@ -7,7 +7,9 @@ Created on Tue Jun 23 14:13:07 2020
 """
 
 
-def plotCorelation(matrix,header):
+#This creates a figure consisits of n*(n-1)/2 subplots, each is a 1v1 corelation
+def plotCorelation_1v1(matrix,header):
+    
     
     
     
