@@ -8,7 +8,7 @@ Created on Thu May 28 11:40:32 2020
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as ss
-inputFile="/home/lu/AcrossTissue/ComparisonLSG/selectionParameterBetweenLS-source.csv"
+inputFile="../ComparisonLSG/selectionParameterBetweenLS-source.csv"
 headers=[]
 
 
