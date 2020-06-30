@@ -1,0 +1,7 @@
+14:20:22	 From Zhixiu Lu : https://github.com/luzhixiu1996/AcrossTissue
+15:33:59	 From Zhixiu Lu : https://honingds.com/blog/weighted-least-squares/
+16:45:02	 From Zhixiu Lu : if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("SummarizedExperiment")
+17:00:58	 From Michael Aaron Gilchrist : https://bioconductor.org/packages/release/bioc/vignettes/miRmine/inst/doc/miRmine.html
