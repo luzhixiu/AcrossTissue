@@ -66,7 +66,7 @@ for geneName in geneExpDict:
       
 import validator
 
-validator.validate(phiList,expList,logScale="yes",xLabel="phi (log)",yLabel="EmpiricalExpression (log)")   
+validator.validate(phiList,expList,logScale="no",xLabel="phi",yLabel="EmpiricalExpression")   
 cnt=0
 for item in expList:
     if item==0:
