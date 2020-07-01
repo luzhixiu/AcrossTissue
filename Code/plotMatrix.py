@@ -10,22 +10,27 @@ import numpy as np;
 import readCSVfiles as RCF
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import pyplot
 
 
 #This creates a figure consisits of n*(n-1)/2 subplots, each is a 1v1 corelation
-def plotCorelation_1v1(matrix,header):
-    plt.figure()
-    plt.imshow(matrix, cmap='hot', interpolation='nearest')
-    plt.show()
+def plotHeatMap(matrix,header,savefile=False):
+    import seaborn as sns; sns.set(color_codes=True)
+    plt.figure(figsize=(15, 15))
+    matrix=np.transpose(matrix)
+    print(rowHeader)
+    g = sns.heatmap(matrix, cmap='hot',vmin=0, vmax=100)
+    g.set_xlabel("Life Stages")
+    g.set_ylabel("Gene")
+    if savefile:
+        plt.savefig("heatmap.pdf")
+    else:
+        plt.show()
     
     
     
     
 
 matrix,rowHeader,columnHeader=RCF.readCSV("/home/lu/AcrossTissue/csvs/cEl.csv")
-print matrix
-print rowHeader
-#print columnHeader
-plotCorelation_1v1(np.asarray(matrix),header)
 
-
+plotHeatMap(matrix,rowHeader)
