@@ -1,0 +1,104 @@
+# Set Up Session
+## Initialize Bioconductor
+```{r}
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+print(.libPaths())
+
+## Install or update packages from _Bioconductor_, CRAN, and GitHub.
+BiocManager::install(version = "3.10", lib="/home/mikeg/R/x86_64-pc-linux-gnu-library/3.6")
+```
+
+
+## Work with Vignette 
+```{r}
+print("test")
+library(SummarizedExperiment)
+## Note it's necessary to set the lib argument, or else, for reasons I don't understand, it tries to use the global lib path
+BiocManager::install("airway", lib="/home/mikeg/R/x86_64-pc-linux-gnu-library/3.6")
+data(airway, package="airway") 
+se <- airway
+se
+```
+
+## Work with C. elegans data
+
+```{r}
+## load data object experimentSummary
+## Note the real data seems to be embedded within this "SimpleList" object
+load("E-MTAB-2812-atlasExperimentSummary.Rdata")
+ranges(experimentSummary$rnaseq)
+
+rse  <- experimentSummary$rnaseq
+
+## Despite being a RangedSummarizedExperiment (RSE) object, the rowRanges info doesn't seem to be used
+rowRanges(rse)
+
+## Following lines taken from RSE help page
+dim(rse)
+assayNames(rse)
+head(assay(rse))
+rowData(rse)
+## colData() returns the information about the samples which are stored in a DataFrame
+colData(rse)
+
+unique(rse[[1,]])
+
+## for the RSE the column names are the experiment IDs 
+colnames(rse)
+
+# here we get the names of the columns in the data frame
+colnames(colData(frse))
+
+## create a filtereD version of rse by subsetting it
+## Filter out males and try to predict their expression afterwards using residuals
+
+## Help pages for base::subset suggests not using it within scripts but use [] instead
+## This doesn't seem to work properly
+trse <- rse[ (rse$sex == "hermaphrodite" & rse$organism_part == "organism" & rse$genotype =="wild type genotype"), ]  
+
+
+
+## Use BiocGenerics::subset
+## drop argument doesn't seem to work
+## Dauer data is 3 stages and have a temperature dependent phenotype
+frse  <-  subset(rse, select = (sex == "hermaphrodite" & organism_part == "organism" & (genotype == "wild type genotype" |  genotype == "daf-2(e1370)III.")  ) )
+unique(frse$sex)
+unique(frse$age)
+unique(frse$organism_part)
+unique(frse$genotype)
+unique(frse$developmental_stage)
+unique(frse$technical_replicate_group)
+
+tmp <- unique(cbind(frse$age, frse$developmental_stage))
+
+```
+### Description of RSE object
+- Genes are in rows, experimental data in columns
+- colnames(): SSRR00XXX are the specific experimental data ID for WormBase
+- colData() gives one access to meta data for each column, such as stage, tissue
+"Sample meta-data describing the samples can be accessed using colData(), and is a DataFrame that can store any number of descriptive columns for each sample row."
+- technical_replicate_group seems to be a factor that allows one to group replicates together
+
+
+```r
+## try to get data frame of counts
+## "The data are accessed using the ‘assays’ function"
+## This is not correct
+tmp  <- rowData(frse)
+
+## Here I seem to be able to get one column of data
+assay(frse[,1])
+
+# Here I create a data frame from the filtered data
+fdf  <- assay(frse)
+attributes(fdf)
+dim(fdf)
+summary(fdf)
+
+fdf[1:10,1:10]
+
+```
+
+So what I need to do next is create the df but include all of the metadata in additional columns
+I then want to make the data tidy
