@@ -106,7 +106,8 @@ def logify(myList):
         if not isinstance(i, Number):
             i=0.0001
         logList.append(math.log(float(i)))
-#        print (logList)
+        print (logList)
+#        logList.append(math.log(i+1))
     return logList
 
 def validate(x,y,corelationFunction="pearson",logScale="no",xLabel="x",yLabel="y",showCorelation="yes"):

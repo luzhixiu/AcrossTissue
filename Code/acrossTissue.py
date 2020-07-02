@@ -20,7 +20,7 @@ rd.seed(0)
 tissueSamples=25
 
 
-sequenceDict=findSequenceById.findSequenceByID("c_elegan.fasta",idType="gene")
+sequenceDict=findSequenceById.findSequenceByID("../Fastas/c_elegan.fasta",idType="gene")
 geneNameList=[]
 
 wholeGenome=[]
@@ -49,7 +49,7 @@ def loadSequence(sequence):
    # print "codon readed successful, the number of codon in this sequence is %d"%(len(codonList))
     return codonList
 
-f=open("cEl.csv","r+")
+f=open("../csvs/cEl.csv","r+")
 lines=f.readlines()
 
 #21 tissues or lifestages
@@ -280,8 +280,6 @@ chosenLables=np.asarray(sampleLables)[indexList]
 
 
 genomeList=[]
-
-
 
 
 for k in range(len(tissueMatrix_log_norm)):

@@ -91,9 +91,7 @@ def loadSequence(sequence):
 def logify(lst):
     logList=[]
     for i in lst:
-        if i==0:
-            i=0.00001
-        logList.append(np.log(i))
+        logList.append(np.log(i+1))
     return logList
  
     
@@ -103,7 +101,7 @@ def regress(list1,list2,weightList=[]):
         model = sm.OLS(list2, list1).fit()
     else:
         print "using WLS"
-        model = sm.WLS(list2, list1, weights=weightList).fit()
+        model = sm.WLS(list2, list1, weights=weightList,hasconst=False).fit()
     predictions = model.predict(list1)
     print model.params
     print model.summary()
@@ -172,6 +170,7 @@ indexList=[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 print len(indexList)
 stdEList=[]
 
+
 for i in range(tissueSamples):
     tissueMatrix.append([])
 cnt=0
@@ -197,10 +196,23 @@ for line in lines:
             allMeasurement.append(float(splitList[i]))
         if marked:
             cnt+=1
-print marked
-print min(allMeasurement)
-print max(allMeasurement)
-print "-----------------"
+
+
+phiWeightList=[]
+for i in range(len(stdEList)):
+    phiWeightList.append(1/float(stdEList[i])**2)
+    
+print stdEList
+print phiWeightList
+
+
+
+#
+#
+#print marked
+#print min(allMeasurement)
+#print max(allMeasurement)
+#print "-----------------"
 
 def corelate(list1,list2):
     return ss.pearsonr(list1,list2)[0]
@@ -277,15 +289,15 @@ def scaleToOne(lst):
 #print regress(X,Y)
 
 
-print len(tissueMatrix)
+#print len(tissueMatrix)
 
 tempMatrix=[]
 for i in range(len(tissueMatrix)):
     if i in indexList:
         tempMatrix.append(tissueMatrix[i])
-
-print len(tempMatrix)
-print "--"
+#
+#print len(tempMatrix)
+#print "--"
 tissueMatrix=tempMatrix
 
 
@@ -321,7 +333,7 @@ for lst in tissueMatrix_norm_trans:
 
 #phiList=minmax_scale(phiList)
 
-X=sm.add_constant(tissueMatrix_norm_trans)
+#X=sm.add_constant(tissueMatrix_norm_trans)
 
 prediction= regress(X,phiList)
 
@@ -344,9 +356,12 @@ import matplotlib.pyplot as plt
 # Initiate some data, giving some randomness using random.random().
 x = tissueMatrix_norm[0]
 y = phiList
+X=tissueMatrix_norm_trans
+prediction= regress(X,phiList,weightList=phiWeightList)
 
-prediction= regress(X,phiList,weightList=stdEList)
-
+import validator
+#plt.figure(5,5)
+validator.validate(phiList,prediction,xLabel="Phi",yLabel="Regression Prediction",logScale="yes")
 
 #b,m=polyfit(phiList,prediction,1)
 #plt.plot(phiList, b + m * phiList, '-')
@@ -401,7 +416,7 @@ import validator
 #makePCA(tissueMatrix_log_norm,isLog="yes")  
 
 
-print sampleLables[9]
+#print sampleLables[9]
 
 emb=tissueMatrix[4]
 larvae_L1=tissueMatrix[6]
@@ -427,7 +442,7 @@ for i in range(0,6):
     for j in range(0,6):
         corelationMatrix[i][j]= ss.spearmanr(testList[i],testList[j])[0]
 
-print corelationMatrix
+#print corelationMatrix
 
 
 #fix the scale of this heatmap
@@ -442,6 +457,8 @@ print corelationMatrix
 #    log_mean_amongSamples.append(gmean(lst))
 #
 #heatMatrix=np.concatenate((np.squeeze(np.asarray(log_mean_amongSamples)),tissueMatrix_log_norm_trans),axis=1)
+
+
 
 
 
