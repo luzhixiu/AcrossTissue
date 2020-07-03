@@ -8,7 +8,7 @@ Created on Thu Jul 18 09:48:45 2019
 
 
 
-#idTypeOption is "locus_tag or gene"
+#idTypeOption is "locus_tag or gene or Gn" *Gn is the keyword for wormbase ID
 def findSequenceByID(inputFile,idType="locus_tag"):
     print ("Selected id Type: %s"%(idType))
     geneDict=dict()
@@ -28,7 +28,7 @@ def findSequenceByID(inputFile,idType="locus_tag"):
         startIndex=startTargetIndex+len(idType)+1
         idName=""
         charIndex=startIndex
-        while not header[charIndex]=="]":
+        while not (header[charIndex]=="]" or header[charIndex]==","):
             idName+=header[charIndex]
             charIndex+=1
         if idName not in geneDict:
