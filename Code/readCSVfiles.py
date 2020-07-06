@@ -21,7 +21,7 @@ def readCSV(fname, hasrowHeader=True,hasColHeader=True,partialIndexList=[]):
     lines=f.readlines()
     rowHeader=lines[0]
     lines=lines[1:]
-    rowHeaderList=rowHeader.rstrip().replace(" ","_").split(",")
+    rowHeaderList=rowHeader.strip().split(",")
     nSamples=len(rowHeaderList)
     if hasColHeader:
         colSize=nSamples-1
@@ -31,7 +31,7 @@ def readCSV(fname, hasrowHeader=True,hasColHeader=True,partialIndexList=[]):
         matrix.append([])
     
     for line in lines:
-        line =line.rstrip()
+        line =line.strip()
         if len(line)==0:
             continue
     #This line is for faster testings, comment when running    

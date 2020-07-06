@@ -8,6 +8,7 @@ Created on Tue Jun 23 14:13:07 2020
 
 import numpy as np;
 import readCSVfiles as RCF
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import pyplot
@@ -15,7 +16,7 @@ import pandas as pd
 import scipy.stats as ss
 
 np.set_printoptions(precision=2)
-
+matplotlib.use('Qt5Agg')
 
 def testCorelation(x, y, corelationFunction):
     if "pearson" in corelationFunction:
@@ -62,7 +63,6 @@ def calculateCorelation1V1(matrix, header, corelationMethod="pearson"):
     fig.patch.set_visible(False)
     ax.axis('off')
     ax.axis('tight')
-
     tb = ax.table(cellText=df.values,colLabels=header,rowLabels=header,loc='center')
     tb.auto_set_font_size(False)
     tb.set_fontsize(2.8)
@@ -70,14 +70,35 @@ def calculateCorelation1V1(matrix, header, corelationMethod="pearson"):
     fig.savefig("../Graph/allLSCorelation.pdf")
     plt.show()
 
+def plotClusterMap(matrix,rowHeader):
+    import seaborn as sns;
+    matrix=np.transpose(matrix)
+    df=pd.DataFrame(matrix, columns =rowHeader)
+    sns.set(color_codes=True)
+    g = sns.clustermap(df,vmin=0, vmax=100)
+    plt.savefig("../Graph/ClusterMap.pdf")
 
+matrix, rowHeader, columnHeader = RCF.readCSV("/home/lu/AcrossTissue/csvs/cel_LS.csv")
+# remove all the genes that have at least one unobserved value in all these life stages
+matrix=np.transpose(matrix)
+fullMatrix=[]
+for ls in matrix:
+    if not 0 in ls:
+        fullMatrix.append(ls)
+matrix=np.transpose(fullMatrix)
 
-matrix, rowHeader, columnHeader = RCF.readCSV("/home/lu/AcrossTissue/csvs/cEl.csv",
-                                              partialIndexList=[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-                                                                20, 21])
+# =========================================================================================================
+
 # matrix,rowHeader,columnHeader=RCF.readCSV("/home/lu/AcrossTissue/csvs/cEl.csv",partialIndexList=[5,6,7,8,9])
-rowHeader = [header.replace("hermaphrodite__organism__", "") for header in rowHeader]
-rowHeader = [header.replace("_Ce", "") for header in rowHeader]
-rowHeader = [header.replace("_hermaphrodite", "") for header in rowHeader]
-print (rowHeader)
-calculateCorelation1V1(matrix, rowHeader)
+# rowHeader = [header.replace("hermaphrodite__organism__", "") for header in rowHeader]
+# rowHeader = [header.replace("_Ce", "") for header in rowHeader]
+# rowHeader = [header.replace("_hermaphrodite", "") for header in rowHeader]
+# print (rowHeader)
+# print (np.shape(matrix))
+
+
+
+# calculateCorelation1V1(matrix, rowHeader)
+
+rowHeader=rowHeader[1:]
+plotClusterMap(matrix,rowHeader)
