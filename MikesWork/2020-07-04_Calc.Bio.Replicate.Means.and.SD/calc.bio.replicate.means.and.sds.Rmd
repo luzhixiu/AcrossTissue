@@ -1,37 +1,29 @@
-# Set Up Session
-## Initialize Bioconductor
-- On some machines I needed to install the .deb package libcurl-openssh-dev
+# Analysis
+## Plan
+- Calculate mean for technical replicates (TR).
+- Calculate mean for biological replicates (BR) (mean of TR means)
+- Use BR to calculate \sigma for each gene
+- Fit model using 
+	- $y =$ mean $\phi$
+	- $\epsilon^2_y$ = $\var(\phi)$
+	- $x_{l,g} = $ mean of BR
+    - $\epsilon_x = $ var of BR
+    - Estimate initial conditions for lifestage coefficients using $\hat{C}_{l^*}$ as described above.
+- Could use genes with stage specific expression to get at initial guesses of the stage's weight.
+
+
+
+## Load R Libraries
+See file understanding.summarized.experiment.Rmd to set up libraries for loading
+
 ```{r}
-myLib = .libPaths()[1] #For some reason R tries to install into the global filesystem, fix that by specifying local lib
-
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager", lib=myLib)
-
-if (!requireNamespace("tidyr", quietly = TRUE))
-    install.packages("tidyr", lib=myLib)
-
-if (!requireNamespace("devtools", quietly = TRUE))
-    install.packages("devtools", lib=myLib)
-
-## install biobroom from github if it's not installed
-if (!require(biobroom, quietly=TRUE)) devtools::install_github("StoreyLab/biobroom")
-
-## Install or update packages from _Bioconductor_, CRAN, and GitHub.
-BiocManager::install(version = "3.10", lib=myLib)
-BiocManager::install("SummarizedExperiment", lib=myLib)
+#print(.libPaths())
 library(SummarizedExperiment)
+library(biobroom) ## extends tidyr to RSE objects
+options(biobroom.return = "data.frame") ## avoid warning about tbl_df
 ```
 
 
-## Work with Vignette 
-```{r}
-#print("test")
-## Note it's necessary to set the lib argument, or else, for reasons I don't understand, it tries to use the global lib path
-#BiocManager::install("airway", lib=myLib)
-#data(airway, package="airway") 
-#se <- airway
-#se
-```
 
 ## Work with C. elegans data
 
@@ -41,6 +33,92 @@ library(SummarizedExperiment)
 - colData() gives one access to meta data for each column, such as stage, tissue
 "Sample meta-data describing the samples can be accessed using colData(), and is a DataFrame that can store any number of descriptive columns for each sample row."
 - technical_replicate_group seems to be a factor that allows one to group replicates together
+
+### Import and Tidy Data
+
+```{r}
+# Experimental data (counts) in a complex object.
+load("E-MTAB-2812-atlasExperimentSummary.Rdata")
+
+rseData <- experimentSummary$rnaseq
+
+colData(rseData)
+
+
+rowData(rseData)
+
+
+experimentIDs  <- colnames(rseData)
+
+## Work with experimentalist's IDs not R's internal factor indexes
+
+## There are 96 categories (ignoring "Comment[]"), but only 92 (ignoring "Comment[]") appear in the database.
+techRepLevels <- unique(rseData$technical_replicate_group)
+
+## Approach using levels which includes "Comment[]" 
+# techRepLevels <- unique(levels(rseData$technical_replicate_group))
+### Filter out "Comment[]" by filtering entries with more than three caracters.
+# techRepLevels <- techRepLevels[sapply(techRepLevels, nchar) <3]
+```
+
+Try to use RSE object-- but fail
+```{r}
+techRep <- techRepLevels[1]
+
+frseData  <- subset(rseData, subset = technical_replicate_group==techRep)
+
+frseData = rseData[rseData$technical_replicate_group ==techRep, ]
+## I believe I want to be using the function select() which uses colData to subset data (as opposed to subset() which uses rowRanges data
+```
+Use dataframe
+
+```{r}
+tidyData <- tidy(rseData, addPheno=TRUE, assay="counts")
+# t2Data <- tidy(rseData, addPheno=FALSE, assay="counts")
+## Create a list where each lifestage has its own element in list
+## Each element will be a dataframe with the raw data for a technical replicate
+dataRawByTechRep <- list()
+
+for(techRep in techRepLevels){
+    
+    dataRawByTechRep[[techRep]] <- tidyData[ tidyData$technical_replicate_group==techRep, ] 
+}
+
+## Average across tech reps and get n
+
+
+tmpRawData <- dataRawByTechRep[[1]]
+
+library(plyr)
+
+# 'gene' is really WormBase ID (WBID)
+meanData  <- ddply(.data=tmpRawData, .variables=gene, .function=mean)
+subTmpRawData <- tmpRawData[1:5000,];
+tmpData  <- ddply(.data=tmpRawData, .variables=.(gene), .function=summarize, mean=mean(value), sd=sd(value), gmean= exp(mean(log(value))), gsd= exp(sd(log(value)) ) )
+## verify there's one entry per WBID
+length(unique(names(meanData))) == length((names(meanData)))
+
+
+## Create a list where each lifestage has its own element in list
+## Each element will be a dataframe with geneID, lifestage, nReplicates, mean, sd, gmean, gsd
+dataByLifeStage <- list()
+
+## Average and SD across bio rep
+
+
+
+factors(tidydata
+summary(tidydata)
+
+attributes(tidydata)
+colnames(tidydata)
+
+## Check if "developmental_stage" and "technical_replicate_group" are synonyms
+tmp <- fdf[ , c("developmental_stage", "technical_replicate_group") ]
+
+## They are not
+utmp <- unique(tmp)
+```
 
 ### Basic access
 
@@ -63,7 +141,6 @@ head(assay(rse))
 rowData(rse)
 ## colData() returns the information about the samples which are stored in a DataFrame
 colData(rse)
-colnames(rse)
 
 unique(rse[[1,]])
 
