@@ -41,7 +41,6 @@ def plotHeatMap(matrix,header,savefile=False):
     
     
 
-matrix,rowHeader,columnHeader=RCF.readCSV("/home/lu/AcrossTissue/csvs/cEl.csv")
 
 #plotHeatMap(matrix,rowHeader)
 def calculateCorelation1V1(matrix,header,corelationMethod="pearson"):
@@ -50,9 +49,13 @@ def calculateCorelation1V1(matrix,header,corelationMethod="pearson"):
             if i<j:
                 ls1=matrix[i]
                 ls2=matrix[j]
-                r=testCorelation(ls1,ls2,corelationFunction=corelationMethod)
-#                print (header[i])
-calculateCorelation1V1(matrix,rowHeader)
-print(len(rowHeader))
+                r=testCorelation(ls1,ls2,corelationFunction=corelationMethod)   
+                print (header[i]," ",header[j])
+                print (r)
+                
+matrix,rowHeader,columnHeader=RCF.readCSV("/home/lu/AcrossTissue/csvs/cEl.csv",partialIndexList=[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21])
+print rowHeader
+#calculateCorelation1V1(matrix,rowHeader)
+
 
     

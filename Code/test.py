@@ -1,11 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan 29 15:09:27 2020
+Created on Mon Jul  6 08:11:18 2020
 
 @author: lu
 """
 
-import glob
+matrix=[[1,2,3],[2,2,2],[3,3,3]]
 
-glob.glob("")
+indexList=[0,1]
+matirx=matrix[:,indexList]
+print(matrix)

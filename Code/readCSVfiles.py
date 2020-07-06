@@ -7,21 +7,21 @@ Created on Tue Jun 23 13:39:22 2020
 """
 
 
-
+import numpy as np
 #read in a csv files into matrix, default assumes there is a rowHeader and return it, 
 #if hasrowHeader is passed in as false, return empty rowHeaderlist
 #input: csv file path
 #output: matrix of the csx, each column is a list relative to coresponding rowHeader location
 #for example, matrix[3] is a list from responding column, and rowHeader[3] describes this column 
-def readCSV(fname, hasrowHeader=True,hasColHeader=True):
+def readCSV(fname, hasrowHeader=True,hasColHeader=True,partialIndexList=[]):
     rowHeader=[]
-    columnHeader=[]
+    columnHeaderList=[]
     matrix=[]
     f=open(fname,"r+")
     lines=f.readlines()
     rowHeader=lines[0]
     lines=lines[1:]
-    rowHeaderList=rowHeader.rstrip().split(",")
+    rowHeaderList=rowHeader.rstrip().replace(" ","_").split(",")
     nSamples=len(rowHeaderList)
     if hasColHeader:
         colSize=nSamples-1
@@ -41,13 +41,19 @@ def readCSV(fname, hasrowHeader=True,hasColHeader=True):
         splitList=line.split(",")
         if len(splitList)==0:
             continue
-        columnHeader.append(splitList[0])
+        
+        columnHeaderList.append(splitList[0])
         for i in range(1,len(splitList)):
             if len(splitList[i])==0:
                 matrix[i-1].append(0)
             else:
                 matrix[i-1].append(float(splitList[i]))
-    return matrix,rowHeader,columnHeader
+    #if the partialIndexList is given, only return partial matrix
+    if not len(partialIndexList) == 0:        
+        matrix=[matrix[index] for index in partialIndexList]
+        rowHeaderList=[rowHeaderList[index] for index in partialIndexList]
+        columnHeaderList=[columnHeaderList[index] for index in partialIndexList]
+    return matrix,rowHeaderList,columnHeaderList
         
         
     
