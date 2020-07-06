@@ -96,9 +96,9 @@ matrix=np.transpose(fullMatrix)
 # print (rowHeader)
 # print (np.shape(matrix))
 
-
-
-# calculateCorelation1V1(matrix, rowHeader)
-
 rowHeader=rowHeader[1:]
-plotClusterMap(matrix,rowHeader)
+
+calculateCorelation1V1(matrix, rowHeader,corelationMethod="spearman")
+
+
+# plotClusterMap(matrix,rowHeader)
