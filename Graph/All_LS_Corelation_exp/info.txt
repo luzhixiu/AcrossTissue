@@ -1,0 +1,4 @@
+the difference between 12k and 33k genes:
+
+33k  genes use all the genes from expression dataset
+12k  genes removed any genes that are missing at least on observation in 17 life stages.
