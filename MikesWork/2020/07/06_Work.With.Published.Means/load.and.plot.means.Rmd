@@ -1,0 +1,37 @@
+# Analysis
+## Plan
+- Load standardized means
+- Fit model using weights for counts inversely related to mean value 
+	- W = 1/(mean +1)^2
+# Install packages
+```{r}
+install.packages("readr")
+```
+
+# Load Libraries
+```{r}
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+```
+
+# Load Data
+```{r}
+flatData  <- read_tsv("E-MTAB-2812-query-results.tpms.tsv", skip=4) %>%
+    rename(ID = `Gene ID`, gene=`Gene Name` )
+
+
+## use pivot_longer command (not gather which is depricated)
+tData <- flatData %>% pivot_longer(-c(ID, gene), names_to = "long_description", values_to = "count")
+
+## Now separate entry in descriptor column into separate column entries
+sData  <- separate(tData, long_description, into=c("sex", "tissue", "stage"), sep=", ")
+
+
+## If the underlying distribution is poisson, then Var=Rate so W = 1/count
+
+## Load \phi and sd_\phi data
+
+## Load Error in Variables Regression package
+

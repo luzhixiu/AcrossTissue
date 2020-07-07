@@ -1,0 +1,54 @@
+From support@ebi.ac.uk Mon Jul  6 14:08:44 2020
+Date: Mon, 06 Jul 2020 19:08:07 +0100
+From: EMBL-EBI Support via RT <support@ebi.ac.uk>
+To: mikeg@utk.edu
+Subject: [Support #430248] AutoReply: More Information on Pipeline for Processing E-MTAB-2812
+Resent-From: <mikeg@utk.edu>
+
+
+Greetings,
+
+This message has been automatically generated in response to the creation 
+of a ticket regarding:
+	"More Information on Pipeline for Processing E-MTAB-2812", 
+a summary of which appears below.
+
+Please include the ticket identifier:
+
+         [Support #430248]
+
+in the subject line of all future correspondence about this issue. To do so, 
+you may reply to this message.
+
+                        Thank you,
+                        support@ebi.ac.uk
+
+#########################################################################
+EMBL-EBI service announcements and news:
+
+- https://www.facebook.com/EMBLEBI
+- https://twitter.com/EmblEbi
+- https://twitter.com/EmblEbiEs
+
+Free on-line training: http://www.ebi.ac.uk/training/online/
+#########################################################################
+User's email address: mikeg@utk.edu
+Feedback topic: GXA
+Referrer URL: https://www.ebi.ac.uk/gxa/FAQ.html
+User's IP address: 160.36.155.102
+Web browser used: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0
+Message sent: Monday 6 July 2020 18:07
+Message content:
+------------------------
+
+Hi,
+
+I'm trying to estimate the uncertainty in the count values (which are averages across technical and biological replicates) in E-MTAB-2812.  In order to do so I have downloaded and begun looking at the .RData object associated with this dataset (https://www.ebi.ac.uk/gxa/experiments-content/E-MTAB-2812/static/E-MTAB-2812-atlasExperimentSummary.Rdata).
+
+While I realize the general outline of the data analysis is described in the "Analysis Methods", it is not detailed enough for me to be able to replicate how the data was processed to get the final mean RPKM values.  Is there anyway to get a copy of the R code that was used to process these data?
+
+Many thanks,
+
+Mike
+
+
