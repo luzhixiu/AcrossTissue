@@ -1,0 +1,308 @@
+# Analysis
+## Plan
+- Calculate mean for technical replicates (TR).
+- Calculate mean for biological replicates (BR) (mean of TR means)
+- Use BR to calculate \sigma for each gene
+- Fit model using 
+	- $y =$ mean $\phi$
+	- $\epsilon^2_y$ = $\var(\phi)$
+	- $x_{l,g} = $ mean of BR
+    - $\epsilon_x = $ var of BR
+    - Estimate initial conditions for lifestage coefficients using $\hat{C}_{l^*}$ as described above.
+- Could use genes with stage specific expression to get at initial guesses of the stage's weight.
+
+## Notes
+### 06 Jul 2020
+- Tried using plyr, but I think I used .function instead of .func as an argument
+  It seems it's better to use dplyr instead.
+  Using both leads to some issues in summarise() functions
+- Trying dplyr
+	- Was confused by earlier documentation (prior to 2019) which referred to obsolete functions (e.g. '%.%') and vignettes.
+	- '%>%' is the 'pipe' operator which should be read as 'then'.
+	It takes the input on the lhs of the operator and uses it as the first argument for the fuction on the rhs of the operator. x %>% f(y) functions as f(x,y) 
+
+- Read https://www.ebi.ac.uk/gxa/FAQ.html and Patcher2010 and see that we want to use either RPKM or TPM (which is RPKM for a gene scaled by the sum of all RPKM values)
+- I don't believe the data in the R object are quantile normalized 
+Description of MTAB experiment says 
+> "(FPKMs) are calculated from the raw counts by iRAP. These are averaged for each set of technical replicates, and then quantile normalized within each set of biological replicates using limma. Finally, they are averaged for all biological replicates (if any)"
+
+## Load R Libraries
+See file understanding.summarized.experiment.Rmd to set up libraries for loading
+
+```{r}
+#print(.libPaths())
+#library(doParallel)
+library(SummarizedExperiment)
+#library(plyr)  ## Range of commands including manipulating datasets ddply()
+library(dplyr)  ## for processing datasets dply()
+library(biobroom) ## extends tidyr to RSE objects by extending 'broom' package.
+options(biobroom.return = "data.frame") ## avoid warning about tbl_df
+## see broom documentation
+## functions generated are augment, tidy, and glance## vignette("introduction", package = "dplyr")
+
+browseVignettes(package = "dplyr")  #displays in firefox
+## Need to figure out how to get them to display in emacs
+## For now try using M-x ess-display-vignettes
+
+
+```
+
+## Set up Parallelization
+```{r}
+cl <- makeCluster(8) # 
+registerDoParallel(cl)
+```
+
+
+
+## Work with C. elegans data
+
+### Description of RSE object
+- Genes are in rows, experimental data in columns
+- colnames(): SSRR00XXX are the specific experimental data ID for WormBase
+- colData() gives one access to meta data for each column, such as stage, tissue
+"Sample meta-data describing the samples can be accessed using colData(), and is a DataFrame that can store any number of descriptive columns for each sample row."
+- technical_replicate_group seems to be a factor that allows one to group replicates together
+
+### Import and Examine Data
+
+```{r}
+# Experimental data (counts) in a complex object.
+load("E-MTAB-2812-atlasExperimentSummary.Rdata")
+
+
+rseData <- experimentSummary$rnaseq
+## evaluating rseData
+##  $ rseData
+## reveals datamatrix contains 'counts'
+## These are presumably RPKM values that have not been quantile normalized
+
+colData(rseData)
+rowData(rseData)
+
+metadata(rseData)
+```
+
+#### Define some variables with information on the data
+```{r}
+
+experimentIDs  <- colnames(rseData)
+
+## Work with experimentalist's IDs not R's internal factor indexes
+
+
+
+```
+
+
+### Tidy Data
+```{r}
+tidyData <- as_tibble(tidy(rseData, addPheno=TRUE, assay="counts"))
+
+
+## Try calculating means for a gene within a technical_replicate_group
+## groups are meta-data associated with td
+## values are integers which is retained when using summarize
+## Thus, rename that column
+td <- tidyData %>%
+    rename(int_value=value, replicate = technical_replicate_group,) %>%
+    filter(organism_part=="organism") %>%
+    group_by(replicate, gene) %>%
+    mutate(value = as.double(int_value)) %>%
+    select(-c(int_value))  ## perhaps drop other columns?
+
+
+## There are 96 categories (ignoring "Comment[]"), but only 92 (ignoring "Comment[]") appear in the database.
+techRepLevels <- unique(td$replicate)
+
+## Approach using levels which includes "Comment[]" 
+# techRepLevels <- unique(levels(rseData$technical_replicate_group))
+### Filter out "Comment[]" by filtering entries with more than three caracters.
+# techRepLevels <- techRepLevels[sapply(techRepLevels, nchar) <3]
+
+dataRawByTechRep <- list()
+
+for(techRep in techRepLevels){
+    
+    dataRawByTechRep[[techRep]] <- group_by(td[ td$replicate==techRep, ], gene) %>% select(-c(AtlasAssayGroup, sample))
+}
+
+
+
+## make things easier and faster by creating a subset of data
+tmp <- dataRawByTechRep[[2]] 
+
+tmpGenes  <- tmp$gene[1:100]
+
+tmpData <- tmp %>% filter(gene %in% tmpGenes)
+
+##
+rmtd <- tmpData %>% group_by() %>%
+    summarise(across(value, c(mean = mean, sd = sd, reps = length)) )
+
+## Try to keep all of the other data except the value column
+rmtd <- summarise(tmpRawData, across(value, list(mean = mean, sd = sd, reps = length)))
+rmtd2 <- summarise(tmpRawData, across(value, list(mean = mean, sd = sd, reps = length)), .groups="keep")
+
+
+```
+
+
+# Junk!
+
+```{r}
+## Try to keep all of the other data except the value column
+rmtd <- summarise(tmpRawData, across(value, list(mean = mean, sd = sd, reps = length)))
+rmtd2 <- summarise(tmpRawData, across(value, list(mean = mean, sd = sd, reps = length)), .groups="keep")
+
+keepCols <- colnames(td)[colnames(tidyData)!="value"]
+## Command below only returns technical_replicate_group, gene, mean, sd, ...
+## std  <- summarize(td, mean=mean(value), sd=sd(value), length(value) )
+##
+## std  <- summarize(td, c(keepCols, mean=mean(value), sd=sd(value), length(value) ))
+
+
+##ddply is very slow
+repMeans  <- ddply(td, .(replicate, gene), summarize, mean=mean(value), sd=sd(value), length(value), .progress = "text" )#  .parallel=TRUE, .paropts=NULL)
+# t2Data <- tidy(rseData, addPheno=FALSE, assay="counts")
+## Create a list where each lifestage has its own element in list
+## Each element will be a dataframe with the raw data for a technical replicate
+
+
+
+
+glance(tidyData)
+
+
+
+
+
+
+# 'gene' is really WormBase ID (WBID)
+meanData  <- ddply(.data=tmpRawData[1:1000,], .variables="gene", .func=mean("value"))
+subTmpRawData <- tmpRawData[1:5000,];
+tmpData  <- ddply(.data=tmpRawData, .variables=.(gene), .func=summarize, mean=mean(value), sd=sd(value), gmean= exp(mean(log(value))), gsd= exp(sd(log(value)) ) )
+## verify there's one entry per WBID
+length(unique(names(meanData))) == length((names(meanData)))
+
+
+## Create a list where each lifestage has its own element in list
+## Each element will be a dataframe with geneID, lifestage, nReplicates, mean, sd, gmean, gsd
+dataByLifeStage <- list()
+
+## Average and SD across bio rep
+
+
+
+factors(tidydata
+summary(tidydata)
+
+attributes(tidydata)
+colnames(tidydata)
+
+## Check if "developmental_stage" and "technical_replicate_group" are synonyms
+tmp <- fdf[ , c("developmental_stage", "technical_replicate_group") ]
+
+## They are not
+utmp <- unique(tmp)
+```
+
+### Basic access
+
+
+```{r}
+## load data object experimentSummary
+## Note the real data seems to be embedded within this "SimpleList" object
+load("E-MTAB-2812-atlasExperimentSummary.Rdata")
+ranges(experimentSummary$rnaseq)
+
+rse  <- experimentSummary$rnaseq
+
+## Despite being a RangedSummarizedExperiment (RSE) object, the rowRanges info doesn't seem to be used
+rowRanges(rse)
+
+## Following lines taken from RSE help page
+dim(rse)
+assayNames(rse)
+head(assay(rse))
+rowData(rse)
+## colData() returns the information about the samples which are stored in a DataFrame
+colData(rse)
+
+unique(rse[[1,]])
+
+## for the RSE the column names are the experiment IDs 
+colnames(rse)
+
+# here we get the names of the columns in the data frame
+colnames(colData(frse))
+
+## create a filtereD version of rse by subsetting it
+## Filter out males and try to predict their expression afterwards using residuals
+
+## Help pages for base::subset suggests not using it within scripts but use [] instead
+## This doesn't seem to work properly
+trse <- rse[ (rse$sex == "hermaphrodite" & rse$organism_part == "organism" & rse$genotype =="wild type genotype"), ]  
+
+
+
+## Use BiocGenerics::subset
+## drop argument doesn't seem to work
+## Dauer data is 3 stages and have a temperature dependent phenotype
+frse  <-  subset(rse, select = (sex == "hermaphrodite" & organism_part == "organism" & (genotype == "wild type genotype" |  genotype == "daf-2(e1370)III.")  ) )
+unique(frse$sex)
+unique(frse$age)
+unique(frse$organism_part)
+unique(frse$genotype)
+unique(frse$developmental_stage)
+unique(frse$technical_replicate_group)
+
+tmp <- unique(cbind(frse$age, frse$developmental_stage))
+
+```
+
+```r
+## try to get data frame of counts
+## "The data are accessed using the ‘assays’ function"
+## This is not correct
+tmp  <- rowData(frse)
+
+## Here I seem to be able to get one column of data
+assay(frse[,1])
+
+# Here I create a data frame from the filtered data
+fdf  <- assay(frse)
+attributes(fdf)
+dim(fdf)
+summary(fdf)
+
+fdf[1:10,1:10]
+
+```
+
+So what I need to do next is create the df but include all of the metadata in additional columns
+I then want to make the data tidy
+
+### Tidy Data
+
+```r
+library(tidyr)  #this doesn't provide tidy for RSE
+## install biobroom from github if it's not installed
+if (!require(biobroom, quietly=TRUE)) devtools::install_github("StoreyLab/biobroom")
+
+library(biobroom)
+options(biobroom.return = "data.frame") ## avoid warning about tbl_df
+fdf  <- tidy(frse, addPheno=TRUE, assay="counts")
+summary(fdf)
+
+## Check if "developmental_stage" and "technical_replicate_group" are synonyms
+tmp <- fdf[ , c("developmental_stage", "technical_replicate_group") ]
+
+## They are not
+utmp <- unique(tmp)
+
+```
+
+
+### Error in Variables Models
+#### See labbook.md for 02 Jul 2020
