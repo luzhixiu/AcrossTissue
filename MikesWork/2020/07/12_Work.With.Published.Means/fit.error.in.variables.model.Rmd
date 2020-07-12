@@ -1,0 +1,42 @@
+---
+title: "Fit Error in Variables Regression Model to ROC and E-MTAB data for C.elegans."
+author: "Michael A. Gilchrist"
+date: "12 Jul 2020"
+output: html_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. 
+
+
+# Load Libraries
+```{r}
+library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(eivtools)
+```
+
+
+
+
+# Modeling error in RNA Seq Data
+If the underlying distribution is 
+	- poisson, then Var=Rate so W = 1/count or 1/(count + k)
+
+
+## Fit Using *eivtools* 
+```{r}
+library(eivtools)
+
+cData  <-bind_cols(phiData, 
+eivreg(
+
+```
+

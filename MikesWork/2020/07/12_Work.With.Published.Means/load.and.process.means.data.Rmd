@@ -1,33 +1,27 @@
+---
+title: "Load and Process Dat from E-MTAB files and ROC"
+author: "Michael A. Gilchrist"
+date: "12 Jul 2020"
+output: html_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. 
+
+# Purpose
+The purpose of this document is to process empirical measurements of mRNA abundances using mRNA-seq technologies.
+Data is in 
+These measurements are based on multiple measurements.
+The values are generally the means of the counts.
+Unfortunately we don't know anything about the sd of the values used to calculate the mean counts.
+
 # Analysis
 ## Plan
 - Load standardized means
 - Fit model using weights for counts inversely related to mean value 
 	- Poisson Like: W = 1/(mean +1) since $E(X) = \lambda = \var(X)$
-# Install packages
-```{r}
-if (!requireNamespace("readr", quietly = TRUE))
-    install.packages("readr")
-
-if (!requireNamespace("forcats", quietly = TRUE))
-    install.packages("forcats")
-## Distributions Hermite Polynomial Approximation: used to calculate moments for truncated distributions. using truncatedNormalMoment
-## We actually have censored data, where values exist but their exact value is unknown beyond the fact they are less than some threshold, not truncated data, which ignores data outside of a range.
-##if (!requireNamespace("hpa", quietly = TRUE))
-##    install.packages("hpa")
-if (!requireNamespace("EnvStats", quietly = TRUE))
-    install.packages("EnvStats")
-
-
-## eivreg
-if (!requireNamespace("eivtools", quietly = TRUE))
-    install.packages("eivtools")
-
-if (!requireNamespace("Biostrings", quietly = TRUE))
-    BiocManager::install("Biostrings", lib="/home/mikeg/R/x86_64-pc-linux-gnu-library/3.6")
-
-
-
-```
 
 # Load Libraries
 ```{r}
@@ -38,89 +32,13 @@ library(readr)
 library(dplyr)
 library(stringr)
 library(forcats)
-library(EnvStats)
+library(ggplot2)
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+
 ```
 
 # Load and Shape Data
-
-## E-MTAB
-### Load Data
-```{r}
-emtabFile <- "E-MTAB-2812-query-results.tpms.tsv"
-flatData  <- readr::read_tsv(emtabFile, skip=4) %>%
-    dplyr::rename(WBID = `Gene ID`, geneName=`Gene Name` ) ## WBID is the WormBaseID
-
-## use pivot_longer command (not gather which is depricated)
-tData <- flatData %>% pivot_longer(-c(WBID, geneName), names_to = "long_description", values_to = "count")
-
-## Now separate entry in descriptor column into separate column entries and filter out tissue specific data
-sData  <- separate(tData, long_description, into=c("sex", "tissue", "stage"), sep=", ") %>% filter(tissue=="organism") %>%
-#    mutate_if(is.character,as.factor)  %>% # convert char columns to factors
-    replace_na(list(count = 0)) # replace NAs with 0.
-## Before doing so the min value in the tibble was 0.1
-
-creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
-comment(sData) <- paste0("Data from ", emtabFile, "in tidy format.\n", creationInfo) 
-```
-
-### Create stageCounts 
-- Data includes a new set of measurements for sex='hermaphrodite' stage='embryo Ce'.
-This data is created from the median values of all sex = 'hermaphrodite' and stage = '* embryo Ce' data
-```{r}
-## Get hermphrodite embryo stage names (male, 'embryo Ce' lacks a space at the start)
-embryoStageNames  <- unique(sData$stage[grepl(' embryo Ce', sData$stage )])
-embryoStageCounts  <-  filter(sData, stage %in% embryoStageNames) %>% group_by(WBID)
-
-combinedEmbryoStageCounts <- unique(embryoStageCounts %>% summarise(geneName, sex, tissue, stage="embryo Ce", median=median(count)))
-
-nonEmbryoStageCounts <- filter(sData, !(stage %in% embryoStageNames)) 
-
-stageCounts <- bind_rows(combinedEmbryoStageCounts, nonEmbryoStageCounts)
-## 
-## Make things simple and focus on just the 'main' lifestage measurements
-## note that the stage "embryo Ce" is specific to sex = male
-## Thus need to combine embryo measurements some how
-## Try using median of stages
-
-```
-
-### Create Counts for mainLifeStages 
-```{r}
-## This will include both sex = c('male', 'hermaphrodite')
-mainLifeStages <- c("embryo Ce", "L1 larvae Ce", "L2 larvae Ce", "L3 larvae Ce", "L4 larvae Ce", "adult Ce", "dauer larvae Ce", "post dauer stage Ce")
-comment(mainLifeStages)=paste0("List of main lifestages to use in regression.\n", creationInfo)
-
-tidyFullLifeStageData <- filter(sData, (stage %in% mainLifeStages)) ## & sex == "hermaphrodite")) 
-comment(tidyFullLifeStageData) <- c("RNASeq counts for each of the\n\t- hermaphrodite non-embryo lifestages: L1 larvae Ce, L2 larvae Ce, ... adult\n\t- male lifestages\n\t- median of the very specific 'hermphrodite,  *embryo Ce' which are 'hermphrodite, embryo Ce.\nAll data for tissue == organism.\nCounts from E-MTAB-2812-query-results.tpms.tsv.", creationInfo ) 
-
-
-###
-tidyFullLifeStageDataMoments <- tidyFullLifeStageData %>% group_by(stage)%>% summarize(stage_sd = sd(count), stage_logSd = sd(log(count, 10)) )
-
-
-summary(tidyFullLifeStageData$count)
-## hist(tidyFullLifeStageData$count)
-hist(log(tidyFullLifeStageData$count))
-
-## Export data using 'geneName' name or WormBaseID
-WormBaseIDandGeneNameData <- unique(select(tidyFullLifeStageData, c(WBID, geneName)))
-comment(WormBaseIDandGeneNameData) <- paste("Mapping between WormBase IDs and geneName in FASTA file")
-tidyGeneNameLifeStageData <- select(tidyFullLifeStageData, -WBID)
-tidyWBIDLifeStageData <- select(tidyFullLifeStageData, -geneName)
-
-## Export values
-## Don't use write_csv because that only works with dataframes,not tibbles
-## write.csv converts the tibble to a dataframe
-save(tidyFullLifeStageData, mainLifeStages, tidyGeneNameLifeStageData, tidyWBIDLifeStageData, file = "processed.E-MTAB.data.Rdata")
-```
-### Estimate SD of log(counts) from E-MTAB Data taking into account data censoring 
-- The lowest count value is 0.1, thus treat all 0 counts (previous empty cells) as coming from a censored distribution at mRNA < 0.1 counts.
-- An example of such an approach can be found [here](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/).
-- An alternative distribution is the 'Zero Modified Log-Normal' which assumes a mixture distribution which is a LogN with an additional probability mass at 0.
-- Zero Modified Log-Normal (ZMLN)  is included in the [EnvStats](http://finzi.psych.upenn.edu/R/library/EnvStats/html/ZeroModifiedLognormal.html) package.
-  - This package generates CI for the mean, but not the SD.
-  Could bootstrap data to generate CI for the SD
-- "One way to try to assess whether a zero-modified lognormal (delta), zero-modified normal, censored normal, or censored lognormal is the best model for the data is to construct both censored and detects-only probability plots (see qqPlotCensored)" - EnvStats page above
 
 ## ROC 
 
@@ -136,7 +54,7 @@ Turns out they have a width which is not a multiple of 3.
 ```{r}
 ## Load original FASTA file
 ## Using Biostrings function which is not a standard df
-unfilteredSeqData <- readDNAStringSet("c_elegan.fasta")
+unfilteredSeqData <- readDNAStringSet("Input/c_elegan.fasta")
 
 ## names are really long descriptions.
 ## NEed to extract relevant part
@@ -146,7 +64,7 @@ unfilteredSeqGeneNames <- sub(".*\\[gene=([^]]+).*", "\\1", unfilteredSeqDesc)
 ##seqGeneWidth<- width(seqData) %>% as_tibble()
 
 ## use geneName for descript
-names(unfilteredSeqData) <- unfilteredSeqGeneNames
+#names(unfilteredSeqData) <- unfilteredSeqGeneNames
 
 ## verify there's a match for each entry
 if(sum(is.na(unfilteredSeqGeneNames)) ==0) print("Every entry matches")
@@ -166,9 +84,9 @@ properLengthIsoformsFlag <- ((unfilteredFastaInfo$length %% 3) == 0)
 ## Results indicate there are none. Good!
 ## filter(unfilteredFastaInfo, grepl("MtDNA", info) )
 
+## note seqData uses 'names' while fastaInfo uses 'info'
 seqData <- unfilteredSeqData[properLengthIsoformsFlag, ]
 fastaInfo <- unfilteredFastaInfo[properLengthIsoformsFlag, ]
-
 ```
 
 
@@ -178,60 +96,70 @@ fastaInfo <- unfilteredFastaInfo[properLengthIsoformsFlag, ]
 ```{r}
 ## detailed information on phi: posterior mean, posterior mean of log10(phi), etc
 ## StdError really StdDev of posterior
-unfilteredPhiPosteriorInfo <- readr::read_csv("phi.posterior.unlabeled.csv") %>% dplyr::rename(phi = PHI, logPhi = log10.PHI, sd = Std.Error, logSd = log10.Std.Error)
+unfilteredPhiPosteriorInfo <- readr::read_csv("Input/phi.posterior.unlabeled.csv") %>% dplyr::rename(phi = PHI, logPhi = log10.PHI, sd = Std.Error, logSd = log10.Std.Error)
 
 ## Not yet filtered for genes that have anomolous lengths (i.e. length mod 3 !=0)
 unfilteredPhiData  <- as_tibble(bind_cols(geneName=unfilteredSeqGeneNames, unfilteredPhiPosteriorInfo, length=unfilteredSeqLength))
-write.csv(unfilteredPhiData, file="labeled.unfiltered.phi.data.csv")
+write.csv(unfilteredPhiData, file="Output/labeled.unfiltered.phi.data.csv", quote=FALSE, row.names=FALSE)
 
 # rm(unfilteredPhiPosteriorInfo)
 ## 
 dim(unfilteredPhiData)
-plot(unfilteredPhiData$phi, unfilteredPhiData$sd)
+plot(unfilteredPhiData$phi, unfilteredPhiData$sd,
+     main="Plot Includes 'anomolous' isoforms",
+     sub = "anomolous = gene lengths in nts that are not multiples of 3"
+     )
 phiData <- unfilteredPhiData[properLengthIsoformsFlag, ]
 
 ## verify you've filtered correctly
-plot(phiData$phi, phiData$sd)
+plot(phiData$phi, phiData$sd, main="Plot excludes 'anomolous' isoforms",
+     sub = "anomolous = gene lengths in nts that are not multiples of 3"
+     )
 
 anomolousLengthIsoformsFlag <- !properLengthIsoformsFlag
 anomolousGeneInfo <- unfilteredFastaInfo[anomolousLengthIsoformsFlag, ]
 anomolousPhiData  <-unfilteredPhiData[anomolousLengthIsoformsFlag, ]
 plot(anomolousPhiData$phi, anomolousPhiData$sd, title="Isoforms Whose Lengths are Not Multiples of Three")
-write.csv(anomolousGeneInfo, "./anomolousGeneInfo.csv")
-
-
+write.csv(anomolousGeneInfo, "Output/anomolousGeneInfo.csv", quote=FALSE, row.names=FALSE)
 
 
 ## Problem: Isoforms of the same gene exist in the fasta file (and thus phi estimates), but are not part of the E-MTAB measurements which are indexed the gene, not isoform of a gene, level.
-## Solution: Combine separate estimates using median values of phi
+## Solution: Combine separate estimates using mean or median values of phi
 
-summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_logSd=median(logSd),  n_isoforms = length(phi) )
+summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(mean_phi = mean(phi), mean_sd = mean(sd), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_logSd=mean(logSd), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_logSd=median(logSd), n_isoforms = length(phi) )
+
 comment(summaryStatsPhiData) <- "summary stats for means and sd of phi for a geneName's multiple isoforms which are summarized in n_isoforms"
 dim(summaryStatsPhiData)
 
-par(mfrow=c(2,2))
-plot(summaryStatsPhiData$median_phi, summaryStatsPhiData$median_sd)
-plot(summaryStatsPhiData$median_length, summaryStatsPhiData$median_sd, log="xy")
-plot(summaryStatsPhiData$median_phi, summaryStatsPhiData$median_length, log="xy")
-## Create histogram of short genes
-tmp <- summaryStatsPhiData$median_length[ summaryStatsPhiData$median_length < 400]
-hist(tmp, xlim=c(0, max(tmp)), main="Histogram of Gene Lengths < 400 aa", xlab="Length" )
+
+write.csv(summaryStatsPhiData, file="Output/summaryStatsPhiData.csv", quote=FALSE, row.names=FALSE)
+
+save(phiData, summaryStatsPhiData, seqData, file = "Output/processed.ROC.data.Rdata") 
+
+
 dev.off()
+
+par(mfrow=c(2,2))
+plot(summaryStatsPhiData$mean_phi, summaryStatsPhiData$mean_sd)
+mtext("Summary Statistics of Phi Estimates", side = 3, line = -21, outer = TRUE)
+plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_sd, log="xy")
+plot(summaryStatsPhiData$mean_phi, summaryStatsPhiData$mean_length, log="xy")
+## Create histogram of short genes
+tmp <- summaryStatsPhiData$mean_length[ summaryStatsPhiData$mean_length < 400]
+hist(tmp, xlim=c(0, max(tmp)), main="Histogram of Gene Lengths < 400 aa", xlab="Length" )
+
+
 
 ## log metrics
 par(mfrow=c(2,2))
-plot(summaryStatsPhiData$median_logPhi, summaryStatsPhiData$median_logSd)
-plot(summaryStatsPhiData$median_length, summaryStatsPhiData$median_logSd, log="x")
-plot(summaryStatsPhiData$median_logPhi, summaryStatsPhiData$median_length, log="y")
+plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_logSd)
+mtext("Summary Statistics of log(Phi) Estimates", side = 3, line = -21, outer = TRUE)
+plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_logSd, log="x")
+plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_length, log="y")
 ## Create histogram of short genes
-tmp <- summaryStatsPhiData$median_length[ summaryStatsPhiData$median_length < 400]
+tmp <- summaryStatsPhiData$mean_length[ summaryStatsPhiData$mean_length < 400]
 hist(tmp, xlim=c(0, max(tmp)), main="Histogram of Gene Lengths < 400 aa", xlab="Length" )
-dev.off()
 
-
-write.csv(summaryStatsPhiData, file="summaryStatsPhiData.csv")
-
-save(phiData, summaryStatsPhiData, seqData, file = "processed.ROC.data.Rdata") 
 ```
 
 
@@ -240,7 +168,7 @@ save(phiData, summaryStatsPhiData, seqData, file = "processed.ROC.data.Rdata")
 ```{r eval=FALSE}
 
 ## NOTE: rocNames is corrupt.  It has replaced some gene names with date formats (e.g. apr-1 has been converted to 1-Apr
-rocNamesBroken <- read_csv("phi.mean.by.names.csv", col_names = c("geneName","phi2") )
+rocNamesBroken <- read_csv("Input/lu.phi.mean.by.names.csv", col_names = c("geneName","phi2") )
 rocNamesBroken[rocNamesBroken$geneName=='1-Apr',]
 ## THere are 17 corrupted names
 length(unfilteredSeqGeneNames) - sum(rocNamesBroken==unfilteredSeqGeneNames)
@@ -255,47 +183,135 @@ plot(phiBrokenDataCheck$phi2, phiDataBrokenCheck$phi)
 ### Examine Anomolous Genes
 - Originally observed as cluster of genes with phi~1 and elevated SDs
 - Upon examination we see they are actually genes with n mod 3 !=0.
-- Don't need to evaluate this code any more
+- Don't need to evaluate this code any more as of 12 Jul 2020
 ```{r eval=FALSE}
 length(anomolousGeneNames$geneName)
 length(unique(anomolousGeneNames$geneName))
 anomolousInfo <- filter(unfilteredFastaInfo, geneName %in% anomolousGeneNames$geneName)
 regularInfo <- filter(unfilteredFastaInfo, !(geneName %in% anomolousGeneNames$geneName))
-
 ```
 
-# Modeling error in RNA Seq Data
-If the underlying distribution is 
-	- poisson, then Var=Rate so W = 1/count or 1/(count + k)
 
-## Combine empirical and ROC data
+## E-MTAB
+### Load Data
 ```{r}
+emtabFile <- "Input/E-MTAB-2812-query-results.tpms.tsv"
+flatData  <- readr::read_tsv(emtabFile, skip=4) %>%
+    dplyr::rename(WBID = `Gene ID`, geneName=`Gene Name` ) ## WBID is the WormBaseID
 
-## Rename phi columns and add 'stage'
-tidyFilteredAndWeightedPhiData <- summaryStatsPhiData  %>%
-    mutate(count=median_phi, weight=1/(sd_phi/mean(sd_phi))^2, stage="phi") %>%
-    select(-c(n_isoforms, sd_phi, median_phi))
+## use pivot_longer command (not gather which is depricated)
+tmpData <- flatData %>% pivot_longer(-c(WBID, geneName), names_to = "long_description", values_to = "count")
 
 
-## Calculate weights for empirical data
+## Now separate entry in descriptor column into separate column entries and filter out tissue specific data and genes that are not in the fasta file
+tmpFastaGeneName <- unique(fastaInfo$geneName)
+countData  <- separate(tmpData, long_description, into=c("sex", "tissue", "stage"), sep=", ") %>% filter(tissue=="organism") %>%
+    filter(geneName %in% tmpFastaGeneName) %>%
+    replace_na(list(count = 0)) # replace NAs with 0.
+## Before doing so the min value in the tibble was 0.1
 
+comment(countData) <- paste0("Data from ", emtabFile, "in tidy format. Empty cells filled with '0', genes not appearing in c_elegans.fasta have been removed out\n", creationInfo) 
+```
+
+### Create stageCounts 
+- Data includes a new set of measurements for sex='hermaphrodite' stage='embryo Ce'.
+This data is created from the mean values of all sex = 'hermaphrodite' and stage = '* embryo Ce' data
+```{r}
+## Get hermphrodite embryo stage names
+## NB: male, 'embryo Ce' lacks a space at the start
+embryoStageName  <- unique(countData$stage[grepl(' embryo Ce', countData$stage )])
+
+separateEmbryoStageCount  <-  filter(countData, stage %in% embryoStageName) 
+
+## 
+## Make things simple and focus on just the 'main' lifestage measurements
+## note that the stage "embryo Ce" is specific to sex = male
+## Thus need to combine embryo measurements some how
+## 
+embryoStageCount <- separateEmbryoStageCount %>%
+ group_by(WBID) %>%
+    summarise(geneName, sex, tissue, stage="embryo Ce", count =mean(count), .groups="drop") %>%
+    unique()
+
+
+embryoStageCount <- select(tmpEmbryoStageCounts, -c(mean, sd, tissue) ) %>% group_by()
+
+nonEmbryoStageCounts <- filter(countData, !(stage %in% embryoStageNames)) %>% select(-tissue)
+
+stageCounts <- bind_rows(combinedEmbryoStageCounts, nonEmbryoStageCounts)
+comment(stageCounts) <-  paste0("Data from ", emtabFile, "in tidy format. Empty cells filled with '0'\n", "separate  stages for embryonic hermaphrodites have been combined using median(counts) for a WBID across embryonic stages\n", creationInfo) 
+```
+
+### Plot Hermaphrodite Embryo Data
+```{r}
+ ## Be sure to use count = func(count) last in summarise().
+ ## Otherwise it will redefine count to a single value which will screw up the other functions
+ ## Use mean() rather than median for summarizing count
+ ## It seems less sensitive to 0 values
+embryoStageCountMoments <- separateEmbryoStageCount %>%
+    group_by(WBID) %>%
+    summarise(mean=mean(count), inverseMean = 1/mean(count), median=median(count), sd=sd(count), n = length(count), min(count), max(count), .groups="drop") %>% unique()
+
+embryoStageCountMoments %>%
+    #filter(mean > 1) %>%
+    ggplot() + geom_point(aes(mean, sd^2)) +
+    scale_x_log10() +
+    scale_y_log10() +
+    labs(title="Summary Stats of Hermaphrodite Embryo Stages",
+         x="mean", y="variance")
+
+print("Data suggests log(var) = c log(mean) across biological replicates")
+```
+
+### Create Counts for mainLifeStages 
+```{r}
+## This will include both sex = c('male', 'hermaphrodite')
+lifeStages <- c("embryo Ce", "L1 larvae Ce", "L2 larvae Ce", "L3 larvae Ce", "L4 larvae Ce", "adult Ce", "dauer larvae Ce", "post dauer stage Ce")
+comment(lifeStages)=paste0("List of main lifestages to use in regression.\n", creationInfo)
+
+## Note that 'count' are standardized means of biological and technical replicates
+## 'organism' scale data for different lifestages
+## Includes data for 'sex' =  male and hermphrodite
+lifeStageCount <- filter(countData, (stage %in% lifeStages)) 
+comment(lifeStageCount) <- c("RNASeq counts for each of the\n\t- hermaphrodite non-embryo lifestages: L1 larvae Ce, L2 larvae Ce, ... adult\n\t- male lifestages\n\t- mean of the very specific 'hermphrodite,  *embryo Ce' which are 'hermphrodite, embryo Ce.\nAll data for tissue == organism.\nCounts from E-MTAB-2812-query-results.tpms.tsv.", creationInfo ) 
+
+
+lifeStageCountMoments <- lifeStageCount %>% group_by(stage)%>% summarize(stage_sd = sd(count), stage_logSd = sd(log(count, 10)) )
+
+
+summary(lifeStageCount$count)
+## hist(lifeStageCount$count)
+hist(log(lifeStageCount$count))
+
+#tidyGeneNameLifeStageStdCounts <- select(lifeStageCount, -WBID)
+#tidyWBIDLifeStageStdCounts <- select(lifeStageCount, -geneName)
+
+## Export values
+## Don't use write_csv because that only works with dataframes,not tibbles
+## write.csv converts the tibble to a dataframe
+save(lifeStageCount, lifeStages, file = "Output/processed.E-MTAB.data.Rdata")
+```
+
+```{r}
+## Export data using 'geneName' name or WormBaseID
+GeneNameAndWormBaseID <- unique(select(lifeStageCount, c(geneName, WBID)))
+comment(GeneNameAndWormBaseID) <- paste("Mapping between WormBase IDs and geneName in FASTA file")
+write.csv(GeneNameAndWormBaseID, file="Output/geneName.and.WBID.csv", quote=FALSE, row.names=FALSE)
+```
+
+
+## Combine empirical E-MTAB and ROC data
+```{r}
 ## Combine phi
-tidyFilteredAndWeightedLifeStageData <- tidyLifeStageData %>%
-    filter(geneName %in% standardizedPhiData$geneName) %>%
+
+tidyFilteredAndWeightedLifeStageStdCounts <- tidyLifeStageStdCounts %>%
+    filter(geneName %in% phiData$geneName) %>%
     mutate(weight=(1/(count+1)) ) ## x+1 poisson weighting
 
 
-tidyJoinedData <- bind_rows(tidyFilteredAndWeightedLifeStageData, tidyFilteredAndWeightedPhiData) %>%
+tidyJoinedData <- bind_rows(tidyFilteredAndWeightedLifeStageStdCounts, tidyFilteredAndWeightedPhiData) %>%
     mutate_if(is.character, as.factor)
 
 joinedData <- pivot_wider(tidyJoinedData, names_from=stage, values_from=c(count, weight)) 
-
-```
-## Fit Using *eivtools* 
-```{r}
-library(eivtools)
-
-cData  <-bind_cols(phiData, 
-eivreg(
 
 ```
