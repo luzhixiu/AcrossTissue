@@ -1,0 +1,312 @@
+# Analysis
+## Plan
+- Load standardized means
+- Fit model using weights for counts inversely related to mean value 
+	- Poisson Like: W = 1/(mean +1) since $E(X) = \lambda = \var(X)$
+# Install packages
+```{r}
+if (!requireNamespace("readr", quietly = TRUE))
+    install.packages("readr")
+
+if (!requireNamespace("forcats", quietly = TRUE))
+    install.packages("forcats")
+## Distributions Hermite Polynomial Approximation: used to calculate moments for truncated distributions. using truncatedNormalMoment
+## We actually have censored data, where values exist but their exact value is unknown beyond the fact they are less than some threshold, not truncated data, which ignores data outside of a range.
+##if (!requireNamespace("hpa", quietly = TRUE))
+##    install.packages("hpa")
+if (!requireNamespace("EnvStats", quietly = TRUE))
+    install.packages("EnvStats")
+
+
+## eivreg
+if (!requireNamespace("eivtools", quietly = TRUE))
+    install.packages("eivtools")
+
+if (!requireNamespace("Biostrings", quietly = TRUE))
+    BiocManager::install("Biostrings", lib="/home/mikeg/R/x86_64-pc-linux-gnu-library/3.6")
+
+
+
+```
+
+# Load Libraries
+```{r}
+library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(EnvStats)
+
+```
+
+# Load and Shape Data
+
+## E-MTAB
+### Load Data
+```{r}
+emtabFile <- "E-MTAB-2812-query-results.tpms.tsv"
+flatData  <- readr::read_tsv(emtabFile, skip=4) %>%
+    dplyr::rename(WBID = `Gene ID`, geneName=`Gene Name` ) ## WBID is the WormBaseID
+
+## use pivot_longer command (not gather which is depricated)
+tData <- flatData %>% pivot_longer(-c(WBID, geneName), names_to = "long_description", values_to = "count")
+
+## Now separate entry in descriptor column into separate column entries and filter out tissue specific data
+sData  <- separate(tData, long_description, into=c("sex", "tissue", "stage"), sep=", ") %>% filter(tissue=="organism") %>%
+#    mutate_if(is.character,as.factor)  %>% # convert char columns to factors
+    replace_na(list(count = 0)) # replace NAs with 0.
+                                        #Before doing so the min value in the tibble was 0.1
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+comment(sData) <- paste0("Data from ", emtabFile, "in tidy format.\n", creationInfo) 
+```
+
+### Create stageCounts 
+- Data includes a new set of measurements for sex='hermaphrodite' stage='embryo Ce'.
+This data is created from the median values of all sex = 'hermaphrodite' and stage = '* embry Ce' data
+```{r}
+## Get hermphrodite embryo stage names (male, 'embryo Ce' lacks a space at the start)
+embryoStageNames  <- levels(sData$stage)[grepl(' embryo Ce', levels(sData$stage) )]
+embryoStageCounts  <-  filter(sData, stage %in% embryoStageNames) %>% group_by(WBID)
+
+combinedEmbryoStageCounts <- unique(embryoStageCounts %>% summarise(geneName, sex, tissue, stage="embryo Ce", median=median(count)))
+
+nonEmbryoStageCounts <- filter(sData, !(stage %in% embryoStageNames)) 
+
+stageCounts <- bind_rows(combinedEmbryoStageCounts, nonEmbryoStageCounts)
+## 
+## Make things simple and focus on just the 'main' lifestage measurements
+## note that the stage "embryo Ce" is specific to sex = male
+## Thus need to combine embryo measurements some how
+## Try using median of stages
+
+```
+
+### Create Counts for mainLifeStages 
+```{r}
+## This will include both sex = c('male', 'hermaphrodite')
+mainLifeStages <- c("embryo Ce", "L1 larvae Ce", "L2 larvae Ce", "L3 larvae Ce", "L4 larvae Ce", "adult Ce", "dauer larvae Ce", "post dauer stage Ce")
+comment(mainLifeStages)=paste0("List of main lifestages to use in regression.\n", creationInfo)
+
+tidyFullLifeStageData <- filter(sData, (stage %in% mainLifeStages)) ## & sex == "hermaphrodite")) 
+comment(tidyFullLifeStageData) <- c("RNASeq counts for each of the\n\t- hermaphrodite non-embryo lifestages: L1 larvae Ce, L2 larvae Ce, ... adult\n\t- male lifestages\n\t- median of the very specific 'hermphrodite,  *embryo Ce' which are 'hermphrodite, embryo Ce.\nAll data for tissue == organism.\nCounts from E-MTAB-2812-query-results.tpms.tsv.", creationInfo ) 
+
+
+###
+tidyFullLifeStageDataMoments <- tidyFullLifeStageData %>% group_by(stage)%>% summarize(stage_sd = sd(count), stage_logSd = sd(log(count, 10)) )
+
+
+summary(tidyFullLifeStageData$count)
+hist(log(tidyFullLifeStageData$count))
+
+## Export data using 'geneName' name or WormBaseID
+WormBaseIDandGeneNameData <- select(tidyFullLifeStageData, c(WBID, geneName))
+comment(WormBaseIDandGeneNameData) <- paste("Mapping between WormBase IDs and geneName in FASTA file")
+tidyGeneNameLifeStageData <- select(tidyFullLifeStageData, -WBID)
+tidyWBIDLifeStageData <- select(tidyFullLifeStageData, -geneName)
+
+## Export values
+## Don't use write_csv because that only works with dataframes,not tibbles
+## write.csv converts the tibble to a dataframe
+## For now, just save as an uncompressed .Rdata
+save(tidyFullLifeStageData, mainLifeStages, tidyGeneNameLifeStageData, tidyWBIDLifeStageData, file = "processed.E-MTAB.data.Rdata")
+```
+### Estimate SD of log(counts) from E-MTAB Data taking into account data censoring 
+- The lowest count value is 0.1, thus treat all 0 counts (previous empty cells) as coming from a censored distribution at mRNA < 0.1 counts.
+- An example of such an approach can be found [here](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/).
+- An alternative distribution is the 'Zero Modified Log-Normal' which assumes a mixture distribution which is a LogN with an additional probability mass at 0.
+- Zero Modified Log-Normal (ZMLN)  is included in the [EnvStats](http://finzi.psych.upenn.edu/R/library/EnvStats/html/ZeroModifiedLognormal.html) package.
+  - This package generates CI for the mean, but not the SD.
+  Could bootstrap data to generate CI for the SD
+- "One way to try to assess whether a zero-modified lognormal (delta), zero-modified normal, censored normal, or censored lognormal is the best model for the data is to construct both censored and detects-only probability plots (see qqPlotCensored)" - EnvStats page above
+
+## ROC 
+
+### Get gene names
+
+
+#### Extract from FASTA file
+```{r}
+## Load original FASTA file
+## Using Biostrings function which is not a standard df
+seqData <- readDNAStringSet("c_elegan.fasta")
+
+## names are really long descriptions.
+## NEed to extract relevant part
+seqDesc  <- names(seqData)
+seqLength <- width(seqData)
+
+seqGeneNames <- sub(".*\\[gene=([^]]+).*", "\\1", seqDesc)
+##seqGeneWidth<- width(seqData) %>% as_tibble()
+
+fastaInfo <- tibble(info=names(seqData), geneName=seqGeneNames, length=as.double(seqLength))
+
+## use geneName for descript
+names(seqData) <- seqGeneNames
+
+## verify there's a match for each entry
+if(sum(is.na(seqGeneNames)) ==0) print("Every entry matches")
+
+## Verify that all 'names' are unique.
+if(length(seqGeneNames) != length(unique(seqGeneNames))) print("Some geneNames appear twice due to isoforms")
+
+```
+
+
+
+
+#### Import Phi Values from ROC Output
+```{r}
+## detailed information on phi: posterior mean, posterior mean of log10(phi), etc
+## StdError really StdDev of posterior
+phiPosteriorInfo <- readr::read_csv("phi.posterior.unlabeled.csv") %>% dplyr::rename(phi = PHI, logPhi = log10.PHI, sd = Std.Error, logSd = log10.Std.Error)
+
+phiData  <- as_tibble(bind_cols(geneName=seqGeneNames, phiPosteriorInfo)) #%>%
+#    mutate_if(is.character, as.factor)  # convert char columns to factors
+write.csv(phiData, file="labeled.phi.data.csv")
+
+## 
+dim(phiData)
+plot(phiData$phi, phiData$sd)  ## There are a bunch of anomolous genes that have a phi of 1 but an elevated sd relative to the rest of genes with that value
+## Turns out they have a width which is not a multiple of 3
+
+anomolousGenesNames <- (filter(fastaInfo, (length %% 3)!=0))$geneName
+anomolousGeneNames <- phiData %>% filter(geneName %in% anomolousGenesNames)
+
+write.csv(anomolousGeneNames, "./anomolousGeneNames.csv")
+
+
+## Plot phiData with anomolousGeneNames in magenta
+
+## verify you've filtered correctly
+filteredPhiData <- bind_cols(phiData, length=seqLength) %>% filter( !(geneName %in% anomolousGeneNamesNames) )
+plot(filteredPhiData$phi, filteredPhiData$sd)
+
+
+
+## Look at structure of data
+
+
+## There are 4 entries in the "phi.mean.by.names.csv" with the name "wwp-1" 
+## This is because the FASTA file contains 4 isoforms of this gene
+## Problem: there's only one WB Gene ID and, thus, only one measurement.
+## Solution: Combine separate estimates using median values of phi
+
+combinedPhiData  <- filteredPhiData %>% group_by(geneName) %>% summarize(median_phi = median(phi), median_sd = median(sd), median_length = mean(length), median_logPhi=median(logPhi), median_logSd=median(logSd),  isoforms = length(phi) )
+dim(combinedPhiData)
+
+par(mfrow=c(2,2))
+plot(combinedPhiData$median_phi, combinedPhiData$median_sd)
+plot(combinedPhiData$median_length, combinedPhiData$median_sd, log="xy")
+plot(combinedPhiData$median_phi, combinedPhiData$median_length, log="xy")
+## Create histogram of short genes
+tmp <- combinedPhiData$median_length[ combinedPhiData$median_length < 400]
+hist(tmp, xlim=c(0, max(tmp)) )
+
+## log metrics
+plot(combinedPhiData$median_logPhi, combinedPhiData$median_logSd)
+plot(combinedPhiData$median_length, combinedPhiData$median_logSd, log="x")
+plot(combinedPhiData$median_logPhi, combinedPhiData$median_length, log="y")
+## Create histogram of short genes
+tmp <- combinedPhiData$median_length[ combinedPhiData$median_length < 400]
+hist(tmp, xlim=c(0, max(tmp)) )
+
+
+write.csv(combinedPhiData, file="phi.data-filtered.means.sd.length")
+filteredCombinedPhiData <- combinedPhiData %>% filter( !(geneName %in% anomolousGeneNames$geneName))
+
+plot(filteredCombinedPhiData$median_phi, filteredCombinedPhiData$sd_phi)
+
+save(phiData, combinedPhiData, filteredCombinedPhiData, seqData, file = "processed.ROC.data.Rdata") 
+```
+
+
+#### Import Phi Values Using Lu's File -- BROKEN! NOT USED
+- Don't use Lu's file
+```{r eval=FALSE}
+
+## NOTE: rocNames is corrupt.  It has replaced some gene names with date formats (e.g. apr-1 has been converted to 1-Apr
+rocNamesBroken <- read_csv("phi.mean.by.names.csv", col_names = c("geneName","phi2") )
+rocNamesBroken[rocNamesBroken$geneName=='1-Apr',]
+## THere are 17 corrupted names
+length(seqGeneNames) - sum(rocNamesBroken==seqGeneNames)
+
+## Need to run 'Get estimates from ROC' code below to evaluate following line
+phiBrokenDataCheck  <- bind_cols(rocNamesBroken, phiPosteriorInfo)
+## Verify that phi values line up between the two datasets
+plot(phiBrokenDataCheck$phi2, phiDataBrokenCheck$phi)
+```
+
+
+### Examine Anomolous Genes (Those with phi~1 and elevated SDs)
+```{r}
+## 950 genes, only 15 of these are isoform variants
+length(anomolousGeneNames$geneName)
+length(unique(anomolousGeneNames$geneName))
+anomolousInfo <- filter(fastaInfo, geneName %in% anomolousGeneNames$geneName)
+regularInfo <- filter(fastaInfo, !(geneName %in% anomolousGeneNames$geneName))
+
+
+## Plot 2 histograms of length
+## Code cribbed from: https://www.dataanalytics.org.uk/plot-two-overlapping-histograms-on-one-chart-in-r/
+c1 <- rgb(173,216,230,max = 255, alpha = 80, names = "lt.blue")
+c2 <- rgb(255,192,203, max = 255, alpha = 80, names = "lt.pink")
+
+xmax <- 800
+A <- transform(anomolousInfo, n = pmin(length/3, 800) )
+#anomolousInfo %>% mutate(n = min(length, 3*800))# %>% mutate(n=n/3) %>% select(n)
+A <- base::as.vector(A)
+B <- base::as.vector(regularInfo  %>% mutate(n = min(length, 3*800)) %>% mutate(n=n/3) %>% select(n) )
+
+
+b <- min(c(A,B)) - 0.001 # Set the minimum for the breakpoints
+e <- max(c(A,B)) # Set the maximum for the breakpoints
+ax <- pretty(0:800, n = 16)# Make a neat vector for the breakpoints
+
+hgA <- hist(A, breaks = ax, plot = FALSE) # Save first histogram data
+hgB <- hist(B, breaks = ax,  plot = FALSE) # Save 2nd histogram data
+
+plot(hgA, col = c1) # Plot 1st histogram using a transparent color
+plot(hgB, col = c2, add = TRUE) # Add 2nd histogram using different color
+
+
+```
+
+# Modeling error in RNA Seq Data
+If the underlying distribution is 
+	- poisson, then Var=Rate so W = 1/count or 1/(count + k)
+
+## Combine empirical and ROC data
+```{r}
+
+## Rename phi columns and add 'stage'
+tidyFilteredAndWeightedPhiData <- filteredCombinedPhiData  %>%
+    mutate(count=median_phi, weight=1/(sd_phi/mean(sd_phi))^2, stage="phi") %>%
+    select(-c(isoforms, sd_phi, median_phi))
+
+
+## Calculate weights for empirical data
+
+## Combine phi
+tidyFilteredAndWeightedLifeStageData <- tidyLifeStageData %>%
+    filter(geneName %in% standardizedPhiData$geneName) %>%
+    mutate(weight=(1/(count+1)) ) ## x+1 poisson weighting
+
+
+tidyJoinedData <- bind_rows(tidyFilteredAndWeightedLifeStageData, tidyFilteredAndWeightedPhiData) %>%
+    mutate_if(is.character, as.factor)
+
+joinedData <- pivot_wider(tidyJoinedData, names_from=stage, values_from=c(count, weight)) 
+
+```
+## Fit Using *eivtools* 
+```{r}
+library(eivtools)
+
+cData  <-bind_cols(phiData, 
+eivreg(
+
+```
