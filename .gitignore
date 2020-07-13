@@ -1,2 +1,4 @@
 # ignore emac tmp files
 *.*~
+# ignore html files created by knitr
+*-exported_files/

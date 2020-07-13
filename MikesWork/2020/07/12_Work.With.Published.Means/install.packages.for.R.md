@@ -9,6 +9,8 @@ if (!requireNamespace("ggplot2", quietly = TRUE))
     install.packages("ggplot2")
 if (!requireNamespace("forcats", quietly = TRUE))
     install.packages("forcats")
+if (!requireNamespace("rmarkdown", quietly = TRUE))
+    install.packages("rmarkdown")
 ## Distributions Hermite Polynomial Approximation: used to calculate moments for truncated distributions. using truncatedNormalMoment
 ## We actually have censored data, where values exist but their exact value is unknown beyond the fact they are less than some threshold, not truncated data, which ignores data outside of a range.
 ##if (!requireNamespace("hpa", quietly = TRUE))

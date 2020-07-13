@@ -1,0 +1,9 @@
+# Notes for using ess
+
+## Polymode
+### Evaluate Chunks
+M-n v *
+- v polymode-eval-region-or-chunk
+- b polymode-eval-buffer
+- u or ↑ 	polymode-eval-buffer-from-beg-to-point
+- d or ↓ 	polymode-eval-buffer-from-point-to-end
