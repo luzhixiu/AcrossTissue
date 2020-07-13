@@ -28,7 +28,8 @@ library(dplyr)
 library(stringr)
 library(forcats)
 library(ggplot2)
-
+##library(hash)
+##library(purrr)
 creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
 
 ```
@@ -125,7 +126,6 @@ summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(mean_phi = 
 
 comment(summaryStatsPhiData) <- "summary stats for means and sd of phi for a geneName's multiple isoforms which are summarized in n_isoforms"
 dim(summaryStatsPhiData)
-
 
 write.csv(summaryStatsPhiData, file="Output/summaryStatsPhiData.csv", quote=FALSE, row.names=FALSE)
 
@@ -281,34 +281,47 @@ summary(lifeStageCount$count)
 ## hist(lifeStageCount$count)
 hist(log(lifeStageCount$count))
 
+geneNameAndWormBaseID <- unique(select(lifeStageCount, c(geneName, WBID)))
+comment(geneNameAndWormBaseID) <- paste("Mapping between WormBase IDs and geneName in FASTA file")
+
 #tidyGeneNameLifeStageStdCounts <- select(lifeStageCount, -WBID)
 #tidyWBIDLifeStageStdCounts <- select(lifeStageCount, -geneName)
 
 ## Export values
 ## Don't use write_csv because that only works with dataframes,not tibbles
 ## write.csv converts the tibble to a dataframe
-save(lifeStageCount, lifeStages, file = "Output/processed.E-MTAB.data.Rdata")
 ```
 
 ## Create database linking geneName and WormBaseID
-```{r}
+Evaluate these lines manually outside of knitr
+```{r eval=FALSE}
+save(lifeStageCount, lifeStages, file = "Output/processed.E-MTAB.data.Rdata")
 ## Export data using 'geneName' name or WormBaseID
-GeneNameAndWormBaseID <- unique(select(lifeStageCount, c(geneName, WBID)))
-comment(GeneNameAndWormBaseID) <- paste("Mapping between WormBase IDs and geneName in FASTA file")
-write.csv(GeneNameAndWormBaseID, file="Output/geneName.and.WBID.csv", quote=FALSE, row.names=FALSE)
+write.csv(geneNameAndWormBaseID, file="Output/geneName.and.WBID.csv", quote=FALSE, row.names=FALSE)
 ```
 
 
 ## Combine empirical E-MTAB and ROC data
 ```{r}
 ## Combine phi
+#tidyFilteredAndWeightedLifeStageStdCount <- tidyLifeStageStdCount %>%
+#    filter(geneName %in% phiData$geneName) %>%
+#    mutate(weight=(1/(count+1)) ) ## x+1 poisson weighting
 
-tidyFilteredAndWeightedLifeStageStdCount <- tidyLifeStageStdCount %>%
-    filter(geneName %in% phiData$geneName) %>%
-    mutate(weight=(1/(count+1)) ) ## x+1 poisson weighting
+
+phiNames <- summaryStatsPhiData$geneName
+
+namesToWBID <- lapply(phiNames, function(x) {index = which(geneNameAndWormBaseID$geneName == x); ifelse(x==0, NA, geneNameAndWormBaseID$WBID[index])})#, USE.NAMES=FALSE)
 
 
-tidyJoinedData <- bind_rows(tidyFilteredAndWeightedLifeStageStdCount, tidyFilteredAndWeightedPhiData) %>%
+unmatchedPhiNames <- phiNames[is.na(namesToWBID)]
+geneName <- geneNameAndWormBaseID$geneName
+WBID <- geneNameAndWormBaseID$WBID
+
+
+
+
+tidyJoinedData <- bind_rows(lifeStageCount, tidyFilteredAndWeightedPhiData) %>%
     mutate_if(is.character, as.factor)
 
 joinedData <- pivot_wider(tidyJoinedData, names_from=stage, values_from=c(count, weight)) 
