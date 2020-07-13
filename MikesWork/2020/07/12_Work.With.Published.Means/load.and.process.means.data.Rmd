@@ -264,7 +264,7 @@ print("Data suggests log(var) = c log(mean) across biological replicates")
 ```{r}
 ## This will include both sex = c('male', 'hermaphrodite')\
 ## Really only lacks 'newly molted young adult hermaphrodite Ce' 
-lifeStages <- c("embryo Ce", "L1 larvae Ce", "L2 larvae Ce", "L3 larvae Ce", "L4 larvae Ce", "adult Ce", "dauer larvae Ce", "post dauer stage Ce")
+lifeStages <- c("embryo Ce", "L1 larva Ce", "L2 larva Ce", "L3 larva Ce", "L4 larva Ce", "adult Ce", "dauer larva Ce", "post dauer stage Ce")
 comment(lifeStages)=paste0("List of main lifestages to use in regression.\n", creationInfo)
 
 ## Note that 'count' are standardized means of biological and technical replicates
@@ -274,7 +274,7 @@ lifeStageCount <- filter(stageCount, (stage %in% lifeStages))
 comment(lifeStageCount) <- c("RNASeq counts for each of the\n\t- hermaphrodite non-embryo lifestages: L1 larvae Ce, L2 larvae Ce, ... adult\n\t- male lifestages\n\t- mean of the very specific 'hermphrodite,  *embryo Ce' which are 'hermphrodite, embryo Ce.\nAll data for tissue == organism.\nCounts from E-MTAB-2812-query-results.tpms.tsv.", creationInfo ) 
 
 
-lifeStageCountMoments <- lifeStageCount %>% group_by(stage)%>% summarize(stage_sd = sd(count), stage_logSd = sd(log(count, 10)) )
+lifeStageCountMoments <- lifeStageCount %>% group_by(sex, stage)%>% summarize(stage_sd = sd(count), stage_logSd = sd(log(count, 10)) )
 
 
 summary(lifeStageCount$count)
