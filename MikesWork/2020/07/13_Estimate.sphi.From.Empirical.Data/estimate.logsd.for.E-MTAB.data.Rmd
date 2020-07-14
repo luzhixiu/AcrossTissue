@@ -19,6 +19,8 @@ library(readr)
 library(dplyr)
 library(stringr)
 library(forcats)
+library(ggplot2)
+library(maxLik)
 ##library(EnvStats) 
 ```
 
@@ -59,22 +61,82 @@ Originally these were blank cells.
 ## Exclude the embryo stage because it has a different threshold and was generated using a different pipeline (mine!)
 
 #filter data
-fData <- lifeStageCount %>% filter(sex=='hermaphrodite' & !(stage=="embryo Ce"))
+fData <- lifeStageCount %>% filter(sex=='hermaphrodite' & !(stage=="embryo Ce"))%>%
+    select(-c(sex, tissue))%>%
+    mutate(count=ifelse(count==0, NA, count))
 # get lower limit (which should be 0.1)
-threshold <- fData %>% filter(!(count==0)) %>% group_by(stage) %>% summarise( limit= min(count))
 
-threshold <- filter(threshold, limit==min(limit))
+hist(log(fData$count))
+#lifeStageCountCensored
+lscc <-
+    fData %>% group_by(stage) %>%
+    mutate(threshold = min(count, na.rm=TRUE)) %>%
+    group_by() %>%
+    mutate(count = ifelse(count < threshold, threshold, count)) #, threshold=NULL)
+
+hist(log(lscc$count))
+
+mean(fData$count, na.rm=TRUE)
+ggplot(lscc, aes(x = count)) +
+  geom_histogram(bins = 150) +
+  scale_x_continuous(trans = "log") +
+  xlab("log(count)")
+```
+## Estimate Parameters
+- `logLikCensoredFun` taken from [r-bloggers](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/)
+- Note that `maxLik` 'must have the parameter vector as the first argument'
+```{r}
+
+logLikCensoredFun <- function(param){
+    meanlog <- param[[1]]
+    sdlog <- param[[2]]
+    count <- param[[3]]
+    threshold <- param[[4]]
+   if(sdlog < 0) return(NA)
+    cdf <-
+        plnorm(threshold, meanlog = meanlog, sdlog = sdlog, log.p = TRUE); 
+    llik <-
+        sum(
+            ifelse(
+                is.na(count),
+                cdf,
+                dlnorm(count, meanlog = meanlog, sdlog = sdlog, log = TRUE))
+        )
+    print(paste0("LLik = ", llik, ", meanlog = ", meanlog, ", sdlog = ", sdlog))
+    return(llik)
+}
 
 
-lifeStageCensoredCount <- tibble(
-  y = fData,
-  censored = y < L,
-  y_star = ifelse(censored, L, y)
+## Demonstrate function evaluates properly!
+tmpCount  <- lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=1000)
+logLikCensoredFun(list(meanlog=1, sdlog=1, count=tmpCount$count, threshold=tmpCount$threshold))
+## Demonstrate we can maximize function
+maxLik(logLik=logLikCensoredFun, start=c(meanlog=1, sdlog=1, count=tmpCount$count, threshold=tmpCount$threshold), method="BFGS", fixed=c("count", "threshold"))
+
+
+wrapMaxLik <- function(data){
+    count <- data$count
+    threshold <- data$threshold
+    maxLik(logLik=logLikCensoredFun, start=c(meanlog=1,sdlog=1, count=count, threshold=threshold), method="BFGS", fixed=c("count", "threshold"))
+    }
+## Fit model with 
+
+wrapMaxLik(
+    lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=1000)
 )
 
 
-ggplot(data, aes(x = y_star)) +
-  geom_histogram(bins = 150) +
-  scale_x_continuous(trans = "log") +
-  xlab("log(y_star)")
+
+results <-
+    lscc %>% group_by(stage) %>%
+    summarize(
+        maxLik(logLik = logLikCensoredFun,
+        ##these correspond to the names in 'parameter' argument which is the first argument passed to 
+###                     start = c(meanlog = mean(log(count), na.rm=TRUE),  sdlog=sd(log(count), na.rm=TRUE)),
+###                     start = c(meanlog = 1,  sdlog= 1),
+                     start = c(1,1),
+                     method="BFGS",
+                     count=count, threshold=threshold
+    )
+    )
 
