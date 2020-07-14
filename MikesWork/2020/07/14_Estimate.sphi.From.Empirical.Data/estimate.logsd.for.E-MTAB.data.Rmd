@@ -20,9 +20,7 @@ library(dplyr)
 library(stringr)
 library(forcats)
 library(ggplot2)
-##library(maxLik)
-
-##library(EnvStats) 
+library(optimx)
 ```
 
 # Estimate SD of log(counts) from E-MTAB Data taking into account data censoring 
@@ -71,7 +69,7 @@ hist(log(fData$count))
 #lifeStageCountCensored
 lscc <-
     fData %>% group_by(stage) %>%
-    mutate(threshold = min(count, na.rm=TRUE)) %>%
+    mutate(threshold = min(count, na.rm=TRUE)) %>%  ## might want to try using threshold set to 1
     group_by() %>%
     mutate(count = ifelse(count < threshold, threshold, count)) #, threshold=NULL)
 
@@ -88,63 +86,93 @@ ggplot(lscc, aes(x = count)) +
 - Note that `maxLik` 
 	- 'must have the parameter vector as the first argument'
 	- can return a single LLik value or a nmeric vector where each component is a LLik value
+	- Is a headache so **don't** use it.
+	Use `optimx` instead
 ```{r}
 
-logLikCensoredFun <- function(param){
-    meanlog <- param[1]
-    sdlog <- param[2]
-    count <- param[3]
-    threshold <- param[4]
+
+## Create toy dataset
+tmpData  <- lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=10000) 
+
+### Define objective function: -LogLik
+NLLikCensoredFun <- function(par, count, threshold, print=FALSE){
+    meanlog = par["meanlog"]
+    sdlog = par["sdlog"]
+    #meanlog=par[1]
+    #sdlog=par[2]
    if(sdlog < 0) return(NA)
     cdf <-
-        plnorm(threshold, meanlog = meanlog, sdlog = sdlog, log.p = TRUE); 
+        plnorm(threshold, meanlog = meanlog, sdlog = sdlog, log.p = TRUE);
+
+
+
+    
     llik <-
-        (
+        sum(
             ifelse(
-                is.na(count),
+                is.na(count) | count < threshold, #Allow use of either criteria
                 cdf,
                 dlnorm(count, meanlog = meanlog, sdlog = sdlog, log = TRUE))
         )
-    print(paste0("LLik = ", llik, ", meanlog = ", meanlog, ", sdlog = ", sdlog))
-    return(llik)
+    if(print) print(paste0("LLik = ", llik, ", meanlog = ", meanlog, ", sdlog = ", sdlog))
+    return(-llik)
 }
 
 
+## THIS WORKS!!!
+## BUt I'd like to use pipes... 
+optim(par=c(meanlog=1, sdlog=0.01),
+      fn=NLLikCensoredFun, ## function to optimize
+      lower=c(-Inf, 1E-10),
+      upper=c(1E5, 100),
+      method = "L-BFGS-B",
+      count=tmpData$count,
+      threshold=tmpData$threshold, ## additional arguments for the function
+      print=FALSE
+      )
+      ##count=pull(tmpData, count), threshold=1, ## additional arguments for the function
 
-## Demonstrate function evaluates properly!
-tmpCount  <- lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=1000)
 
-logLikCensoredFun(c(meanlog=1, sdlog=1, count=pull(tmpCount, count), threshold=pull(tmpCount, threshold)))
-
-logLikCensoredFun(c(meanlog=1, sdlog=1, count=tmpCount[1, "count"], threshold=vector(tmpCount[1, "threshold"]))
-
-## Demonstrate we can maximize function
-maxLik(logLik=logLikCensoredFun, start=list(meanlog=mean(log(tmpCount$count), na.rm=TRUE),  sdlog=sd(log(tmpCount$count), na.rm=TRUE), count=tmpCount$count, threshold=tmpCount$threshold), method="BFGS", fixed=c("count", "threshold"))
-
-
-wrapMaxLik <- function(data){
-    count <- data$count
-    threshold <- data$threshold
-    maxLik(logLik=logLikCensoredFun, start=c(meanlog=1,sdlog=1, count=count, threshold=threshold), method="BFGS", fixed=c("count", "threshold"))
+## THis works two, but what a PITA
+resultTibble <- tibble()
+for(threshold in c(0.001, 0.01, 0.1, 1)){
+    for(lifestage in lifeStages[-1]){
+        ##print(lifestage)
+        tmp <- lscc %>% filter(stage==lifestage)
+        count <- tmp$count
+        fit <-
+            optim(
+                par=c(meanlog=1, sdlog=2),
+                fn=NLLikCensoredFun, ## function to optimize
+                lower=c(-Inf, 1E-10),
+                upper=c(1E5, 100),
+                method = "L-BFGS-B",
+                count= count,
+                threshold=threshold, 
+                print=FALSE
+            )
+        results <- tibble(threshold, lifestage, count=length(count), NLLik=fit$value, meanlog=fit$par["meanlog"], sdlog=fit$par["sdlog"])
+        resultTibble <- bind_rows(resultTibble, results)
+        print(results, digits=4)
     }
-## Fit model with 
+}
 
-wrapMaxLik(
-    lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=1000)
-)
+        print(paste0("threshold = ", threshold,
+                     ",\tstage = ", stage,
+                     ",\tNLLik = ", fit$value,
+                     ",\tsdlog = ", fit$par["sdlog"],
+                     ",\tmeanlog = ", fit$par["meanlog"]
+                     )
+              )
 
+## Example
+## From: https://stackoverflow.com/questions/52718604/passing-a-list-of-arguments-to-a-function-with-quasiquotation
+sum_fun <- function(.data, .summary_var, .group_vars) {
+  summary_var <- enquo(.summary_var)
 
+  .data %>%
+    group_by_at(.group_vars) %>%
+    summarise(mean = mean(!!summary_var))
+}
 
-results <-
-    lscc %>% group_by(stage) %>%
-    summarize(
-        maxLik(logLik = logLikCensoredFun,
-        ##these correspond to the names in 'parameter' argument which is the first argument passed to 
-###                     start = c(meanlog = mean(log(count), na.rm=TRUE),  sdlog=sd(log(count), na.rm=TRUE)),
-###                     start = c(meanlog = 1,  sdlog= 1),
-                     start = c(1,1),
-                     method="BFGS",
-                     count=count, threshold=threshold
-    )
-    )
-
+sum_fun(mtcars, disp, .group_vars = vars(cyl, am))
