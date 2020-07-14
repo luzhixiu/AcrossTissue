@@ -1,0 +1,81 @@
+---
+title: "Estimate logSD using censored data approaches
+author: "Michael A. Gilchrist"
+date: "12 Jul 2020"
+output: html_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. 
+
+
+# Load Libraries
+```{r}
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot)
+##library(EnvStats) 
+```
+
+# Estimate SD of log(counts) from E-MTAB Data taking into account data censoring 
+- The lowest count value is 0.1, thus treat all 0 counts (previous empty cells) as coming from a censored distribution at mRNA < 0.1 counts.
+- An example of such an approach can be found [here](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/).
+- An alternative distribution is the 'Zero Modified Log-Normal' which assumes a mixture distribution which is a LogN with an additional probability mass at 0.
+	- Zero Modified Log-Normal (ZMLN)  is included in the [EnvStats](http://finzi.psych.upenn.edu/R/library/EnvStats/html/ZeroModifiedLognormal.html) package.
+	- This package generates CI for the mean, but not the SD.
+   Could bootstrap data to generate CI for the SD
+- "One way to try to assess whether a zero-modified lognormal (delta), zero-modified normal, censored normal, or censored lognormal is the best model for the data is to construct both censored and detects-only probability plots (see qqPlotCensored)" - EnvStats page above
+- Given that ROC does not have a 0 category, we don't want the ZMLN model.
+- This[blog](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/) provides as workflow that we can use w/o any additional packages
+
+## Load Data
+- Original data file is `E-MTAB-2812-query-results.tpms.tsv`
+- Data processed by `2020/07/12_Work.With.Published.Means/load.and.process.means.data.Rmd`
+- Data stored in `2020/07/12_Work.With.Published.Means/Output/processed.E-MTAB.data.Rdata` which is linked to symbolically in the working directories `Input/`
+
+```{r}
+
+load("Input/processed.E-MTAB.data.Rdata")
+
+# get some basic info on what we've loaded
+comment(lifeStageCount) 
+comment(lifeStages)
+names(lifeStageCount)
+```
+
+
+## Analyze Data
+- Using code from [here](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/)
+- Note 0 values in dataset were added by myself when processing data. 
+Originally these were blank cells.
+```{r eval=FALSE}
+
+## Find lower limits for each stage.
+## Exclude the embryo stage because it has a different threshold and was generated using a different pipeline (mine!)
+
+#filter data
+fData <- lifeStageCount %>% filter(sex=='hermaphrodite' & !(stage=="embryo Ce"))%>%
+    select(-c(sex, tissue))%>%
+    mutate(count=ifelse(count==0, NA, count))
+# get lower limit (which should be 0.1)
+
+hist(log(fData$count))
+lscc <-
+    fData %>% group_by(stage) %>%
+    mutate(threshold = min(count, na.rm=TRUE)) %>%
+    group_by() %>%
+    mutate(count = ifelse(count < threshold, threshold, count), .keep="unused") #, threshold=NULL)
+
+hist(log(lscc$count))
+
+ggplot(fData, aes(x = count)) +
+  geom_histogram(bins = 150) +
+  scale_x_continuous(trans = "log") +
+  xlab("log(count)")
+
