@@ -1,0 +1,30 @@
+# Install Packages I Need 
+- Run this coded on a local machine and it will ensure I've got all the packages I need for these analyses
+- Was originally in 'load.and.process.means.data.Rmd' prior to 12 Jul 2020
+
+```{r}
+
+## We actually have censored data, where values exist but their exact value is unknown beyond the fact they are less than some threshold, not truncated data, which ignores data outside of a range.
+##if (!requireNamespace("hpa", quietly = TRUE))
+##    install.packages("hpa")
+
+funcList<-
+    c("readr",
+      "ggplot2",
+      "forcats", 
+      "EnvStats",
+      "eivtools",
+      "Biostrings",
+      "rmarkdown",
+      "knitr",
+      "hash",
+      "purrr"
+      )
+
+
+tmp <- lapply(
+    funcList,
+    function(x) {if (!requireNamespace(x, quietly = TRUE)) install.packages(x) }
+    )
+rm(tmp)
+```

@@ -1,0 +1,199 @@
+# Analysis
+## Plan
+- Load standardized means
+- Fit model using weights for counts inversely related to mean value 
+	- Poisson Like: W = 1/(mean +1) since $E(X) = \lambda = \var(X)$
+# Install packages
+```{r}
+if (!requireNamespace("readr", quietly = TRUE))
+    install.packages("readr")
+
+if (!requireNamespace("forcats", quietly = TRUE))
+    install.packages("forcats")
+
+## eivreg
+if (!requireNamespace("eivtools", quietly = TRUE))
+    install.packages("eivtools")
+
+if (!requireNamespace("Biostrings", quietly = TRUE))
+    BiocManager::install("Biostrings", lib="/home/mikeg/R/x86_64-pc-linux-gnu-library/3.6")
+
+
+
+```
+
+# Load Libraries
+```{r}
+library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(eivtools)
+
+```
+
+# Load and Shape Data
+
+## E-MTAB
+```{r}
+flatData  <- readr::read_tsv("E-MTAB-2812-query-results.tpms.tsv", skip=4) %>%
+    dplyr::rename(ID = `Gene ID`, gene=`Gene Name` )
+
+## use pivot_longer command (not gather which is depricated)
+tData <- flatData %>% pivot_longer(-c(ID, gene), names_to = "long_description", values_to = "count")
+
+## Now separate entry in descriptor column into separate column entries and filter out tissue specific data
+sData  <- separate(tData, long_description, into=c("sex", "tissue", "stage"), sep=", ") %>% filter(tissue=="organism") %>%
+#    mutate_if(is.character,as.factor)  %>% # convert char columns to factors
+    replace_na(list(count = 0)) # replace NAs with 0.
+                                        #Before doing so the min value in the tibble was 0.1
+
+
+# Create a new set of measurements for 'hermaphrodite embryo Ce' stage
+## Get hermphrodite embryo stage names (male, 'embryo Ce' lacks a space at the start)
+embryoStageNames  <- levels(sData$stage)[grepl(' embryo Ce', levels(sData$stage) )]
+embryoStageCounts  <-  filter(sData, stage %in% embryoStageNames) %>% group_by(ID)
+
+combinedEmbryoStageCounts <- unique(embryoStageCounts %>% summarise(gene, sex, tissue, stage="embryo Ce", median=median(count)))
+
+nonEmbryoStageCounts <- filter(sData, !(stage %in% embryoStageNames)) 
+
+stageCounts <- bind_rows(combinedEmbryoStageCounts, nonEmbryoStageCounts)
+## 
+## Make things simple and focus on just the 'main' lifestage measurements
+## note that the stage "embryo Ce" is specific to sex = male
+## Thus need to combine embryo measurements some how
+## Try using median of stages
+
+mainLifeStages <- c("embryo Ce", "L1 larvae Ce", "L2 larvae Ce", "L3 larvae Ce", "L4 larvae Ce", "adult Ce", "dauer larvae Ce", "post dauer stage Ce")
+
+tidyFullLifeStageData <- filter(sData, (stage %in% mainLifeStages & sex == "hermaphrodite")) 
+
+summary(tidyFullLifeStageData$count)
+hist(log(tidyFullLifeStageData$count))
+
+IDandGeneData <- select(tidyFullLifeStageData, c(ID, gene))
+tidyLifeStageData <- select(tidyFullLifeStageData, gene, stage, count)
+
+```
+
+## ROC 
+
+### Get gene names
+
+
+#### Extract from FASTA file
+```{r}
+## Load original FASTA file
+## Using Biostrings function which is not a standard df
+seqData <- readDNAStringSet("c_elegan.fasta")
+
+## names are really long descriptions.
+## NEed to extract relevant part
+seqDesc  <- names(seqData)
+
+
+phiNames <- sub(".*\\[gene=([^]]+).*", "\\1", seqDesc)
+
+## verify there's a match for each entry
+if(sum(is.na(phiNames)) ==0) print("Every entry matches")
+
+## Verify that all 'names' are unique.
+if(length(phiNames) != length(unique(phiNames))) print("Some genes appear twice due to isoforms")
+```
+
+
+#### BROKEN - Don't use Lu's file
+```{r}
+
+## NOTE: phiNames is corrupt.  It has replaced some gene names with date formats (e.g. apr-1 has been converted to 1-Apr
+phiNamesBroken <- read_csv("phi.mean.by.names.csv", col_names = c("gene","phi2") )
+phiNamesBroken[phiNamesBroken$gene=='1-Apr',]
+## THere are 17 corrupted names
+length(phiNames) - sum(phiNamesBroken==phiNames)
+
+## Need to run 'Get estimates from ROC' code below to evaluate following line
+phiBrokenDataCheck  <- bind_cols(phiNamesBroken, phiPosteriorInfo)
+## Verify that phi values line up between the two datasets
+plot(phiBrokenDataCheck$phi2, phiDataBrokenCheck$phi)
+```
+
+
+#### Get estimates from ROC
+```{r}
+## detailed information on phi: posterior mean, posterior mean of log10(phi), etc
+## StdError really StdDev of posterior
+phiPosteriorInfo <- read_csv("phi.posterior.unlabeled.csv") %>% rename(phi = PHI, logPhi = log10.PHI, sd = Std.Error, logSd = log10.Std.Error)
+
+phiData  <- bind_cols(gene=phiNames, phiPosteriorInfo) #%>%
+#    mutate_if(is.character, as.factor)  # convert char columns to factors
+
+dim(phiData)
+plot(phiData$phi, phiData$sd)  ## There are a bunch of anomolous genes that have a phi of 1 but an elevated sd relative to the rest of genes with that value
+
+anomolousGenes <- phiData %>% filter(phi>0.975 & phi < 1.025 & sd>4E-5)
+write_csv(anomolousGenes, "./anomolousGenes.csv")
+
+## Plot phiData with anomolousGenes in magenta
+
+## verify you've filtered correctly
+filteredPhiData <- phiData %>% filter( !(gene %in% anomolousGenes$gene))
+plot(filteredPhiData$phi, filteredPhiData$sd)
+
+
+
+## Look at structure of data
+
+
+## There are 4 entries in the "phi.mean.by.names.csv" with the name "wwp-1" 
+## This is because the FASTA file contains 4 isoforms of this gene
+## Problem: there's only one WB Gene ID and, thus, only one measurement.
+## Solution: Combine separate estimates using median values of phi
+
+combinedPhiData  <- phiData %>% group_by(gene) %>% summarize(median_phi = median(phi), sd_phi = median(sd), isoforms = length(phi) )
+dim(combinedPhiData)
+plot(combinedPhiData$median_phi, combinedPhiData$sd_phi)
+
+filteredCombinedPhiData <- combinedPhiData %>% filter( !(gene %in% anomolousGenes$gene))
+
+plot(filteredCombinedPhiData$median_phi, filteredCombinedPhiData$sd_phi)
+```
+
+
+# Modeling error in RNA Seq Data
+If the underlying distribution is 
+	- poisson, then Var=Rate so W = 1/count or 1/(count + k)
+
+## Combine empirical and ROC data
+```{r}
+
+## Rename phi columns and add 'stage'
+tidyFilteredAndWeightedPhiData <- filteredCombinedPhiData  %>%
+    mutate(count=median_phi, weight=1/(sd_phi/mean(sd_phi))^2, stage="phi") %>%
+    select(-c(isoforms, sd_phi, median_phi))
+
+
+## Calculate weights for empirical data
+
+## Combine phi
+tidyFilteredAndWeightedLifeStageData <- tidyLifeStageData %>%
+    filter(gene %in% standardizedPhiData$gene) %>%
+    mutate(weight=(1/(count+1)) ) ## x+1 poisson weighting
+
+
+tidyJoinedData <- bind_rows(tidyFilteredAndWeightedLifeStageData, tidyFilteredAndWeightedPhiData) %>%
+    mutate_if(is.character, as.factor)
+
+joinedData <- pivot_wider(tidyJoinedData, names_from=stage, values_from=c(count, weight)) 
+
+```
+## Fit Using *eivtools* 
+```{r}
+
+cData  <-bind_cols(phiData, 
+eivreg(
+
+```
