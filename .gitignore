@@ -2,3 +2,5 @@
 *.*~
 # ignore html files created by knitr
 *-exported_files/
+#*
+*#
