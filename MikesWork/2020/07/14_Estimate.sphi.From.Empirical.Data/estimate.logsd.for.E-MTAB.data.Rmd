@@ -92,7 +92,7 @@ ggplot(lscc, aes(x = count)) +
 
 
 ## Create toy dataset
-tmpData  <- lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=10000) 
+## tmpData  <- lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=10000) 
 
 ### Define objective function: -LogLik
 NLLikCensoredFun <- function(par, count, threshold, print=FALSE){
@@ -157,16 +157,21 @@ for(threshold in c(0.001, 0.01, 0.1, 1)){
     }
 }
 
-        print(paste0("threshold = ", threshold,
-                     ",\tstage = ", stage,
-                     ",\tNLLik = ", fit$value,
-                     ",\tsdlog = ", fit$par["sdlog"],
-                     ",\tmeanlog = ", fit$par["meanlog"]
-                     )
-              )
 
-## Example
-## From: https://stackoverflow.com/questions/52718604/passing-a-list-of-arguments-to-a-function-with-quasiquotation
+plot(x = resultTibble$threshold, y = resultTibble$NLLik, log="x")
+plot(x = resultTibble$threshold, y = resultTibble$sdlog, log="x")
+
+
+resultTibble %>% group_by(threshold) %>% summarise(mean(sdlog))
+```
+
+
+
+
+
+## Example using functions with summarise()
+### From: https://stackoverflow.com/questions/52718604/passing-a-list-of-arguments-to-a-function-with-quasiquotation
+```{r eval=FALSE}
 sum_fun <- function(.data, .summary_var, .group_vars) {
   summary_var <- enquo(.summary_var)
 
@@ -176,3 +181,5 @@ sum_fun <- function(.data, .summary_var, .group_vars) {
 }
 
 sum_fun(mtcars, disp, .group_vars = vars(cyl, am))
+
+```
