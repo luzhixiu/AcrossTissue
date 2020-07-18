@@ -2,5 +2,7 @@
 *.*~
 # ignore html files created by knitr
 *-exported_files/
-#*
-*#
+\#*
+*\#
+# Ignore intermediate knitr to pdf files
+*.log
