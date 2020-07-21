@@ -1,0 +1,82 @@
+---
+title: "Plot Moments of Fine Scale Embryo Data"
+author: "Michael A. Gilchrist"
+date: "21 Jul 2020"
+output: pdf_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+### Evaluate Chunks
+M-n v *
+- v polymode-eval-region-or-chunk
+- b polymode-eval-buffer
+- u or ↑        polymode-eval-buffer-from-beg-to-point
+- d or ↓        polymode-eval-buffer-from-point-to-end
+
+M-n e : Evaluate buffer
+# Load Libraries
+```{r}
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(ggpubr)
+library(ggpmisc)
+library(optimx)
+library(gridExtra) ## supplies plotting on grid function marrangegrob
+```
+
+
+# Plot Hermaphrodite Embryo Data
+- Embryonic data from various development points.
+Data processed in `../21_Processed.Published.Means/load.and.process.means.data.Rmd` 
+- Use this data to
+	- Examine how the variation in the measurements increases with its value.
+
+	- It clearly increase linearly on a log scale.
+	Increasing the order of the polynomial helps some.
+	- Model error seems a bit off at higher values.
+	Perhaps it's the error in the x variable tempering things?
+	- Note 832 points are excluded due to 0 values.
+	
+```{r}
+
+## To place 'items' in the ggplot pipeline, you need to use lists.
+myFits <- function(i){
+    list(geom_smooth(method = "lm", formula = y ~ poly(x, i, raw = TRUE), color = myColors[i]),
+         stat_poly_eq(
+             aes(label =  paste(..eq.label.., ..rr.label.., ..AIC.label.., sep = "~~")),
+             formula = y ~ poly(x, i, raw = TRUE),
+             size = 3,
+             label.x = "right",
+             label.y= 0.39-i*0.13,
+             parse = TRUE
+         )
+         )
+}
+
+pl <- lapply(c(0, 1, 10, 100), function(lowerBound){
+    tmpData <- embryoStageCountMoments %>% filter(logMean > log(lowerBound) )    
+    ggplot(tmpData, aes(logMean, logVar)) + 
+        geom_point() +
+        ggtitle(paste0("Count lower bound > ", lowerBound)) +
+        lapply(1:3, myFits) +
+        theme(text = element_text(size=10))+
+        labs(x=switch(lowerBound==100, "logMean")) ## switch will return NULL except when condition is true
+    ## Vectorized nature of ifelse prevents it from working with NULL
+}
+)
+```
+\newpage
+```{r out.height="80%"}
+#knitr::opts_chunk$set(out.height = "\\textheight",  out.width = "\\textwidth")
+                                        #marrangeGrob(pl, nrow=4, ncol=1, aes(logMean, logVar), heights=rep(unit(2.5, "in"), 4))
+
+pl
+
+```
