@@ -1,7 +1,7 @@
 ---
 title: "Load and Process Data from E-MTAB files and ROC fit to NCBI data"
 author: "Michael A. Gilchrist"
-date: "20 Jul 2020"
+date: "21 Jul 2020"
 output: pdf_document
 ---
 
@@ -92,7 +92,11 @@ fastaInfoNCBI <- unfilteredFastaInfoNCBI[properLengthIsoformsFlag, ]
 
 ## detailed information on phi: posterior mean, posterior mean of log10(phi), etc
 ## StdError really StdDev of posterior
-unfilteredPhiPosteriorInfo <- readr::read_csv("Input/phi.posterior.unlabeled-NCBI.csv") %>% dplyr::rename(phi = PHI, logPhi = log10.PHI, sd = Std.Error, logSd = log10.Std.Error)
+unfilteredPhiPosteriorInfo <-
+    readr::read_csv("Input/phi.posterior.unlabeled-NCBI.csv") %>%
+    dplyr::rename(phi = PHI, log10Phi = log10.PHI, sd = Std.Error, sdLog10Phi = log10.Std.Error) %>%
+    mutate(logPhi=log10Phi*log(10), sdLogPhi=sdLog10Phi*log(10)) %>%
+    select(-c(log10Phi, sdLog10Phi))
 
 ## Not yet filtered for genes that have anomolous lengths (i.e. length mod 3 !=0)
 unfilteredPhiData  <- as_tibble(bind_cols(geneName=unfilteredSeqGeneNames, unfilteredPhiPosteriorInfo, length=unfilteredSeqLength))
@@ -106,7 +110,7 @@ anomolousPhiData  <-unfilteredPhiData[anomolousLengthIsoformsFlag, ]
 ## Problem: Isoforms of the same gene exist in the fasta file (and thus phi estimates), but are not part of the E-MTAB measurements which are indexed the gene, not isoform of a gene, level.
 ## Solution: Combine separate estimates using mean or median values of phi
 
-summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(mean_phi = mean(phi), mean_sd = mean(sd), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_logSd=mean(logSd), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_logSd=median(logSd), n_isoforms = length(phi) )
+summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(mean_phi = mean(phi), mean_sd = mean(sd), mean_var = mean(sd^2), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_sdLogPhi=mean(sdLogPhi), mean_logVar=mean(sdLogPhi^2), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_sdLogPhi=median(sdLogPhi), n_isoforms = length(phi) )
 
 comment(summaryStatsPhiData) <- "summary stats for means and sd of phi for a geneName's multiple isoforms which are summarized in n_isoforms"
 dim(summaryStatsPhiData)
@@ -115,7 +119,7 @@ write.csv(unfilteredPhiData, file="Output/labeled.unfiltered.phi.data-NCBI.csv",
 write.csv(unfilteredFastaInfoNCBI, file="Output/unfiltered.fasta.info-NCBI.csv", quote= FALSE, row.names=FALSE)
 write.csv(anomolousGeneInfo, "Output/anomolousGeneInfo-NCBI.csv", quote=FALSE, row.names=FALSE)
 write.csv(summaryStatsPhiData, file="Output/summaryStatsPhiData-NCBI.csv", quote=FALSE, row.names=FALSE)
-save(phiData, seqData, file = "Output/processed.ROC.data-NCBI.Rdata")
+save(phiData, seqData, summaryStatsPhiData, file = "Output/processed.ROC.data-NCBI.Rdata")
 ```
 
 Import data if `exportData==FALSE`
@@ -158,9 +162,9 @@ hist(tmp, xlim=c(0, max(tmp)), main="Histogram of Gene Lengths < 400 aa", xlab="
 
 ## Log metrics
 #par(mfrow=c(2,2))
-plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_logSd)
+plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_sdLogPhi)
 mtext("Summary Statistics of log(Phi) Estimates", side = 3, line = -21, outer = TRUE)
-plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_logSd, log="x")
+plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_sdLogPhi, log="x")
 plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_length, log="y")
 
 ```
@@ -256,7 +260,7 @@ lifeStageCount <- filter(stageCount, (stage %in% lifeStages))
 comment(lifeStageCount) <- c("RNASeq counts for each of the\n\t- hermaphrodite non-embryo lifestages: L1 larvae Ce, L2 larvae Ce, ... adult\n\t- male lifestages\n\t- mean of the very specific 'hermphrodite,  *embryo Ce' which are 'hermphrodite, embryo Ce.\nAll data for tissue == organism.\nCounts from E-MTAB-2812-query-results.tpms.tsv.", creationInfo ) 
 
 
-lifeStageCountMoments <- lifeStageCount %>% group_by(sex, stage)%>% summarize(stage_sd = sd(count), stage_logSd = sd(log(count, 10)) )
+lifeStageCountMoments <- lifeStageCount %>% group_by(sex, stage)%>% summarize(stage_sd = sd(count), stage_sdLog = sd(log(count)) )
 
 
 
@@ -284,7 +288,7 @@ Import the data instead of generating it.
 ```{r eval=!(exportData)}
 load("Output/countData.from.E-MTAB-data.Rdata")
 embryoStageCountMoments <- read.csv(file="Output/summary.stats.of.embryo.stage.data.csv")
-separateEmbryoStageCount <- read.csv(file="Output/summary.stats.of.embryo.stage.data.csv")
+separateEmbryoStageCount <- read.csv(file="Output/separate.embryo.stage.count.csv")
 
 ## Export data using 'geneName' name or WormBaseID
 geneNameAndWormBaseID  <- read.csv( file="Output/geneName.and.WBID.csv")
