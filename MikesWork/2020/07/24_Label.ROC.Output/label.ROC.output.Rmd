@@ -12,7 +12,7 @@ To compile in emacs use M-n e
 
 
 # Purpose
-Use information from FASTA file used to fit ROC to add isoform.ID and WormBase.ID information
+Use information from FASTA file used to fit ROC to add isoform.ID and WormBase.ID and isoform length information
 
 # Load Libraries
 ```{r}
@@ -38,7 +38,8 @@ exportData=TRUE ## Flag for running save(), write.csv() and other output command
 
 ## ROC 
 
-### Load FASTA to get isoform and WormBase IDs (names)
+### Load FASTA to get isoform and WormBase IDs & Calculate Sequence Length
+Used to call `isoform.ID` `geneName` and `WormBase.ID` `WBID`
 
 ```{r, eval = exportData}
 ## Load WB FASTA file
@@ -79,107 +80,8 @@ Load ROC Estimates and bind isoform.ID and WormBase.ID with Phi Values
 unlabeledROCOutput <-
     readr::read_csv("Input/ROC_unlabeled.phi.summaries.with.sphi.equal.2.8.csv") 
 
-labeledROCOutput <- bind_cols(seqID, unlabeledROCOutput) 
+labeledROCOutput <- bind_cols(seqID, unlabeledROCOutput, seqLength) 
 
-write.csv(x=labeledROCOutput, file="Output/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv", quote=FALSE, row.names=FALSE) 
-```
-
-## No longer needed...
-
-
-```{r}
-dplyr::rename(phi = PHI, log10Phi = log10.PHI, sd = Std.Dev, sdLog10Phi = log10.Std.Dev) %>%
-    mutate(logPhi=log10Phi*log(10), sdLogPhi=sdLog10Phi*log(10)) %>%
-    select(c(phi, sd, log10Phi, sdLog10Phi))
-
-phiMatchData  <- as_tibble(bind_cols(WormBase.ID, phiPosteriorInfo, length=seqLength))
-
-
-dim(phiMatchData)
-
-## Problem: Isoforms of the same gene exist in the fasta file (and thus phi estimates), but are not part of the E-MTAB measurements which are indexed the gene, not isoform of a gene, level.
-## Previous Solution: Combine separate estimates using mean or median values of phi - See 21_Process.Published.Means/load.and.process.means.data.Rmd
-## Current Solution: 
-summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(mean_phi = mean(phi), mean_sd = mean(sd), mean_var = mean(sd^2), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_sdLogPhi=mean(sdLogPhi), mean_logVar=mean(sdLogPhi^2), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_sdLogPhi=median(sdLogPhi), n_isoforms = length(phi) )
-
-comment(summaryStatsPhiData) <- "summary stats for means and sd of phi for a geneName's multiple isoforms which are summarized in n_isoforms"
-dim(summaryStatsPhiData)
-
-write.csv(unfilteredPhiData, file="Output/labeled.unfiltered.phi.data-NCBI.csv", quote=FALSE, row.names=FALSE)
-write.csv(unfilteredFastaInfoNCBI, file="Output/unfiltered.fasta.info-NCBI.csv", quote= FALSE, row.names=FALSE)
-write.csv(anomolousGeneInfo, "Output/anomolousGeneInfo-NCBI.csv", quote=FALSE, row.names=FALSE)
-write.csv(summaryStatsPhiData, file="Output/summaryStatsPhiData-NCBI.csv", quote=FALSE, row.names=FALSE)
-save(phiData, seqData, summaryStatsPhiData, file = "Output/processed.ROC.data-NCBI.Rdata")
-
-```
-
-# Look at distribution of isoforms and filter
-```{r}
-nameCounts <- count(as_tibble(WormBase.ID), value)
-qplot(x=n, data=nameCounts)
-
-geneNamesSingleIsoforms <- filter(nameCounts, n ==1) 
-## Filter out whose length is not a multiple of 3
-## Keep name of filtered data simple
-unfilteredFastaInfoNCBI <- tibble(info=names(unfilteredSeqData), geneName=unfilteredSeqGeneNames, length=as.double(unfilteredSeqLength))
-
-## Create a vector flagging isoforms with proper gene lengths
-properLengthIsoformsFlag <- ((unfilteredFastaInfoNCBI$length %% 3) == 0)
-
-## Check for MtDNA genes
-## Results indicate there are none. Good!
-
-## note seqData uses 'names' while fastaInfoNCBI uses 'info'
-seqData <- unfilteredSeqData[properLengthIsoformsFlag, ]
-fastaInfoNCBI <- unfilteredFastaInfoNCBI[properLengthIsoformsFlag, ]
-
-
-```
-
-Import data if `exportData==FALSE`
-```{r eval = !(exportData)}
-## Load data instead of generating and exporting it
-unfilteredPhiData <- read.csv(file="Output/labeled.unfiltered.phi.data-NCBI.csv")
-unfilteredFastaInfoNCBI <-  read.csv(file="Output/unfiltered.fasta.info-NCBI.csv")
-anomolousGeneInfo <- read.csv("Output/anomolousGeneInfo-NCBI.csv")
-summaryStatsPhiData <- read.csv(file="Output/summaryStatsPhiData-NCBI.csv")
-load(file = "Output/processed.ROC.data-NCBI.Rdata")
-```
-
-
-### Plot Results
-```{r}
-## Examine Unfiltered and Filtered Data
-dim(unfilteredPhiData)
-plot(unfilteredPhiData$phi, unfilteredPhiData$sd,
-     main="Plot Includes 'anomolous' isoforms",
-     sub = "anomolous = gene lengths in nts that are not multiples of 3"
-     )
-
-## Verify we've filtered correctly
-plot(phiData$phi, phiData$sd, main="Plot excludes 'anomolous' isoforms",
-     sub = "anomolous = gene lengths in nts that are not multiples of 3"
-     )
-
-plot(anomolousPhiData$phi, anomolousPhiData$sd, main="Isoforms Whose Lengths are Not Multiples of Three")
-
-#par(mfrow=c(2,2))
-plot(summaryStatsPhiData$mean_phi, summaryStatsPhiData$mean_sd)
-mtext("Summary Statistics of Phi Estimates", side = 3, line = -21, outer = TRUE)
-plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_sd, log="xy")
-plot(summaryStatsPhiData$mean_phi, summaryStatsPhiData$mean_length, log="xy")
-## Create histogram of short genes
-tmp <- summaryStatsPhiData$mean_length[ summaryStatsPhiData$mean_length < 400]
-hist(tmp, xlim=c(0, max(tmp)), main="Histogram of Gene Lengths < 400 aa", xlab="Length" )
-
-
-
-## Log metrics
-#par(mfrow=c(2,2))
-plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_sdLogPhi)
-mtext("Summary Statistics of log(Phi) Estimates", side = 3, line = -21, outer = TRUE)
-plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_sdLogPhi, log="x")
-plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_length, log="y")
-
+write.csv(x=labeledROCOutput, file="Output/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv", quote=TRUE, row.names=FALSE) 
 ```
 

@@ -1,12 +1,15 @@
 ---
 title: "Visualize Properties of ROC's Posterior Estimates of Phi"
 author: "Michael A. Gilchrist"
-date: "22 Jul 2020"
+date: "24 Jul 2020"
 output: pdf_document
 ---
 
 # Preliminary Information
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+- Replacement of ` ../22_Visualize.ROC.Estimates.of.Phi/visualize.ROC.estimates.of.phi.Rmd`.
+- No longer processes ROC data, instead that is processed in a separate .Rmd file and loaded here.
+- Visualize variation within and across genes at the isoform level.
+- Some nice figures using LaTeX coded and ggplots' facets.
 
 
 # ESS Commands
@@ -29,21 +32,130 @@ library(ggpubr)
 library(ggpmisc)
 library(gridExtra)
 library(purrr)
-library(eivtools)
+##library(hrbrthemes)  ## Plotting 
+library(viridis)  ## Plotting?
+library(latex2exp)
+## Usage: TeX(sprintf("$\\alpha = %d$", alpha)
+##        TeX('$\\alpha  x^\\alpha$, where $\\alpha \\in 1\\ldots 5$')
 
 creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
 
 exportPlots=TRUE ## Flag for exporting plots
 ```
 
-# C. elegans
+# Analyze C. elegans Genome
 Should do a similar analysis of yeast genome.
-Since there is isoform/gene, yeast analysis will be at the 'gene level'.
-## Load Data
+
+## Load Data and Calculate Summary Stats Isoforms of a Gene
 ```{r}
 ## load objects: summaryStatsPhiData, seqData, phiData
-load(file="Input/processed.ROC.data-NCBI.Rdata")  
+
+
+labeledPhiFile = "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
+
+tmpData <- read_csv(file=labeledPhiFile)
+phiData <- tmpData %>%
+    dplyr::rename(phi = PHI, log10Phi = log10.PHI, sd = Std.Dev, sdLog10Phi = log10.Std.Dev) %>%
+    mutate(logPhi=log10Phi*log(10), sdLogPhi=sdLog10Phi*log(10))
+
+## isoformSummaryStats was summaryStatsPhiData
+isoformSummaryStats  <-
+    phiData %>%
+    group_by(WormBase.ID) %>%
+    summarize(mean_phi = mean(phi), sd_phi=sd(phi), mean_sd = mean(sd), mean_var = mean(sd^2), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_sdLogPhi=mean(sdLogPhi), mean_logVar=mean(sdLogPhi^2), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_sdLogPhi=median(sdLogPhi), n_isoforms = length(phi), n_isoforms_fct = as.character(n_isoforms) ) %>% 
+    mutate( n_isoforms_fct= fct_reorder(.f=n_isoforms_fct, .x= n_isoforms)) ## Make sure factors follow numerical order    
+
+
+## Plot Means of Isoforms
+ggplot(data=isoformSummaryStats,  aes(x=mean_phi, fill=n_isoforms_fct)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') #+
+    #scale_fill_manual(values=c("#69b3a2", "#404080")) ##+
+    ##theme_ipsum() +
+    ##labs(fill="")
+
+isoformSummaryStats %>% 
+    ggplot( aes(x=mean_phi, color=n_isoforms_fct, fill=n_isoforms_fct)) +
+    geom_histogram(alpha=0.6, bins=30) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    ##theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.1, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
+    ylab("Count") +
+    ggtitle(label = TeX("Distribution of Average $\\bar{\\phi}$ Across a Gene's Isoforms") )+
+    facet_wrap(~n_isoforms_fct, scales = "free_y")
+
+
+
+## Plot SD of Isoforms
+ggplot(data=isoformSummaryStats,  aes(x=sd_phi, fill=n_isoforms_fct)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') #+
+    #scale_fill_manual(values=c("#69b3a2", "#404080")) ##+
+    ##theme_ipsum() +
+    ##labs(fill="")
+
+isoformSummaryStats %>% 
+    ggplot(
+        aes(x=mean_phi,
+            y = sd_phi,
+            color=n_isoforms_fct,
+            fill=n_isoforms_fct)) +
+    scale_x_log10()+
+    scale_y_log10()+
+    geom_point(alpha=0.6) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    ##theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.2, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
+    ylab(TeX("Standard Deviation of $\\bar{\\phi}$ Across Isoforms")) +
+    
+    ggtitle(label = TeX("Mean $\\bar{\phi}$ vs SD$_\\bar{\\phi}$ Across a Gene's Isoforms") )+
+    facet_wrap(~n_isoforms_fct)
+
+## Plot mean_sd of Isoforms
+ggplot(data=isoformSummaryStats,  aes(x=mean_sd, fill=n_isoforms_fct)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') #+
+    #scale_fill_manual(values=c("#69b3a2", "#404080")) ##+
+    ##theme_ipsum() +
+    ##labs(fill="")
+
+isoformSummaryStats %>% 
+    ggplot(
+        aes(x=mean_phi,
+            y = mean_sd,
+            color=n_isoforms_fct,
+            fill=n_isoforms_fct)) +
+    scale_x_log10()+
+    scale_y_log10()+
+    geom_point(alpha=0.6) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    ##theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.2, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
+    ylab(TeX("Average of Standard Deviation of Posterior Across Isoforms")) +
+    
+    ggtitle(label = TeX("Mean $\\phi$ vs Mean Posterior SD Across a Gene's Isoforms") )+
+    facet_wrap(~n_isoforms_fct)
+
+
 ```
+
+
+
 ## Examine Data
 ```{r}
 
@@ -64,10 +176,10 @@ do.call(grid.arrange, myPlots)
 ## Gene Scale
 myPlots <-
     list(
-        qplot(x = mean_phi, y=mean_sd, log = c("x", "y"), data=summaryStatsPhiData),
-        qplot(x = mean_phi, y=median_phi, log = c("x", "y"), data=summaryStatsPhiData),
-        qplot(x = mean_phi, y=mean_sd/mean_phi, ylab="CV", log = c("x", "y"), data=summaryStatsPhiData),
-        qplot(x = mean_logPhi, y=mean_sdLogPhi, data=summaryStatsPhiData)
+        qplot(x = mean_phi, y=mean_sd, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_phi, y=median_phi, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_phi, y=mean_sd/mean_phi, ylab="CV", log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_logPhi, y=mean_sdLogPhi, data=isoformSummaryStats)
     )
 
 do.call(grid.arrange,
@@ -82,10 +194,10 @@ do.call(grid.arrange,
 ## Gene Scale: Median
 myPlots <-
     list(
-        qplot(x = median_phi, y=median_sd, log = c("x", "y"), data=summaryStatsPhiData),
-        qplot(x = mean_sd, y=median_sd, log = c("x", "y"), data=summaryStatsPhiData),
-        qplot(x = median_phi, y=median_sd/median_phi, ylab="CV", log = c("x", "y"), data=summaryStatsPhiData),
-        qplot(x = median_logPhi, y=median_sdLogPhi, data=summaryStatsPhiData)
+        qplot(x = median_phi, y=median_sd, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_sd, y=median_sd, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = median_phi, y=median_sd/median_phi, ylab="CV", log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = median_logPhi, y=median_sdLogPhi, data=isoformSummaryStats)
     )
 
 do.call(grid.arrange,
@@ -99,4 +211,115 @@ do.call(grid.arrange,
 
 ```
 
+
+## Save Data
+```{r}
+
+comment(isoformSummaryStats) <- paste0("Various summary stats across a WormBase gene's isoforms. Columns include", names(isoformSummaryStats) )
+
+
+save(phiData, seqData, summaryStatsPhiData, file = "Output/processed.ROC.data-NCBI.Rdata")
+
+```
+
+
+### From old process file
+## No longer needed...
+
+
+```{r}
+dplyr::rename(phi = PHI, log10Phi = log10.PHI, sd = Std.Dev, sdLog10Phi = log10.Std.Dev) %>%
+    mutate(logPhi=log10Phi*log(10), sdLogPhi=sdLog10Phi*log(10)) %>%
+    select(c(phi, sd, log10Phi, sdLog10Phi))
+
+phiMatchData  <- as_tibble(bind_cols(WormBase.ID, phiPosteriorInfo, length=seqLength))
+
+
+dim(phiMatchData)
+
+## Problem: Isoforms of the same gene exist in the fasta file (and thus phi estimates), but are not part of the E-MTAB measurements which are indexed the gene, not isoform of a gene, level.
+## Previous Solution: Combine separate estimates using mean or median values of phi - See 21_Process.Published.Means/load.and.process.means.data.Rmd
+## Current Solution: 
+summaryStatsPhiData  <- phiData %>% group_by(geneName) %>% summarize(mean_phi = mean(phi), mean_sd = mean(sd), mean_var = mean(sd^2), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_sdLogPhi=mean(sdLogPhi), mean_logVar=mean(sdLogPhi^2), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_sdLogPhi=median(sdLogPhi), n_isoforms = length(phi) )
+
+comment(summaryStatsPhiData) <- "summary stats for means and sd of phi for a geneName's multiple isoforms which are summarized in n_isoforms"
+dim(summaryStatsPhiData)
+
+write.csv(unfilteredPhiData, file="Output/labeled.unfiltered.phi.data-NCBI.csv", quote=FALSE, row.names=FALSE)
+write.csv(unfilteredFastaInfoNCBI, file="Output/unfiltered.fasta.info-NCBI.csv", quote= FALSE, row.names=FALSE)
+write.csv(anomolousGeneInfo, "Output/anomolousGeneInfo-NCBI.csv", quote=FALSE, row.names=FALSE)
+write.csv(summaryStatsPhiData, file="Output/summaryStatsPhiData-NCBI.csv", quote=FALSE, row.names=FALSE)
+save(phiData, seqData, summaryStatsPhiData, file = "Output/processed.ROC.data-NCBI.Rdata")
+
+```
+
+# Look at distribution of isoforms and filter
+```{r}
+nameCounts <- count(as_tibble(WormBase.ID), value)
+qplot(x=n, data=nameCounts)
+
+geneNamesSingleIsoforms <- filter(nameCounts, n ==1) 
+## Filter out whose length is not a multiple of 3
+## Keep name of filtered data simple
+unfilteredFastaInfoNCBI <- tibble(info=names(unfilteredSeqData), geneName=unfilteredSeqGeneNames, length=as.double(unfilteredSeqLength))
+
+## Create a vector flagging isoforms with proper gene lengths
+properLengthIsoformsFlag <- ((unfilteredFastaInfoNCBI$length %% 3) == 0)
+
+## Check for MtDNA genes
+## Results indicate there are none. Good!
+
+## note seqData uses 'names' while fastaInfoNCBI uses 'info'
+seqData <- unfilteredSeqData[properLengthIsoformsFlag, ]
+fastaInfoNCBI <- unfilteredFastaInfoNCBI[properLengthIsoformsFlag, ]
+
+
+```
+
+Import data if `exportData==FALSE`
+```{r eval = !(exportData)}
+## Load data instead of generating and exporting it
+unfilteredPhiData <- read.csv(file="Output/labeled.unfiltered.phi.data-NCBI.csv")
+unfilteredFastaInfoNCBI <-  read.csv(file="Output/unfiltered.fasta.info-NCBI.csv")
+anomolousGeneInfo <- read.csv("Output/anomolousGeneInfo-NCBI.csv")
+summaryStatsPhiData <- read.csv(file="Output/summaryStatsPhiData-NCBI.csv")
+load(file = "Output/processed.ROC.data-NCBI.Rdata")
+```
+
+
+### Plot Results
+```{r}
+## Examine Unfiltered and Filtered Data
+dim(unfilteredPhiData)
+plot(unfilteredPhiData$phi, unfilteredPhiData$sd,
+     main="Plot Includes 'anomolous' isoforms",
+     sub = "anomolous = gene lengths in nts that are not multiples of 3"
+     )
+
+## Verify we've filtered correctly
+plot(phiData$phi, phiData$sd, main="Plot excludes 'anomolous' isoforms",
+     sub = "anomolous = gene lengths in nts that are not multiples of 3"
+     )
+
+plot(anomolousPhiData$phi, anomolousPhiData$sd, main="Isoforms Whose Lengths are Not Multiples of Three")
+
+#par(mfrow=c(2,2))
+plot(summaryStatsPhiData$mean_phi, summaryStatsPhiData$mean_sd)
+mtext("Summary Statistics of Phi Estimates", side = 3, line = -21, outer = TRUE)
+plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_sd, log="xy")
+plot(summaryStatsPhiData$mean_phi, summaryStatsPhiData$mean_length, log="xy")
+## Create histogram of short genes
+tmp <- summaryStatsPhiData$mean_length[ summaryStatsPhiData$mean_length < 400]
+hist(tmp, xlim=c(0, max(tmp)), main="Histogram of Gene Lengths < 400 aa", xlab="Length" )
+
+
+
+## Log metrics
+#par(mfrow=c(2,2))
+plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_sdLogPhi)
+mtext("Summary Statistics of log(Phi) Estimates", side = 3, line = -21, outer = TRUE)
+plot(summaryStatsPhiData$mean_length, summaryStatsPhiData$mean_sdLogPhi, log="x")
+plot(summaryStatsPhiData$mean_logPhi, summaryStatsPhiData$mean_length, log="y")
+
+```
 
