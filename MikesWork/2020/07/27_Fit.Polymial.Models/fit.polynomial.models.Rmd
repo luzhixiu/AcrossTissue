@@ -37,6 +37,7 @@ See (~/Software/R/r.notes.Rmd)  for more details
 # Load Libraries
 ```{r}
 ##library(Biostrings) ## process first to avoid conflicts
+## May want to set library(verbose=TRUE)
 library(tidyr)
 library(tibble)
 library(readr)
@@ -53,7 +54,7 @@ library(eivtools)
 
 creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
 
-exportData=TRUE ## Flag for running save(), write.csv() and other output commands
+#exportData=TRUE ## Flag for running save(), write.csv() and other output commands
 ```
 
 
@@ -62,19 +63,31 @@ exportData=TRUE ## Flag for running save(), write.csv() and other output command
 
 
 ```{r}
-labeledPhiFile <- "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
+## Define file names
 emtabDataFile <- "Input/processed.E-MTAB.data.Rdata"
-isoformSummaryStatsFile <- "Input/ROC.isoform.summary.stats-NCBI.Rdata" 
+isoformSummaryStatsFile <- "Input/ROC.isoform.summary.stats-NCBI.Rdata"
+embryoStageCountMomentsFile <- "Input/summary.stats.of.embryo.stage.data.csv"
 
-## $\phi$ Data
-load(isoformSummaryStatsFile)
 
+##labeledPhiFile <- "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
 
 ## Load E-MTAB Data
 load(file=emtabDataFile) ## lifeStageCount and lifeStage
-comment(lifeStageCount)
+
+lifeStageCount <- rename(lifeStageCount,
+                         WormBase.ID = WBID)
+
+## $\phi$ Data
+load(isoformSummaryStatsFile)
+comment(isoformSummaryStats)
+
+
 ```
 
+## Plot ROC Isoform Data
+- Should probably reside some where else
+- May already exist in Plot.ROC...Rmd files
+```{r eval=TRUE}
 ## remove unnecessary data on phi
 ## In future may want to use WBID if it is available
 ## Since there is more than one isoform/gene, don't use phiData.
@@ -82,83 +95,42 @@ comment(lifeStageCount)
 
 
 
-phiData  <- select(isoformSummaryStats, c("WB.ID", "mean_phi", "mean_var"))
+selectStats  <- select(isoformSummaryStats, c("WormBase.ID", "mean_phi", "mean_var"))
+
 
 ## only retain genes with matches in both datasets
 ## NOTE:
+meanLog10MeanPhi <- mean(log10(selectStats$mean_phi))
+sdLog10MeanPhi <- sd(log10(selectStats$mean_phi))
 
-qplot(data = phiData, x=weight_phi)
-qplot(data = phiData, x=mean_phi)
+qplot(data = selectStats, x=mean_phi, log = "x") # +
+#    annotate(geom = geom_vline(aes(xintercept = meanLog10MeanPhi) ) ) #+ 
+#    annotate(geom = geom_segment(x = meanLog10MeanPhi, xend = meanLog10MeanPhi + sdLog10MeanPhi, y = 0, yend=0) )
 
-
-phiRange <- quantile(x = phiData[["mean_phi"]], probs=c(0.2, 0.8))
-
-filteredGeneData <- filter(commonGenesData, mean_phi > phiRange[1] & mean_phi < phiRange[2])
-
-```
-
-
-# Process Data
-```{r}
-## This data can be useful for providing a model of how the error increases with counts
-embryoStageCountMoments <- read.csv(file="Input/summary.stats.of.embryo.stage.data.csv")
-
-hLifeStageCount  <- lifeStageCount %>%
-    filter(sex=="hermaphrodite") ##%>%
-    ## mutate_if(is.character, as.factor)
+qplot(data = selectStats, x=mean_var, log = "y")
 
 ```
 
 
-# Evaluate Proportion of Lifestages above a Count Threshold
 
+
+
+
+# Reshape E-MTAB Data
 ```{r}
-myPlots <- lapply(c(1,2,4,8,16),
-                  function(threshold){  ## threshold criteria for 'not low' counts
-    stageCountAboveCriteria  <- hLifeStageCount%>%
-        group_by(WBID) %>%
-        summarise( nStages = sum(count > threshold))
 
-    ggplot(stageCountAboveCriteria, aes(x = nStages)) +
-        geom_histogram(bins = 8) +
-        labs(x="Stages above Threshold", title=paste0("Threshold = ", threshold))
-
-}
-)
-
-## This is how you plot a list of ggplot objects
-## (which are not the same as grobs? I am confused.)
-do.call(grid.arrange, myPlots)
-
-
-```
-
-
-For now filter out genes with no lifestages with a count above 1.
-This is ~10% of the genes.
-
-
-```{r}
-threshold <- 1
-filteredWBID  <- hLifeStageCount %>% group_by(WBID) %>% summarise( nStages = sum(count > threshold)) %>% filter(nStages > 0) %>% select(WBID) 
-comment(filteredWBID) = paste0("WormBaseID (genes) who had at least one stage where their count was > ", threshold)
-
-## This doesn't work. I don't understand why %in% doesn't work as expected
-## filteredLifeStageCount <- hLifeStageCount %>% dplyr::filter(WBID %in% c(filteredWBID))
-
-nGenes <- length(unique(hLifeStageCount[, "WBID"]))
-## Calculate scaled counts: counts scaled by totalCount of a lifestage
-sLifeStageCount  <- hLifeStageCount %>% group_by(stage) %>%
-    mutate(sCount=(count/sum(count)), totalCount=sum(count))
+## filteredWBID  <- hLifeStageCount %>% group_by(WBID) %>% summarise( nStages = sum(count > threshold)) %>% filter(nStages > 0) %>% select(WBID)
 
 ## Remove count and totalCount because it messes with the results of pivot_wider()
-tallData <- sLifeStageCount %>% semi_join(filteredWBID) %>% select(-c(tissue, sex, count, totalCount))
+tallData <- lifeStageCount %>%
+    filter(grepl("hermaphrodite", sex)) ##%>%
+    ## Ensure average for each set of data is 1
+    ## Should update scaledCount later when genes are filtered based on Phi values
+##    mutate(scaledCount=(count/sum(count)*), totalCount=sum(count)) %>%
+##    group_by(stage) %>%
+##    semi_join(filteredWBID) %>% select(-c(tissue, sex, count, totalCount))
 
-## This works but spread is no longer under development
-##
-spreadData <- spread(tallData, stage, sCount)
-
-wideData <- pivot_wider(tallData, names_from=stage, values_from=sCount )
+wideData <- pivot_wider(tallData, names_from=stage, values_from=count )
 
 ## Update column names
 names(wideData) <-
@@ -166,17 +138,35 @@ names(wideData) <-
     str_replace_all(' Ce', '') %>%
     str_replace_all(' larva', '') %>%
     str_replace_all(' stage', '') %>%
-    str_replace_all(' ', '.')
-
+    str_replace_all(' ', '.)'
 
 ```
 
-# Fit model
-```{r} 
+```{r}
+
+## Find genes in common between ROC and E-MTAB data
 commonGenesData <- inner_join(wideData, wtPhiData, by = "geneName")
 
 
 commonGenesData
+```
+
+
+# Fit model
+
+
+## Filter Genes with Extreme Phi Values
+```{r}
+myPhiPercentileRange <- c(0.2, 0.8))
+filterPhiRange <- quantile(x = selectStats[["mean_phi"]], probs= myPhiPercentileRange)
+
+filteredGeneData <- filter(commonGenesData, mean_phi > filterPhiRange[1] & mean_phi < filterPhiRange[2])
+
+```
+
+```{r} 
+
+
 
 qplot(x = mean_phi, y = weight_phi, data = commonGenesData)
 

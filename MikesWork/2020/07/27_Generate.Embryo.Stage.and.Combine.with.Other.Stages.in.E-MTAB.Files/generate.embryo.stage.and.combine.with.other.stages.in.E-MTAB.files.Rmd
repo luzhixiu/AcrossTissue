@@ -1,0 +1,155 @@
+---
+title: "Generate Embryo Stage and Combine with Other Stages in E-MTAB files"
+author: "Michael A. Gilchrist"
+date: "21 Jul 2020"
+output: pdf_document
+---
+
+# History
+## 2020-07-27 
+- File derived from `21_Process.Published.Means/load.and.process.means.data.Rmd`
+- Streamlined file so it only processes the MTAB data.
+- No longer needs FASTA file or ROC data.
+This is because we are using the WormBase FASTA file, not the one from NCBI that contains questionable genes and transcripts that are not multiples of three.
+
+
+# Purpose
+The purpose of this document is to process empirical measurements of mRNA abundances using mRNA-seq technologies.
+These measurements are based on multiple measurements.
+The values are generally the means of the counts.
+Unfortunately we don't know anything about the sd of the values used to calculate the mean counts.
+
+To remedy this, I analyze the different, fine scaled measurements of the various embryo stages in the hermaphrodites.
+We can use the observed relationship between the mean across treatments and their sd.
+
+
+# Load Libraries
+```{r}
+library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(knitr)
+library(ggpubr)
+library(ggpmisc)
+library(purrr)
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+
+exportData=TRUE ## Flag for running save(), write.csv() and other output commands
+```
+
+# Load and Shape Data
+
+
+## E-MTAB
+### Load Data
+```{r eval=exportData}
+emtabFile <- "Input/E-MTAB-2812-query-results.tpms.tsv"
+flatData  <- readr::read_tsv(emtabFile, skip=4) %>%
+    dplyr::rename(WBID = `Gene ID`, geneName=`Gene Name` ) ## WBID is the WormBaseID
+
+## use pivot_longer command (not gather which is depricated)
+tmpData <- flatData %>% pivot_longer(-c(WBID, geneName), names_to = "long_description", values_to = "count")
+
+countData  <- separate(tmpData, long_description, into=c("sex", "tissue", "stage"), sep=", ") %>%
+    filter(grepl("organism", tissue)) %>%
+    replace_na(list(count = 0)) ## replace NAs with 0.
+## Before doing so the min value in the tibble was 0.1
+
+comment(countData) <- paste0("Data from ", emtabFile, "in tidy format. Includes separate counts for each embryonic stage. count NAs replaced with 0's\n", creationInfo)
+```
+
+### Create stageCounts 
+#### Create data: sex='hermaphrodite' stage='embryo Ce'.
+- Data includes a new set of summary measurements of gene expression from the multitude of data from hermphroditic, embryonic stages 
+- This data is created from the mean values of all sex = 'hermaphrodite' and stage = '* embryo Ce' data
+- See file `plot.moments.of.embryo.data.Rmd` for analysis of this data.
+```{r eval=exportData}
+## Get hermphrodite embryo stage names
+## NB: male, 'embryo Ce' lacks a space at the start
+embryoStageName  <- unique(countData$stage[grepl(' embryo Ce', countData$stage )])
+separateEmbryoStageCount  <-  filter(countData, stage %in% embryoStageName) 
+
+
+## 
+## Make things simple and focus on just the 'main' lifestage measurements
+## note that the stage "embryo Ce" is specific to sex = male
+## Thus need to combine embryo measurements some how
+##
+## Only include data columns well find elsewhere
+## See separate chunk for looking at moments of data
+embryoStageCount <- separateEmbryoStageCount %>%
+    group_by(WBID) %>%
+    summarise(geneName, sex, tissue, stage="embryo Ce", count =mean(count), .groups="drop") %>%
+    unique()
+
+
+#### Combine Counts Across Stages
+
+nonEmbryoStageCount <- filter(countData, !(stage %in% embryoStageName))  ##%>% select(-tissue)
+
+stageCount <- bind_rows(embryoStageCount, nonEmbryoStageCount)
+comment(stageCount) <-  paste0("Data from ", emtabFile, "in tidy format.\n", "separate  stages for embryonic hermaphrodites have been combined using mean(counts) for a WBID across embryonic stages\ncount NAs replaced with 0's", creationInfo)
+
+
+## This will include both sex = c('male', 'hermaphrodite')
+## Really only lacks 'newly molted young adult hermaphrodite Ce' 
+
+lifeStages <- c("embryo Ce", "L1 larva Ce", "L2 larva Ce", "L3 larva Ce", "L4 larva Ce", "adult Ce", "dauer larva Ce", "post dauer stage Ce")
+comment(lifeStages)=paste0("List of main lifestages to use in regression.\ncount NAs replaced with 0's", creationInfo)
+
+## Note that 'count' are standardized means of biological and technical replicates
+## 'organism' scale data for different lifestages
+## Includes data for 'sex' =  male and hermphrodite
+lifeStageCount <- filter(stageCount, (stage %in% lifeStages)) 
+comment(lifeStageCount) <- c("RNASeq counts for each of the\n\t- hermaphrodite non-embryo lifestages: L1 larvae Ce, L2 larvae Ce, ... adult\n\t- male lifestages\n\t- mean of the very specific 'hermphrodite,  *embryo Ce' which are 'hermphrodite, embryo Ce.\nAll data for tissue == organism.\nCounts from E-MTAB-2812-query-results.tpms.tsv. count NAs replaced with 0's", creationInfo ) 
+
+
+lifeStageCountMoments <- lifeStageCount %>% group_by(sex, stage)%>% summarize(stage_sd = sd(count), stage_sdLog = sd(log(count)) )
+
+
+
+##geneNameAndWormBaseID <- unique(select(lifeStageCount, c(geneName, WBID)))
+##comment(geneNameAndWormBaseID) <- paste("Mapping between WormBase IDs and geneName in FASTA file")
+
+## Export values
+## Don't use write_csv because that only works with dataframes,not tibbles
+## write.csv converts the tibble to a dataframe
+
+
+## write.csv(separateEmbryoStageCount, file = "Output/separate.embryo.stage.count.csv", quote=FALSE, row.names=FALSE)
+save(separateEmbryoStageCount, file = "Output/separate.embryo.stage.count.Rdata")
+
+
+## Export data using 'geneName' name or WormBaseID
+## write.csv(geneNameAndWormBaseID, file="Output/geneName.and.WBID.csv", quote=FALSE, row.names=FALSE)
+
+save(countData, file = "Output/countData.from.E-MTAB-data.Rdata")
+save(lifeStageCount, lifeStages, file = "Output/processed.E-MTAB.data.Rdata")
+
+```
+
+### Calculate and Save Moments of Embryo Data 
+- Don't believe these are needed for now
+- Previously they were used in 21_Evaluate.Fine.Scale.Embryo.Data/plot.moments.of.embryo.data.Rmd
+
+```{r eval=FALSE}
+## Calculate and save more details on embryoStageCountMoments
+## Be sure to use count = func(count) last in summarise().
+## Otherwise it will redefine count to a single value which will screw up the other functions
+## Use mean() rather than median for summarizing count
+## It seems less sensitive to 0 values
+embryoStageCountMoments <- separateEmbryoStageCount %>%
+    group_by(WBID) %>%
+    summarise(mean=mean(count), median=median(count), sd=sd(count), logMean=log(mean), logSd = log(sd), logVar=2*log(sd), n=length(count), min(count), max(count), .groups="drop") %>% unique()
+
+comment(embryoStageCountMoments) <- paste0("Various measures of mean and variation in gene counts across the fine grained embryo stages for hermaphrodites. Stages include, ", embryoStageName, "Note that logMean and logSd are the log(mean) and log(sd) *NOT* mean(log(count)) nor sd(log(count)).  These terms last set of terms are not calculated due to the presence of 0's and the desire to avoid having to deal with them via a truncated")
+
+
+write.csv(embryoStageCountMoments, file="Output/summary.stats.of.embryo.stage.data.csv", quote=FALSE, row.names=FALSE)
+```
