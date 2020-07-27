@@ -109,7 +109,7 @@ samples <-samp
 thinning <- thin
 adaptiveWidth <-adapt
 mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                             est.expression=T, est.csp=TRUE, est.hyper=T,est.mix = FALSE)
+                             est.expression=T, est.csp=TRUE, est.hyper=F,est.mix = FALSE)
 
 
 
@@ -316,7 +316,7 @@ dir.create(paste(dir_name,"Parameter_est",sep="/"))
 dir.create(paste(dir_name,"R_objects",sep="/"))
 
 mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                             est.expression=TRUE, est.csp=TRUE, est.hyper=TRUE,est.mix=FALSE)
+                             est.expression=TRUE, est.csp=TRUE, est.hyper=F,est.mix=FALSE)
 
 mcmc$setStepsToAdapt(0)
 

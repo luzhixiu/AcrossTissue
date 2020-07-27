@@ -77,7 +77,7 @@ if(length(genome) != sum(mixture.sizes)){
 cat("Genome loaded\n")
 #initialize parameter object
 
-sphi_init <- rep(2.8,numMixtures)
+sphi_init <- rep(5.6,numMixtures)
 with.phi <- F
 mixDef <- "allUnique"
 percent.to.keep <- 1
@@ -109,7 +109,7 @@ samples <-samp
 thinning <- thin
 adaptiveWidth <-adapt
 mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                             est.expression=T, est.csp=TRUE, est.hyper=T,est.mix = FALSE)
+                             est.expression=T, est.csp=TRUE, est.hyper=F,est.mix = FALSE)
 
 
 
@@ -225,7 +225,7 @@ while((!done) && (run_number <= 3))
   dir.create(paste(dir_name,"R_objects",sep="/"))
   
   mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                               est.expression=T, est.csp=TRUE, est.hyper=T,est.mix=FALSE)
+                               est.expression=T, est.csp=TRUE, est.hyper=F,est.mix=FALSE)
   
   model <- initializeModelObject(parameter, "ROC", with.phi)
   setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
@@ -316,7 +316,7 @@ dir.create(paste(dir_name,"Parameter_est",sep="/"))
 dir.create(paste(dir_name,"R_objects",sep="/"))
 
 mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                             est.expression=TRUE, est.csp=TRUE, est.hyper=TRUE,est.mix=FALSE)
+                             est.expression=TRUE, est.csp=TRUE, est.hyper=F,est.mix=FALSE)
 
 mcmc$setStepsToAdapt(0)
 
