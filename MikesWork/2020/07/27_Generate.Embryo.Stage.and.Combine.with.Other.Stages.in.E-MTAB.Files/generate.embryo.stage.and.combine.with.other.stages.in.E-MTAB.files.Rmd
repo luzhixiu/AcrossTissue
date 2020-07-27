@@ -135,10 +135,10 @@ save(lifeStageCount, lifeStages, file = "Output/processed.E-MTAB.data.Rdata")
 ```
 
 ### Calculate and Save Moments of Embryo Data 
-- Don't believe these are needed for now
+- Don't believe these are needed for now, but saved them into a .Rdata file anyway.
 - Previously they were used in 21_Evaluate.Fine.Scale.Embryo.Data/plot.moments.of.embryo.data.Rmd
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 ## Calculate and save more details on embryoStageCountMoments
 ## Be sure to use count = func(count) last in summarise().
 ## Otherwise it will redefine count to a single value which will screw up the other functions
@@ -150,6 +150,6 @@ embryoStageCountMoments <- separateEmbryoStageCount %>%
 
 comment(embryoStageCountMoments) <- paste0("Various measures of mean and variation in gene counts across the fine grained embryo stages for hermaphrodites. Stages include, ", embryoStageName, "Note that logMean and logSd are the log(mean) and log(sd) *NOT* mean(log(count)) nor sd(log(count)).  These terms last set of terms are not calculated due to the presence of 0's and the desire to avoid having to deal with them via a truncated")
 
-
-write.csv(embryoStageCountMoments, file="Output/summary.stats.of.embryo.stage.data.csv", quote=FALSE, row.names=FALSE)
+save(embryoStageCountMoments, file="Output/summary.stats.of.embryo.stage.Rdata")
+##write.csv(embryoStageCountMoments, file="Output/summary.stats.of.embryo.stage.data.csv", quote=FALSE, row.names=FALSE)
 ```
