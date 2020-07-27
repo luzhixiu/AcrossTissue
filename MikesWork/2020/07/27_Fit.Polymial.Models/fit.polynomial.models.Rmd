@@ -1,0 +1,193 @@
+---
+title: "Fit Error in Variables Model to Stage Specific RNAseq Data and ROC Phi"
+author: "Michael A. Gilchrist"
+date: "21 Jul 2020"
+output: pdf_document
+---
+
+# ESS Commands
+See (~/Software/R/r.notes.Rmd)  for more details
+
+| Keys    | Description              |
+|:--------|:-------------------------|
+| M-n v v | evaluate current chunk   |
+| C-M-x   | evaluate function/region |
+| M-n e   | evaluate entire buffer   |
+
+
+# Purpose
+- Fit stage specific measurements of gene expression to phi values estimated by ROC.
+
+# Results So Far
+- Have restricted genes in the 20% to 80%-ile of the phi values estimated by ROC.
+  Based on Alex Cope suggested restricting data to genes where the counts are 'not low', e.g. > 100 in every stage if we were working with FPKM (as I understand it).
+- Initially using simple polynomial models.
+	- Initial fits were poor
+		- negative coefficients
+		- highly structured residuals that declined linearly with the predictor.
+		(See figure for linear `lm()` fit)
+	- Residuals suggest a second order polynomial will work well.
+- Could see if log(phi) is better predicted using the geometric mean (though a 0 would mess things up).
+- May eventually fit error in variables regression approach since there is substantial error in both predictor (RNAseq counts) and response variable (ROC's $\phi$).
+
+
+
+
+
+# Load Libraries
+```{r}
+##library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(knitr)
+library(ggpubr)
+library(ggpmisc)
+library(gridExtra)
+library(purrr)
+library(eivtools)
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+
+exportData=TRUE ## Flag for running save(), write.csv() and other output commands
+```
+
+
+
+# Load and Filter Data
+
+
+```{r}
+labeledPhiFile <- "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
+emtabDataFile <- "Input/processed.E-MTAB.data.Rdata"
+isoformSummaryStatsFile <- "Input/ROC.isoform.summary.stats-NCBI.Rdata" 
+
+## $\phi$ Data
+load(isoformSummaryStatsFile)
+
+
+## Load E-MTAB Data
+load(file=emtabDataFile) ## lifeStageCount and lifeStage
+comment(lifeStageCount)
+```
+
+## remove unnecessary data on phi
+## In future may want to use WBID if it is available
+## Since there is more than one isoform/gene, don't use phiData.
+## Instead use summary stats of phi data
+
+
+
+phiData  <- select(isoformSummaryStats, c("WB.ID", "mean_phi", "mean_var"))
+
+## only retain genes with matches in both datasets
+## NOTE:
+
+qplot(data = phiData, x=weight_phi)
+qplot(data = phiData, x=mean_phi)
+
+
+phiRange <- quantile(x = phiData[["mean_phi"]], probs=c(0.2, 0.8))
+
+filteredGeneData <- filter(commonGenesData, mean_phi > phiRange[1] & mean_phi < phiRange[2])
+
+```
+
+
+# Process Data
+```{r}
+## This data can be useful for providing a model of how the error increases with counts
+embryoStageCountMoments <- read.csv(file="Input/summary.stats.of.embryo.stage.data.csv")
+
+hLifeStageCount  <- lifeStageCount %>%
+    filter(sex=="hermaphrodite") ##%>%
+    ## mutate_if(is.character, as.factor)
+
+```
+
+
+# Evaluate Proportion of Lifestages above a Count Threshold
+
+```{r}
+myPlots <- lapply(c(1,2,4,8,16),
+                  function(threshold){  ## threshold criteria for 'not low' counts
+    stageCountAboveCriteria  <- hLifeStageCount%>%
+        group_by(WBID) %>%
+        summarise( nStages = sum(count > threshold))
+
+    ggplot(stageCountAboveCriteria, aes(x = nStages)) +
+        geom_histogram(bins = 8) +
+        labs(x="Stages above Threshold", title=paste0("Threshold = ", threshold))
+
+}
+)
+
+## This is how you plot a list of ggplot objects
+## (which are not the same as grobs? I am confused.)
+do.call(grid.arrange, myPlots)
+
+
+```
+
+
+For now filter out genes with no lifestages with a count above 1.
+This is ~10% of the genes.
+
+
+```{r}
+threshold <- 1
+filteredWBID  <- hLifeStageCount %>% group_by(WBID) %>% summarise( nStages = sum(count > threshold)) %>% filter(nStages > 0) %>% select(WBID) 
+comment(filteredWBID) = paste0("WormBaseID (genes) who had at least one stage where their count was > ", threshold)
+
+## This doesn't work. I don't understand why %in% doesn't work as expected
+## filteredLifeStageCount <- hLifeStageCount %>% dplyr::filter(WBID %in% c(filteredWBID))
+
+nGenes <- length(unique(hLifeStageCount[, "WBID"]))
+## Calculate scaled counts: counts scaled by totalCount of a lifestage
+sLifeStageCount  <- hLifeStageCount %>% group_by(stage) %>%
+    mutate(sCount=(count/sum(count)), totalCount=sum(count))
+
+## Remove count and totalCount because it messes with the results of pivot_wider()
+tallData <- sLifeStageCount %>% semi_join(filteredWBID) %>% select(-c(tissue, sex, count, totalCount))
+
+## This works but spread is no longer under development
+##
+spreadData <- spread(tallData, stage, sCount)
+
+wideData <- pivot_wider(tallData, names_from=stage, values_from=sCount )
+
+## Update column names
+names(wideData) <-
+    names(wideData) %>%
+    str_replace_all(' Ce', '') %>%
+    str_replace_all(' larva', '') %>%
+    str_replace_all(' stage', '') %>%
+    str_replace_all(' ', '.')
+
+
+```
+
+# Fit model
+```{r} 
+commonGenesData <- inner_join(wideData, wtPhiData, by = "geneName")
+
+
+commonGenesData
+
+qplot(x = mean_phi, y = weight_phi, data = commonGenesData)
+
+lmUnweightedPhiFit  <- lm(mean_phi ~ embryo+L1+L2+L3+L4+adult+dauer+post.dauer-1, filteredGeneData)
+
+
+plot(lmUnweightedPhiFit)
+summary(lmUnweightedPhiFit)
+## Need to do a contrained fit where
+## sum(coefficients) =1 and coefficients > 0
+
+
+
+```

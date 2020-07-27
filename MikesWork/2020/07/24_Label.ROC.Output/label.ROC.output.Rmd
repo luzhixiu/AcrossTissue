@@ -80,8 +80,8 @@ Load ROC Estimates and bind isoform.ID and WormBase.ID with Phi Values
 unlabeledROCOutput <-
     readr::read_csv("Input/ROC_unlabeled.phi.summaries.with.sphi.equal.2.8.csv") 
 
-labeledROCOutput <- bind_cols(seqID, unlabeledROCOutput, seqLength) 
+labeledROCOutput <- bind_cols(seqID, unlabeledROCOutput, length=seqLength) 
 
-write.csv(x=labeledROCOutput, file="Output/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv", quote=TRUE, row.names=FALSE) 
+write.csv(x=labeledROCOutput, file="Output/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv", quote=FALSE, row.names=FALSE) 
 ```
 

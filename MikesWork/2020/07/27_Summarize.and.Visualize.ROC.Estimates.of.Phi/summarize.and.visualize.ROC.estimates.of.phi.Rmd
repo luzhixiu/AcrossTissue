@@ -1,13 +1,15 @@
 ---
-title: "Visualize Properties of ROC's Posterior Estimates of Phi"
+title: "Summarize and Visualize ROC's Estimates of Phi"
 author: "Michael A. Gilchrist"
-date: "24 Jul 2020"
+date: "27 Jul 2020"
 output: pdf_document
 ---
 
 # Preliminary Information
-- Replacement of ` ../22_Visualize.ROC.Estimates.of.Phi/visualize.ROC.estimates.of.phi.Rmd`.
-- No longer processes ROC data, instead that is processed in a separate .Rmd file and loaded here.
+- Replacement of ` ../25_Visualize.ROC.Estimates.of.Phi/visualize.ROC.estimates.of.phi.Rmd`.
+- No longer label raw ROC output with gene names, instead that is processed in a separate .Rmd file and loaded here.
+- Create and export summary statistics for genes across each one's various isoforms.
+- This output should be useful for fitting models where ROC output is the predictor variables and E-MTAB data are the explanatory variables.
 - Visualize variation within and across genes at the isoform level.
 - Some nice figures using LaTeX coded and ggplots' facets.
 
@@ -40,7 +42,8 @@ library(latex2exp)
 
 creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
 
-exportPlots=TRUE ## Flag for exporting plots
+exportData = FALSE
+exportPlots = TRUE ## Flag for exporting plots
 ```
 
 # Analyze C. elegans Genome
@@ -50,8 +53,7 @@ Should do a similar analysis of yeast genome.
 ```{r}
 
 labeledPhiFile = "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
-
-isoformSummaryStatsFile <- "Output/processed.ROC.data-NCBI.Rdata"
+isoformSummaryStatsFile <- "Output/ROC.isoform.summary.stats-NCBI.Rdata"
 
 
 ```
@@ -74,7 +76,7 @@ isoformSummaryStats  <-
 comment(isoformSummaryStats) <- paste0("Various summary stats of ROC phi output across a WormBase gene's isoforms. Columns include", names(isoformSummaryStats) )
 
 
-save(phiData, seqData, isoformSummaryStats, file = isoformSummaryStatsFile)
+save(isoformSummaryStats, file = isoformSummaryStatsFile)
 
 ```
 
