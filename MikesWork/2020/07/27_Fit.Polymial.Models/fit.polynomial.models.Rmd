@@ -8,13 +8,6 @@ output: pdf_document
 # ESS Commands
 See (~/Software/R/r.notes.Rmd)  for more details
 
-| Keys    | Description              |
-|:--------|:-------------------------|
-| M-n v v | evaluate current chunk   |
-| C-M-x   | evaluate function/region |
-| M-n e   | evaluate entire buffer   |
-
-
 # Purpose
 - Fit stage specific measurements of gene expression to phi values estimated by ROC.
 
@@ -65,8 +58,8 @@ creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissu
 ```{r}
 ## Define file names
 emtabDataFile <- "Input/processed.E-MTAB.data.Rdata"
-isoformSummaryStatsFile <- "Input/ROC.isoform.summary.stats-NCBI.Rdata"
-embryoStageCountMomentsFile <- "Input/summary.stats.of.embryo.stage.data.csv"
+isoformSummaryStatsFile <- "Input/ROC.isoform.summary.stats-WB.fasta.sphi.equal.2.8.Rdata"
+##embryoStageCountMomentsFile <- "Input/summary.stats.of.embryo.stage.Rdata"
 
 
 ##labeledPhiFile <- "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
@@ -80,21 +73,13 @@ lifeStageCount <- rename(lifeStageCount,
 ## $\phi$ Data
 load(isoformSummaryStatsFile)
 comment(isoformSummaryStats)
-
-
 ```
 
-## Plot ROC Isoform Data
+
+# Plot ROC Isoform Data
 - Should probably reside some where else
 - May already exist in Plot.ROC...Rmd files
-```{r eval=TRUE}
-## remove unnecessary data on phi
-## In future may want to use WBID if it is available
-## Since there is more than one isoform/gene, don't use phiData.
-## Instead use summary stats of phi data
-
-
-
+```{r eval=FALSE}
 selectStats  <- select(isoformSummaryStats, c("WormBase.ID", "mean_phi", "mean_var"))
 
 
@@ -104,24 +89,16 @@ meanLog10MeanPhi <- mean(log10(selectStats$mean_phi))
 sdLog10MeanPhi <- sd(log10(selectStats$mean_phi))
 
 qplot(data = selectStats, x=mean_phi, log = "x") # +
-#    annotate(geom = geom_vline(aes(xintercept = meanLog10MeanPhi) ) ) #+ 
-#    annotate(geom = geom_segment(x = meanLog10MeanPhi, xend = meanLog10MeanPhi + sdLog10MeanPhi, y = 0, yend=0) )
+##    annotate(geom = geom_vline(aes(xintercept = meanLog10MeanPhi) ) ) #+ 
+##    annotate(geom = geom_segment(x = meanLog10MeanPhi, xend = meanLog10MeanPhi + sdLog10MeanPhi, y = 0, yend=0) )
 
 qplot(data = selectStats, x=mean_var, log = "y")
 
 ```
 
-
-
-
-
-
 # Reshape E-MTAB Data
 ```{r}
 
-## filteredWBID  <- hLifeStageCount %>% group_by(WBID) %>% summarise( nStages = sum(count > threshold)) %>% filter(nStages > 0) %>% select(WBID)
-
-## Remove count and totalCount because it messes with the results of pivot_wider()
 tallData <- lifeStageCount %>%
     filter(grepl("hermaphrodite", sex)) ##%>%
     ## Ensure average for each set of data is 1
@@ -138,46 +115,139 @@ names(wideData) <-
     str_replace_all(' Ce', '') %>%
     str_replace_all(' larva', '') %>%
     str_replace_all(' stage', '') %>%
-    str_replace_all(' ', '.)'
+    str_replace_all(' ', '.')
 
+stages <- lifeStages %>% 
+    str_replace_all(' Ce', '') %>%
+    str_replace_all(' larva', '') %>%
+    str_replace_all(' stage', '') %>%
+    str_replace_all(' ', '.')
 ```
 
 ```{r}
 
+
 ## Find genes in common between ROC and E-MTAB data
-commonGenesData <- inner_join(wideData, wtPhiData, by = "geneName")
+## Old: dataForModel <- inner_join(wideData, wtPhiData, by = "geneName")
+geneData <- inner_join(wideData, isoformSummaryStats, by = "WormBase.ID")
+singleIsoformGeneData <- filter(geneData, n_isoforms==1) 
 
+comment(geneData) = "tibble with data from E-MTAB file (single embryo stage) and the summary stats of phi across isoforms."
 
-commonGenesData
+qplot(x = mean_phi, y = mean_var, data = geneData)
+qplot(x = mean_phi, y = mean_var, data = geneData, log = "xy")
+
+qplot(x = mean_phi, y = mean_var, data = singleIsoformGeneData,
+      main="Single Isoform Genes Only")
+qplot(x = mean_phi, y = mean_var, data = singleIsoformGeneData, log = "xy",
+      main="Single Isoform Genes Only")
+
 ```
 
+
+## Filter Genes with High and Low Phi Values
+```{r}
+myPhiPercentileRange <- c(0.2, 0.8)
+filterPhiRange <- quantile(x = geneData[["mean_phi"]], probs= myPhiPercentileRange)
+
+
+## Filter data based on phi values
+tmpGeneData <- filter(geneData, mean_phi > filterPhiRange[1] & mean_phi < filterPhiRange[2])
+
+## Scale counts for each E-MTAB stage such that the mean is 1
+filteredGeneData <-
+    tmpGeneData %>%
+    mutate(across(stages,  ~(.x/sum(.x)*length(.x)) ) )
+
+summarise(filteredGeneData, across(stages, mean))
+
+qplot(x = mean_phi, y = mean_var, data = filteredGeneData)
+
+```
 
 # Fit model
 
-
-## Filter Genes with Extreme Phi Values
-```{r}
-myPhiPercentileRange <- c(0.2, 0.8))
-filterPhiRange <- quantile(x = selectStats[["mean_phi"]], probs= myPhiPercentileRange)
-
-filteredGeneData <- filter(commonGenesData, mean_phi > filterPhiRange[1] & mean_phi < filterPhiRange[2])
-
-```
+## Linear Model
+- Note the crazy residuals.
 
 ```{r} 
 
+## Taken from https://ryouready.wordpress.com/2009/02/06/r-calculating-all-possible-linear-regression-models-for-a-given-set-of-predictors/
+## as.formula(paste(c("y ~ 1", regressors[vec]), collapse=" + "))
+first.order.formula<- as.formula(paste(c("mean_phi ~ -1", stages), collapse = " + "))
+
+firstOrderPhiFit  <- lm(first.order.formula, filteredGeneData)
 
 
-qplot(x = mean_phi, y = weight_phi, data = commonGenesData)
-
-lmUnweightedPhiFit  <- lm(mean_phi ~ embryo+L1+L2+L3+L4+adult+dauer+post.dauer-1, filteredGeneData)
-
-
-plot(lmUnweightedPhiFit)
-summary(lmUnweightedPhiFit)
+## Residuals are linear with the response variable!!
+plot(firstOrderPhiFit)
+summary(firstOrderPhiFit)
 ## Need to do a contrained fit where
 ## sum(coefficients) =1 and coefficients > 0
 
+```
+
+# Quadratic Model Fit
+- Still have crazy residuals.
+As a result, I'm confused; why didn't this drastically improve the residuals?
+
+```{r}
+
+tmp <- paste(paste0("I(", stages, "^2)"))
+
+second.order.formula<- as.formula(paste(c("mean_phi ~ -1", stages, tmp), collapse = " + "))
 
 
+secondOrderPhiFit  <- lm(second.order.formula, filteredGeneData)
+plot(secondOrderPhiFit)
+summary(secondOrderPhiFit)
+
+
+
+```
+
+## Sqrt Transformation of `mean_phi`
+```{r}
+
+sqrtPhiFit  <- lm(sqrt(mean_phi) ~ embryo+L1+L2+L3+L4+adult+dauer+post.dauer-1, filteredGeneData)
+
+plot(sqrtPhiFit)
+summary(sqrtPhiFit)
+
+
+```
+## Log Transformation of `mean_phi`
+
+```{r}
+
+logPhiFit  <- lm(log(mean_phi) ~ embryo+L1+L2+L3+L4+adult+dauer+post.dauer-1, filteredGeneData)
+
+plot(logPhiFit)
+summary(logPhiFit)
+
+
+```
+
+## Log All Data
+
+```{r}
+
+logStages  <- paste0("log(", stages, "+ 1E-10)")
+first.order.log.formula<- as.formula(paste(c("log(mean_phi) ~ -1", logStages), collapse = " + "))
+
+firstOrderLogFit  <- lm(first.order.log.formula, filteredGeneData)
+
+
+## Residuals are linear with the response variable!!
+plot(firstOrderLogFit)
+summary(firstOrderPhiFit)
+
+quadPhiFit  <- lm(mean_phi ~ embryo+L1+L2+L3+L4+adult+dauer+post.dauer-1, filteredGeneData)
+
+
+## Residuals are linear with the response variable!!
+plot(quadPhiFit)
+summary(quadPhiFit)
+## Need to do a contrained fit where
+## sum(coefficients) =1 and coefficients > 0
 ```

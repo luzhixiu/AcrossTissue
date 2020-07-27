@@ -53,7 +53,7 @@ Should do a similar analysis of yeast genome.
 ```{r}
 
 labeledPhiFile = "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
-isoformSummaryStatsFile <- "Output/ROC.isoform.summary.stats-NCBI.Rdata"
+isoformSummaryStatsFile <- "Output/ROC.isoform.summary.stats-WB.fasta.sphi.equal.2.8.Rdata"
 
 
 ```
