@@ -225,7 +225,7 @@ while((!done) && (run_number <= 3))
   dir.create(paste(dir_name,"R_objects",sep="/"))
   
   mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                               est.expression=T, est.csp=TRUE, est.hyper=T,est.mix=FALSE)
+                               est.expression=T, est.csp=TRUE, est.hyper=F,est.mix=FALSE)
   
   model <- initializeModelObject(parameter, "ROC", with.phi)
   setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
