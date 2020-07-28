@@ -1,0 +1,146 @@
+---
+title: "Filter Fasta Files"
+author: "Michael A. Gilchrist"
+date: "28 Jul 2020"
+output: pdf_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+To compile in emacs use M-n e 
+
+
+# Purpose
+- Filter an organism's genes as listed in its 'master' FASTA file
+- Examples would be
+	- Filter by length
+	- Filter by number of isoforms
+	- Randomly filter to create reduced dataset to speed up model fitting.
+
+# Load Libraries
+```{r}
+##library(Biostrings) ## Designed for basic quirying of large datasets
+library(seqinr)
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(knitr)
+library(purrr)
+library(ggplot2)
+library(ggpubr)
+library(ggpmisc)
+library(gridExtra)
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()), "\n")
+
+cat(creationInfo)
+
+exportData=TRUE ## Flag for running save(), write.csv() and other output commands
+```
+
+# Background
+Prevous work (see [here](../24_Visualize.ROC.Estimates.with.Fixed.Sphi/visualize.ROC.estimates.of.phi-exported.pdf) indicates that
+
+- ~ 15k genes have only 1 isoform; 
+- ~ 2k genes have 2 isoforms
+- Frequency of genes with a given number of isoforms drops quickly with the number of isoform
+- Distribution of phi seems to be largely unaffected by number of isoform
+
+# Local Functions
+```{r}
+## Taken from
+dss2df <- function(dss) data.frame(width=width(dss), seq=as.character(dss), names=names(dss))
+comment(dss2df) <- "Function copied from https://bioinformatics.stackexchange.com/a/5291.  Converts DNAStringSet object to a data frame."
+
+dss2tibble <- function(dss) tibble(width=width(dss), seq=as.character(dss), names=names(dss))
+```
+
+# Load and Shape Data
+
+### Load FASTA to get isoform and WormBase IDs & Calculate Sequence Length
+For FASTA from WormBase:
+	- `isoform.ID` is the name of the specific isoform's sequence
+	- `WormBase.ID` is the name of the gene that each isoform is an instance of via alternative splicing
+
+```{r, eval = exportData}
+## Load WB FASTA file
+fasta.file <- "Input/c_elegans.PRJNA13758.WS277.CDS_transcripts.fa"
+## Using Biostrings function which is not a standard df
+seqData <- dss2tibble(readDNAStringSet(fasta.file))
+
+## Split 'names' into isoform and WB ID columns
+seqDesc  <- select(seqData, desc = names)
+seqID <- separate(data = seqDesc, col = desc, into=c("isoform.ID", "WormBase.ID"), sep=" gene=", remove=TRUE) 
+rm(seqDesc)
+
+## verify there's a match for each entry
+if(sum(is.na(seqID$WormBase.ID)) ==0) print("Every entry matches")
+
+## Verify that all 'names' are unique.
+if(length(seqID$WormBase.ID) != length(unique(seqID$WormBase.ID))) print("Some WormBase IDs appear twice due to isoforms")
+
+if(length(seqID$isoform.ID) == length(unique(seqID$isoform.ID))) print("Every isoform.ID is unique as expected.")
+
+## Combine ID information with seqInformation for filtering
+tmpData <- bind_cols(seqData, seqID) %>%
+    select(-names)
+
+fullData <- tmpData %>% group_by(WormBase.ID) %>% mutate(n.isoform= length(isoform.ID) )
+
+```
+## Plot Distribution of Isoforms
+```{r}
+IsoformsPerWormBaseID <-  unique(select(fullData, c(n.isoform, WormBase.ID)))
+
+plot1 <-
+    qplot(x=n.isoform,
+          data=IsoformsPerWormBaseID,
+          binwidth = 1)
+          
+
+plot2 <- plot1 + scale_y_log10()
+
+grid.arrange(plot1, plot2, ncol=2, top = "Distribution of Number of Isoforms per Gene")
+
+```
+
+
+## Generate Filtered FASTA files
+```{r}
+
+## Filter out mitochondrial genes
+## This is c. elegans specific 
+nuclearData  <- filter(fullData, !grepl("^MTCE.*", isoform.ID) )
+tmp.fasta.file <- sub("Input", "Output", fasta.file)
+nuclear.fasta.file <- sub(".fa", "-nuclear.fa", tmp.fasta.file)
+
+
+narrow(
+
+
+## Filter out genes with multiple isoforms
+monoformData <- filter(nuclearData, n.isoform ==1)
+monoform.fasta.file <- sub(".fa", ".monoform.fa", nuclear.fasta.file)
+
+
+## Filter out monoform genes (not sure why this would be useful)
+multiformData <-filter(nuclearData, n.isoform !=1)
+
+
+
+## Create subsets of randomly selected genes.
+## Do this when running model
+## n.subsets = 4
+##
+## for(dataSet in c(nuclearData, monoformData)){
+##    for(subset.size in c(1000, 2000, 4000) ){
+##        for(i in 1:n.subsets){
+##            
+##    }
+
+```
+
