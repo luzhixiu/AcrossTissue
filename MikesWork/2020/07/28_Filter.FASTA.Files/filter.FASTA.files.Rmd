@@ -1,5 +1,5 @@
 ---
-title: "Filter Fasta Files"
+title: "Create Filtered Lists of Genes"
 author: "Michael A. Gilchrist"
 date: "28 Jul 2020"
 output: pdf_document
@@ -12,7 +12,7 @@ To compile in emacs use M-n e
 
 
 # Purpose
-- Filter an organism's genes as listed in its 'master' FASTA file
+- Create lists of genes that have been filtered from an organism's genes in its 'master' FASTA file
 - Examples would be
 	- Filter by length
 	- Filter by number of isoforms
@@ -20,8 +20,7 @@ To compile in emacs use M-n e
 
 # Load Libraries
 ```{r}
-##library(Biostrings) ## Designed for basic quirying of large datasets
-library(seqinr)
+library(Biostrings) ## Designed for basic quirying of large datasets
 library(tidyr)
 library(tibble)
 library(readr)
@@ -34,6 +33,7 @@ library(ggplot2)
 library(ggpubr)
 library(ggpmisc)
 library(gridExtra)
+##library(seqinr)
 
 creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()), "\n")
 
@@ -44,15 +44,14 @@ exportData=TRUE ## Flag for running save(), write.csv() and other output command
 
 # Background
 Prevous work (see [here](../24_Visualize.ROC.Estimates.with.Fixed.Sphi/visualize.ROC.estimates.of.phi-exported.pdf) indicates that
-
 - ~ 15k genes have only 1 isoform; 
 - ~ 2k genes have 2 isoforms
 - Frequency of genes with a given number of isoforms drops quickly with the number of isoform
 - Distribution of phi seems to be largely unaffected by number of isoform
 
 # Local Functions
-```{r}
-## Taken from
+```{r eval = TRUE}
+## These were written to work with Biostrings DNAStringSet objects
 dss2df <- function(dss) data.frame(width=width(dss), seq=as.character(dss), names=names(dss))
 comment(dss2df) <- "Function copied from https://bioinformatics.stackexchange.com/a/5291.  Converts DNAStringSet object to a data frame."
 
@@ -61,21 +60,23 @@ dss2tibble <- function(dss) tibble(width=width(dss), seq=as.character(dss), name
 
 # Load and Shape Data
 
-### Load FASTA to get isoform and WormBase IDs & Calculate Sequence Length
+## Load FASTA to get isoform and WormBase IDs & Calculate Sequence Length
 For FASTA from WormBase:
 	- `isoform.ID` is the name of the specific isoform's sequence
 	- `WormBase.ID` is the name of the gene that each isoform is an instance of via alternative splicing
 
-```{r, eval = exportData}
+```{r eval = exportData}
 ## Load WB FASTA file
 fasta.file <- "Input/c_elegans.PRJNA13758.WS277.CDS_transcripts.fa"
 ## Using Biostrings function which is not a standard df
 seqData <- dss2tibble(readDNAStringSet(fasta.file))
 
+## Use seqinr
+## seqData <- read.fasta(fasta.file)
+
 ## Split 'names' into isoform and WB ID columns
 seqDesc  <- select(seqData, desc = names)
 seqID <- separate(data = seqDesc, col = desc, into=c("isoform.ID", "WormBase.ID"), sep=" gene=", remove=TRUE) 
-rm(seqDesc)
 
 ## verify there's a match for each entry
 if(sum(is.na(seqID$WormBase.ID)) ==0) print("Every entry matches")
@@ -86,12 +87,12 @@ if(length(seqID$WormBase.ID) != length(unique(seqID$WormBase.ID))) print("Some W
 if(length(seqID$isoform.ID) == length(unique(seqID$isoform.ID))) print("Every isoform.ID is unique as expected.")
 
 ## Combine ID information with seqInformation for filtering
-tmpData <- bind_cols(seqData, seqID) %>%
-    select(-names)
+tmpData <- bind_cols(seqData, seqID)
 
 fullData <- tmpData %>% group_by(WormBase.ID) %>% mutate(n.isoform= length(isoform.ID) )
 
 ```
+
 ## Plot Distribution of Isoforms
 ```{r}
 IsoformsPerWormBaseID <-  unique(select(fullData, c(n.isoform, WormBase.ID)))
@@ -115,20 +116,21 @@ grid.arrange(plot1, plot2, ncol=2, top = "Distribution of Number of Isoforms per
 ## Filter out mitochondrial genes
 ## This is c. elegans specific 
 nuclearData  <- filter(fullData, !grepl("^MTCE.*", isoform.ID) )
-tmp.fasta.file <- sub("Input", "Output", fasta.file)
-nuclear.fasta.file <- sub(".fa", "-nuclear.fa", tmp.fasta.file)
+nuclearGenes <- select(nuclearData, c(names, width, isoform.ID, WormBase.ID, n.isoform))
 
-
-narrow(
-
+comment(nuclearGenes) <- c("nuclearGenes: List of C. elegans nuclear gene according to c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(nuclearGenes), collapse = ", " ))
 
 ## Filter out genes with multiple isoforms
 monoformData <- filter(nuclearData, n.isoform ==1)
-monoform.fasta.file <- sub(".fa", ".monoform.fa", nuclear.fasta.file)
+monoformGenes <- select(monoformData, c(names, width, isoform.ID, WormBase.ID, n.isoform))
+
+comment(monoformGenes) <- c("monoformGenes: List of C. elegans nuclear gene that according to WormBase c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(monoformGenes), collapse = ", " ))
+
+save(monoformGenes, nuclearGenes, file = "./Output/nuclear.and.monoform.gene.lists.Rdata")
 
 
 ## Filter out monoform genes (not sure why this would be useful)
-multiformData <-filter(nuclearData, n.isoform !=1)
+## multiformData <-filter(nuclearData, n.isoform !=1)
 
 
 
