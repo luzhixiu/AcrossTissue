@@ -145,6 +145,9 @@ qplot(x = mean_phi, y = mean_var, data = singleIsoformGeneData, log = "xy",
 ```
 
 
+
+# Fit One Model at a Time
+
 ## Filter Genes with High and Low Phi Values
 ```{r}
 myPhiPercentileRange <- c(0.2, 0.8)
@@ -164,8 +167,6 @@ summarise(filteredGeneData, across(stages, mean))
 qplot(x = mean_phi, y = mean_var, data = filteredGeneData)
 
 ```
-
-# Fit model
 
 ## Linear Model
 - Note the crazy residuals.
@@ -187,7 +188,7 @@ summary(firstOrderPhiFit)
 
 ```
 
-# Quadratic Model Fit
+## Quadratic Model Fit
 - Still have crazy residuals.
 As a result, I'm confused; why didn't this drastically improve the residuals?
 
@@ -232,6 +233,30 @@ summary(logPhiFit)
 
 ```{r}
 
+logStages  <- paste0("log(", stages, "+ 1E-10)")
+first.order.log.formula<- as.formula(paste(c("log(mean_phi) ~ -1", logStages), collapse = " + "))
+
+firstOrderLogFit  <- lm(first.order.log.formula, filteredGeneData)
+
+
+## Residuals are linear with the response variable!!
+plot(firstOrderLogFit)
+summary(firstOrderPhiFit)
+
+quadPhiFit  <- lm(mean_phi ~ embryo+L1+L2+L3+L4+adult+dauer+post.dauer-1, filteredGeneData)
+
+
+## Residuals are linear with the response variable!!
+plot(quadPhiFit)
+summary(quadPhiFit)
+## Need to do a contrained fit where
+## sum(coefficients) =1 and coefficients > 0
+```
+
+
+# Explore Fit to Log Transformed Data
+
+```{r}
 logStages  <- paste0("log(", stages, "+ 1E-10)")
 first.order.log.formula<- as.formula(paste(c("log(mean_phi) ~ -1", logStages), collapse = " + "))
 
