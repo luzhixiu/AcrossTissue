@@ -9,7 +9,10 @@ output: pdf_document
 - Replacement of ` ../22_Visualize.ROC.Estimates.of.Phi/visualize.ROC.estimates.of.phi.Rmd`.
 - No longer processes ROC data, instead that is processed in a separate .Rmd file and loaded here.
 - Visualize variation within and across genes at the isoform level.
+- ROC output used hadn't actually stabilized, so should rerun when they have.
 - Some nice figures using LaTeX coded and ggplots' facets.
+- To run from the command line use: 
+  > R -e rmarkdown::render"('visualize.ROC.estimates.of.phi.Rmd', output_file='test.pdf')"
 
 
 # ESS Commands
@@ -38,9 +41,10 @@ library(latex2exp)
 ## Usage: TeX(sprintf("$\\alpha = %d$", alpha)
 ##        TeX('$\\alpha  x^\\alpha$, where $\\alpha \\in 1\\ldots 5$')
 
-creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+creationInfo <- paste0('\tDate: ', date(), '\n\tLocation: ', sub(".*/AcrossTissue", "AcrossTissue", getwd()), '\n' )
 
-exportPlots=TRUE ## Flag for exporting plots
+exportData = TRUE
+exportPlots = TRUE ## Flag for exporting plots
 ```
 
 # Analyze C. elegans Genome
@@ -51,7 +55,7 @@ Should do a similar analysis of yeast genome.
 
 labeledPhiFile = "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
 
-isoformSummaryStatsFile <- "Output/processed.ROC.data-NCBI.Rdata"
+isoformSummaryStatsFile <- "Output/processed.ROC.with.sphi.equal.2.8.Rdata"
 
 
 ```
@@ -71,10 +75,12 @@ isoformSummaryStats  <-
     summarize(mean_phi = mean(phi), sd_phi=sd(phi), mean_sd = mean(sd), mean_var = mean(sd^2), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_sdLogPhi=mean(sdLogPhi), mean_logVar=mean(sdLogPhi^2), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_sdLogPhi=median(sdLogPhi), n_isoforms = length(phi), n_isoforms_fct = as.character(n_isoforms) ) %>% 
     mutate( n_isoforms_fct= fct_reorder(.f=n_isoforms_fct, .x= n_isoforms)) ## Make sure factors follow numerical order    
 
-comment(isoformSummaryStats) <- paste0("Various summary stats of ROC phi output across a WormBase gene's isoforms. Columns include", names(isoformSummaryStats) )
+comment(isoformSummaryStats) <-
+    paste0('Various summary stats of ROC phi output across a WormBase gene\'s isoforms. Columns include:\n\t', paste0(names(isoformSummaryStats),  sep = '', collapse= ','), '\n' ) # %>% cat
 
 
-save(phiData, seqData, isoformSummaryStats, file = isoformSummaryStatsFile)
+
+save(phiData, isoformSummaryStats, file = isoformSummaryStatsFile)
 
 ```
 
@@ -143,7 +149,7 @@ isoformSummaryStats %>%
     xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
     ylab(TeX("Standard Deviation of $\\bar{\\phi}$ Across Isoforms")) +
     
-    ggtitle(label = TeX("Mean $\\bar{\phi}$ vs SD$_\\bar{\\phi}$ Across a Gene's Isoforms") )+
+    ggtitle(label = TeX("Mean $\\bar{\\phi}$ vs SD$_\\bar{\\phi}$ Across a Gene's Isoforms") )+
     facet_wrap(~n_isoforms_fct)
 
 ## Plot mean_sd of Isoforms
