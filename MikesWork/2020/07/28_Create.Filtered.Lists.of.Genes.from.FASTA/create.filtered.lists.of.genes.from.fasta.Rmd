@@ -52,10 +52,11 @@ Prevous work (see [here](../24_Visualize.ROC.Estimates.with.Fixed.Sphi/visualize
 # Local Functions
 ```{r eval = TRUE}
 ## These were written to work with Biostrings DNAStringSet objects
-dss2df <- function(dss) data.frame(width=width(dss), seq=as.character(dss), names=names(dss))
+dss2df <- function(dss) data.frame(width=width(dss), seq=as.character(dss), names=names(dss) )
+
 comment(dss2df) <- "Function copied from https://bioinformatics.stackexchange.com/a/5291.  Converts DNAStringSet object to a data frame."
 
-dss2tibble <- function(dss) tibble(width=width(dss), seq=as.character(dss), names=names(dss))
+dss2tibble <- function(dss) tibble(width=width(dss), seq=as.character(dss), names=names(dss) )
 ```
 
 # Load and Shape Data
@@ -86,10 +87,17 @@ if(length(seqID$WormBase.ID) != length(unique(seqID$WormBase.ID))) print("Some W
 
 if(length(seqID$isoform.ID) == length(unique(seqID$isoform.ID))) print("Every isoform.ID is unique as expected.")
 
-## Combine ID information with seqInformation for filtering
-tmpData <- bind_cols(seqData, seqID)
 
-fullData <- tmpData %>% group_by(WormBase.ID) %>% mutate(n.isoform= length(isoform.ID) )
+## Combine ID information with seqInformation and index for filtering
+## The index can be used by genome$getGenomeForGeneIndices(index, simulated=FALSE)
+index <- 1:length(seqID$isoform.ID)
+tmpData <- bind_cols(seqData, seqID, index=index)
+
+
+fullData <- tmpData %>%
+    group_by(WormBase.ID) %>%
+    mutate(n.isoform= length(isoform.ID) ) 
+
 
 ```
 
@@ -115,18 +123,21 @@ grid.arrange(plot1, plot2, ncol=2, top = "Distribution of Number of Isoforms per
 
 ## Filter out mitochondrial genes
 ## This is c. elegans specific 
+allGenes <- select(fullData, c(names, width, isoform.ID, WormBase.ID, index, n.isoform) )
 nuclearData  <- filter(fullData, !grepl("^MTCE.*", isoform.ID) )
-nuclearGenes <- select(nuclearData, c(names, width, isoform.ID, WormBase.ID, n.isoform))
+nuclearGenes <- select(nuclearData, c(names, width, isoform.ID, WormBase.ID, index,  n.isoform))
+comment(allGenes) <- c("allGenes: List of C. elegans mitochondrial (only 12) and nuclear gene according to c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(nuclearGenes), collapse = ", " ), " Indexing is relative to the order in the FASTA file and, in turn, this list")
 
-comment(nuclearGenes) <- c("nuclearGenes: List of C. elegans nuclear gene according to c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(nuclearGenes), collapse = ", " ))
+
+comment(nuclearGenes) <- c("nuclearGenes: List of C. elegans nuclear gene according to c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(nuclearGenes), collapse = ", " ), " Indexing is relative to order in FASTA file")
 
 ## Filter out genes with multiple isoforms
 monoformData <- filter(nuclearData, n.isoform ==1)
-monoformGenes <- select(monoformData, c(names, width, isoform.ID, WormBase.ID, n.isoform))
+monoformGenes <- select(monoformData, c(names, width, isoform.ID, WormBase.ID, index, n.isoform))
 
-comment(monoformGenes) <- c("monoformGenes: List of C. elegans nuclear gene that according to WormBase c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(monoformGenes), collapse = ", " ))
+comment(monoformGenes) <- c("monoformGenes: List of C. elegans nuclear gene that according to WormBase c_elegans.PRJNA13758.WS277.CDS_transcripts.fa organized by:", paste0(names(monoformGenes), collapse = ", " ), " Indexing is relative to order in FASTA file")
 
-save(monoformGenes, nuclearGenes, file = "./Output/nuclear.and.monoform.gene.lists.Rdata")
+save(allGenes, monoformGenes, nuclearGenes, file = "./Output/all.nuclear.and.monoform.gene.lists.Rdata")
 
 
 ## Filter out monoform genes (not sure why this would be useful)

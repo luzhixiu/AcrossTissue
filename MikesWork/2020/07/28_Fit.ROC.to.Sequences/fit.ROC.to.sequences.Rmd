@@ -1,0 +1,299 @@
+---
+title: "Fit ROC to Sequence Data in a FASTA File"
+author: "Michael A. Gilchrist"
+date: "28 Jul 2020"
+output: pdf_document
+---
+
+# Background
+- This file and `../28_Plot.Output.from.Fit.ROC.to.Sequence/plot.output.from.roc.Rmd` were created from the `updateROC.R` file that Lu has been using.
+- Shifting from using filtered fasta files to filtering genome object after initializing it.
+
+# ESS Commands
+See (~/Software/R/r.notes.Rmd)  for more details
+
+# Purpose
+- Fit ROC to data using easier to understand and modify code
+- Save output for future plotting.
+
+# Load Libraries
+```{r}
+
+## Clear out any previously defined objects and parameters
+rm(list=ls())
+
+## Load Needed Libraries
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(knitr)
+library(purrr)
+library(AnaCoDa, verbose = TRUE, lib.loc = "~/R/x86_64-pc-linux-gnu-library/3.6") ## Could use Version(); if it's not there build locally using script
+## library(profmem, verbose = TRUE)  #is this still necessary?
+
+```
+
+
+# Load Gene Lists
+- Loads tibbles: nuclearGenes and monoisoformGenes
+```{r}
+
+load("./Input/all.nuclear.and.monoform.gene.lists.Rdata")
+
+names(nuclearGenes)
+
+```
+
+# Define Local Parameters
+
+## Variables for Both Local and CommandLine Fitting
+
+```{r}
+max.round <- 10 ## Max number of rounds of fitting
+which.model="ROC"
+which.genome = "monoform" # monoform or nuclear
+sample.genome = TRUE #whether to create a subsample of the genome
+set.seed = TRUE # flag for setting random seed
+sample.seed = 2397502  # random seed for sampling genome
+gene.sample.size <- 2000 ## number of genes to use in fitting
+## Local settings
+with.phi  <-  FALSE
+init_sphi <- 2.8 ## initial value for s_phi
+## Hyperparameters include s_phi, measurement error, and ??
+est.hyper  <- FALSE ## FALSE keeps s_phi fixed
+mixDef <- "allUnique"
+runConvergenceTests <- FALSE
+
+div <- 4  ## divergence.steps - randomizes ICs
+input.dir <- "./Input/"  ## Location of FASTA and possibly empirical phi
+output.dir <- "./Output/" 
+samples <- 2000  ## steps determined by samples * thin
+thinning <- 5    ## only 1/thin steps (iterations) are kept (in memory?)
+adaptive.width <- 100  ## adaptive width, in units of samples
+steps <- samples * thinning 
+## ncores <- (as.integer(system(command="nproc"))-1) #use n local cores -1
+## could use `detectCores()` from library(parallel)
+ncores <- 4 ## good for cheoah
+adaptive.ratio <- 0.6 # proportion of samples to run with adaptive proposal widths
+adaptive.steps <- steps * adaptive.ratio
+samples.to.keep <- (1 - adaptive.ratio) * samples # Saves relative to last sample
+    
+fasta.file <- paste0(input.dir, "c_elegans.PRJNA13758.WS277.CDS_transcripts.fa")
+
+## max.mixture <- 1
+## mixture.sizes <- rep(0, max.mixture)
+```
+
+
+## Save Key Parameters and Settings
+```{r}
+## Parameters that would be useful to have when plotting which is now in a separate file.
+parameterSaveList <- ls()
+#c("fasta.files",
+#                       "mixture.labels",
+#                       "fasta.paths",
+#                       "max.mixture",
+#                       "mixture.sizes")
+```
+	
+# Initialize AnaCoDa Objects
+Possible ways of filtering genome
+- Select key genes using
+	- Genome::getGene() - RCPP Exposed
+	- Genome::removeUnobservedGenes() - not exposed
+	- Genome::addGene(Gene& gene, bool simulated) - Exposed
+	- Genome::getGenomeForGeneIndices - Exposed *Using this one*
+
+## Initialize Genome Object and Filter Using Indices
+- Was `Initialize Genome Object using FASTA Files`
+```{r}
+
+## Previously we had separate files for each mixture.
+## Here we load one file into the genome and then modify it afterwards
+
+
+fullGenome <-
+    initializeGenomeObject(
+        file=fasta.file,
+        genome=NULL,
+        match.expression.by.id = FALSE,
+        append = FALSE,
+        positional = TRUE)
+
+length(fullGenome)
+
+## nuclearGenome <- fullGenome$getGenomeForGeneIndices(nuclearGenes$index, simulated=FALSE)
+## length(nuclearGenome)
+
+## monoformGenome <- fullGenome$getGenomeForGeneIndices(monoformGenes$index, simulated=FALSE)
+## length(monoformGenome)
+
+tmpGenes <- eval(str2lang(paste0(which.genome, "Genes")))
+tmpIndex  <- tmpGenes$index
+
+if(sample.genome == FALSE){
+    sampleIndex  <- tmpIndex
+} else
+{
+    if(set.seed == TRUE) set.seed(sample.seed)
+    sampleIndex <- sort(sample(tmpIndex, gene.sample.size))
+}
+
+## sample genome 
+genome <- fullGenome$getGenomeForGeneIndices(sampleIndex, simulated=FALSE)
+genome.length <- length(genome)
+
+## get gene.id's from genome
+gene.id <- sapply(1:genome.length, function(x) {
+    (genome$getGeneByIndex(x, simulate=FALSE))$id
+}
+)
+
+
+cat("Genome loaded and filtered\n")
+```
+
+
+## Do Multiple Rounds of Model Fitting 
+```{r}
+
+
+## Create output directories if needed
+output.folder.list <- c("Graphs", "Restart", "Parameters", "R.Objects")
+tmp <- lapply(output.folder.list, function(x){
+    tmpDir <- paste0(output.dir, x)
+    if(!dir.exists(tmpDir)) dir.create(tmpDir, recursive = TRUE)}
+    )
+
+round <- 1
+
+while(round <= max.round){
+
+    input.restart.file <- paste0(output.dir,"Restart/rstart.round.", round - 1, ".rst")
+    output.restart.file <- paste0(output.dir,"Restart/rstart.round.", round, ".rst")
+    
+if(round==1){ #initial set up
+    ## Initialize parameter object
+    ## Set initial phi value
+    parameter <-
+        initializeParameterObject(
+        genome = genome,
+        model = which.model,
+        sphi = init_sphi,
+        mutation.prior.mean = 0,
+        mutation.prior.sd = 0.35, ## should try changing this
+        num.mixtures = 1,
+        gene.assignment = rep(1, genome.length),
+        split.serine = TRUE,
+        mixture.definition = mixDef)
+
+} else{  ## not the first round, use a restart file
+    parameter <-
+        initializeParameterObject(
+            genome = genome,
+            init.with.restart.file = input.restart.file,
+            model=which.model)
+}
+
+    ## Initialize model object
+    model <- initializeModelObject(parameter = parameter, model = which.model, with.phi = with.phi)
+
+
+    ## Initialize MCMC and Model Object
+    mcmc <- initializeMCMCObject(samples=samples,
+                                 thinning=thinning,
+                                 adaptive.width=adaptive.width,
+                                 est.expression=TRUE,
+                                 est.csp=TRUE,
+                                 est.hyper=est.hyper,
+                                 est.mix = FALSE)
+
+    ## Set steps for adaptive algorithm 
+    mcmc$setStepsToAdapt(adaptive.steps)
+
+    ## Set up restart files
+    setRestartSettings(mcmc = mcmc, filename = output.restart.file, samples = adaptive.width, write.multiple = FALSE)  
+    ## run mcmc on genome with parameter using model
+    sys.runtime<-system.time(
+        runMCMC(mcmc = mcmc, genome = genome, model = model, ncores = ncores, divergence.iteration = div)
+    )
+    
+    sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
+    
+    write.table(sys.runtime,  #would like to add system.time to this.
+                file=paste0(output.dir,"runtime.round-", round ,".csv"),
+                sep=",",
+                col.names = TRUE,
+                row.names = TRUE,
+                quote=FALSE)
+    
+    ## Process Output
+    print("Begin Processing Output")
+    print("Write Restart File")
+    
+    print("Write Summaries of CSP")
+    ## Write output to .csv file
+    getCSPEstimates(parameter = parameter,
+                    filename = paste0(output.dir,
+                                     "Parameters/csp.round-",
+                                     round),
+                    mixture = 1,
+                    samples = samples.to.keep,
+                    relative.to.optimal.codon= TRUE,
+                    report.original.ref = TRUE)
+    print("Save Model Objects")
+    print("Save Parameter Object")
+    output.file <- paste0(output.dir,"R.Objects/parameter.round-", round, ".Rda")
+    writeParameterObject(parameter = parameter,
+                         file = output.file     
+                         )
+    print("Save MCMC Object")
+    writeMCMCObject(mcmc = mcmc,
+                    file = paste0(output.dir,"R.Objects/mcmc.round-", round, ".Rda") )
+
+
+    print("Save and Write Summaries of Phi to Memory")
+    phi.vals <- getExpressionEstimates(
+        parameter = parameter,
+        gene.index = c(1:genome.length),
+        samples = samples.to.keep)
+
+    phi.tibble  <- bind_cols(isoform.id = gene.id, phi.vals)
+    write.table(phi.tibble,
+                file=paste0(output.dir,"Parameters/gene.expression.round-", round, ".csv"),
+                sep=",",
+                col.names = TRUE,
+                quote = FALSE,
+                row.names = FALSE)
+
+
+    if(runConvergenceTests){
+        ## Calculate & Export Diagnostics
+        param.diag <- convergence.test(
+            trace,
+            samples=samples.to.keep,
+            thin = thinning,
+            what="Selection",
+            mixture=1,
+            frac1=0.1)
+        z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+        if (length(z.scores) > 0)
+        {
+            param.conv <- FALSE
+        }
+        
+        write(param.diag$z,
+          paste0(output.dir,
+                 "/Parameters/convergence.delta.eta.round-", round, ".txt"), ncolumns = 1)
+    }else{
+        print("not running convergence tests because 'no applicable method... applied to an object of class \"function\"")
+    }
+
+    round = round + 1
+}
+
+```
+
