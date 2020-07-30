@@ -36,7 +36,6 @@ library(AnaCoDa, verbose = TRUE, lib.loc = "~/R/x86_64-pc-linux-gnu-library/3.6"
 
 ```
 
-
 # Load Gene Lists
 - Loads tibbles: nuclearGenes and monoisoformGenes
 ```{r}
@@ -91,12 +90,7 @@ fasta.file <- paste0(input.dir, "c_elegans.PRJNA13758.WS277.CDS_transcripts.fa")
 ## Save Key Parameters and Settings
 ```{r}
 ## Parameters that would be useful to have when plotting which is now in a separate file.
-parameterSaveList <- ls()
-#c("fasta.files",
-#                       "mixture.labels",
-#                       "fasta.paths",
-#                       "max.mixture",
-#                       "mixture.sizes")
+save(list = ls(all.names = TRUE), file="Output/parameterSaveList.Rdata")
 ```
 	
 # Initialize AnaCoDa Objects
@@ -153,6 +147,8 @@ gene.id <- sapply(1:genome.length, function(x) {
 )
 
 
+## Save genome object here?
+
 cat("Genome loaded and filtered\n")
 ```
 
@@ -200,7 +196,8 @@ if(round==1){ #initial set up
 
     ## Initialize model object
     model <- initializeModelObject(parameter = parameter, model = which.model, with.phi = with.phi)
-
+    
+    ## Save model object here?
 
     ## Initialize MCMC and Model Object
     mcmc <- initializeMCMCObject(samples=samples,
@@ -244,7 +241,8 @@ if(round==1){ #initial set up
                     samples = samples.to.keep,
                     relative.to.optimal.codon= TRUE,
                     report.original.ref = TRUE)
-    print("Save Model Objects")
+    ##print("Save Genome Objects? No, they don't change with run.")
+    print("Save Model Objects?")
     print("Save Parameter Object")
     output.file <- paste0(output.dir,"R.Objects/parameter.round-", round, ".Rda")
     writeParameterObject(parameter = parameter,
@@ -261,7 +259,7 @@ if(round==1){ #initial set up
         gene.index = c(1:genome.length),
         samples = samples.to.keep)
 
-    phi.tibble  <- bind_cols(isoform.id = gene.id, phi.vals)
+    phi.tibble  <- bind_cols(isoform.ID = gene.id, phi.vals)
     write.table(phi.tibble,
                 file=paste0(output.dir,"Parameters/gene.expression.round-", round, ".csv"),
                 sep=",",

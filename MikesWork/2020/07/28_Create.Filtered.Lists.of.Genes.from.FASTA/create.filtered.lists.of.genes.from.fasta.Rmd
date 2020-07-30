@@ -17,7 +17,7 @@ To compile in emacs use M-n e
 	- Filter by length
 	- Filter by number of isoforms
 	- Randomly filter to create reduced dataset to speed up model fitting.
-
+- NOTE: 2020-07-30 minor change to undo grouping fullData and XXXGenes by WormBase.ID
 # Load Libraries
 ```{r}
 library(Biostrings) ## Designed for basic quirying of large datasets
@@ -96,7 +96,8 @@ tmpData <- bind_cols(seqData, seqID, index=index)
 
 fullData <- tmpData %>%
     group_by(WormBase.ID) %>%
-    mutate(n.isoform= length(isoform.ID) ) 
+    mutate(n.isoform= length(isoform.ID) ) %>% ungroup()
+
 
 
 ```
