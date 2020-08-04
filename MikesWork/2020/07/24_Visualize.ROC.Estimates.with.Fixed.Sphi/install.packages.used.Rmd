@@ -1,15 +1,25 @@
+---
+title: "Install Packages Used"
+author: "Michael A. Gilchrist"
+date: "04 Aug 2020"
+output: pdf_document
+---
+
 # Install Packages I Need 
 - Run this coded on a local machine and it will ensure I've got all the packages I need for these analyses
 - Was originally in 'load.and.process.means.data.Rmd' prior to 12 Jul 2020
+- Run using                                                                          ```{bash eval=FALSE}                                                                 R -e rmarkdown::render"('install.packages.used.Rmd', output_file='/tmp/install.pdf')"```     
 
+# R Code
 ```{r}
+myLib <- Sys.getenv("R_LIBS_USER")
 
-## We actually have censored data, where values exist but their exact value is unknown beyond the fact they are less than some threshold, not truncated data, which ignores data outside of a range.
-##if (!requireNamespace("hpa", quietly = TRUE))
-##    install.packages("hpa")
-
-funcList<-
-    c("readr",
+libList<-
+    c("nlme",
+      "readr",
+      "tidyr",
+      "devtools",
+      "BiocManager",
       "ggplot2",
       "forcats", 
       "EnvStats",
@@ -28,9 +38,36 @@ funcList<-
       ##        TeX('$\\alpha  x^\\alpha$, where $\\alpha \\in 1\\ldots 5$')
       )
 
+
+## use requireNamespace when working with library names as strings 
 tmp <- lapply(
-    funcList,
-    function(x) {if (!requireNamespace(x, quietly = TRUE)) install.packages(x, lib=Sys.getenv("R_LIBS_USER"))}
+    libList,
+    function(x) {if (!requireNamespace(x, quietly = TRUE)) install.packages(x, lib=myLib)}
     )
 rm(tmp)
+```
+
+## Non-CRAN Packages
+- On some machines I needed to install the .deb package libcurl-openssh-dev to download non-CRAN libraries
+
+```{r}
+## As of 2020-08-04 this has to be installed from a non-CRAN source
+if (!requireNamespace("XML", quietly = TRUE)) install.packages(x, lib=Sys.getenv("R_LIBS_USER", repos = "http://www.omegahat.net/R"))
+
+
+## install biobroom from github if it's not installed
+if (!require(biobroom, quietly=TRUE)) devtools::install_github("StoreyLab/biobroom")
+
+## Bioconductor Packages
+## Install or update packages from _Bioconductor_, CRAN, and GitHub.
+if (!require(BiocManager, quietly=TRUE)) BiocManager::install(version = "3.10", lib=myLib) ## Version for R 3.6.3
+
+biocLibList <- c("SummarizedExperiment", "DESeq2", "airway")
+
+tmp <- lapply(
+    biocLibList,
+    function(x) {if (!requireNamespace(x, quietly = TRUE)) BiocManager::install(x, lib=myLib)}
+    )
+rm(tmp)
+
 ```
