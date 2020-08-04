@@ -1,0 +1,87 @@
+---
+title: "Label ROC Data"
+author: "Michael A. Gilchrist"
+date: "24 Jul 2020"
+output: pdf_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+To compile in emacs use M-n e 
+
+
+# Purpose
+Use information from FASTA file used to fit ROC to add isoform.ID and WormBase.ID and isoform length information
+
+# Load Libraries
+```{r}
+library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(knitr)
+library(ggpubr)
+library(ggpmisc)
+library(purrr)
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+
+exportData=TRUE ## Flag for running save(), write.csv() and other output commands
+```
+
+# Load and Shape Data
+
+## ROC 
+
+### Load FASTA to get isoform and WormBase IDs & Calculate Sequence Length
+Used to call `isoform.ID` `geneName` and `WormBase.ID` `WBID`
+
+```{r, eval = exportData}
+## Load WB FASTA file
+## Using Biostrings function which is not a standard df
+seqData <- readDNAStringSet("Input/c_elegans.PRJNA13758.WS277.CDS_transcripts.fa")
+
+seqLength <- width(seqData)
+
+## names are really long descriptions.
+## NEed to extract relevant part
+seqDesc  <- as_tibble_col(x=names(seqData), column_name = "desc")
+seqID <- separate(data = seqDesc, col = desc, into=c("isoform.ID", "WormBase.ID"), sep=" gene=", remove=TRUE) 
+rm(seqDesc)
+
+## sub example
+##WormBase.ID <- sub(".* gene=([WBGEne0-9]+)", "\\1", seqDesc)
+
+
+
+## verify there's a match for each entry
+if(sum(is.na(seqID$WormBase.ID)) ==0) print("Every entry matches")
+
+## Verify that all 'names' are unique.
+if(length(seqID$WormBase.ID) != length(unique(seqID$WormBase.ID))) print("Some WormBase IDs appear twice due to isoforms")
+
+if(length(seqID$isoform.ID) == length(unique(seqID$isoform.ID))) print("Every isoform.ID is unique as expected.")
+
+```
+
+## Label ROC estimates
+Load ROC Estimates and bind isoform.ID and WormBase.ID with Phi Values
+```{r}
+## Import Phi Values from ROC Output
+
+## detailed information on phi: posterior mean, posterior mean of log10(phi), etc
+## StdError really StdDev of posterior
+## This will change with a ROC update
+unlabeledROCOutput <-
+    readr::read_csv("Input/ROC_unlabeled.phi.summaries.with.sphi.equal.2.8.csv") 
+
+labeledROCOutput <- bind_cols(seqID, unlabeledROCOutput, length=seqLength) 
+
+write.csv(x=labeledROCOutput, file="Output/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv", quote=FALSE, row.names=FALSE) 
+```
+

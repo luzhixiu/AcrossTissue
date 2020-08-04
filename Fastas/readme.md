@@ -17,3 +17,7 @@ Note it has the following 12 MtDNA genes within it which should be removed befor
     - MTCE.35 gene=WBGene00010967
 - File size uncompressed is 41MB, gzip --best is 9MB.
 - Contains 28,350 genes + isoforms
+
+# 16 Jul 2020
+- Removed previously used FASTA files.
+

@@ -1,0 +1,102 @@
+---
+title: "Visualize Properties of ROC's Posterior Estimates of Phi"
+author: "Michael A. Gilchrist"
+date: "22 Jul 2020"
+output: pdf_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+
+# ESS Commands
+See (~/Software/R/r.notes.Rmd)  for more details
+
+
+# Load Packages and Data
+```{r}
+
+##library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(knitr)
+library(ggpubr)
+library(ggpmisc)
+library(gridExtra)
+library(purrr)
+library(eivtools)
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+
+exportPlots=TRUE ## Flag for exporting plots
+```
+
+# C. elegans
+Should do a similar analysis of yeast genome.
+Since there is isoform/gene, yeast analysis will be at the 'gene level'.
+## Load Data
+```{r}
+## load objects: summaryStatsPhiData, seqData, phiData
+load(file="Input/processed.ROC.data-NCBI.Rdata")  
+```
+## Examine Data
+```{r}
+
+str(formals(qplot))
+
+## Isoform Scale
+myPlots <-
+    list(
+        qplot(x = phi, y=sd, log = c("x", "y"), data=phiData),
+        qplot(x = phi, y=1/(sd^2), log = c("x", "y"), data=phiData),
+        qplot(x = phi, y=sd/phi, ylab="CV", log = c("x", "y"), data=phiData),
+        qplot(x = logPhi, y=sdLogPhi, data=phiData)
+    )
+
+do.call(grid.arrange, myPlots)
+
+
+## Gene Scale
+myPlots <-
+    list(
+        qplot(x = mean_phi, y=mean_sd, log = c("x", "y"), data=summaryStatsPhiData),
+        qplot(x = mean_phi, y=median_phi, log = c("x", "y"), data=summaryStatsPhiData),
+        qplot(x = mean_phi, y=mean_sd/mean_phi, ylab="CV", log = c("x", "y"), data=summaryStatsPhiData),
+        qplot(x = mean_logPhi, y=mean_sdLogPhi, data=summaryStatsPhiData)
+    )
+
+do.call(grid.arrange,
+        list(
+            grobs = myPlots,
+            top = "Gene Level",
+            bottom = "Merging Information Across Isoforms"
+        )
+        )
+
+
+## Gene Scale: Median
+myPlots <-
+    list(
+        qplot(x = median_phi, y=median_sd, log = c("x", "y"), data=summaryStatsPhiData),
+        qplot(x = mean_sd, y=median_sd, log = c("x", "y"), data=summaryStatsPhiData),
+        qplot(x = median_phi, y=median_sd/median_phi, ylab="CV", log = c("x", "y"), data=summaryStatsPhiData),
+        qplot(x = median_logPhi, y=median_sdLogPhi, data=summaryStatsPhiData)
+    )
+
+do.call(grid.arrange,
+        list(
+            grobs = myPlots,
+            top = "Gene Level",
+            bottom = "Median of Isoforms"
+        )
+        )
+
+
+```
+
+

@@ -1,0 +1,206 @@
+---
+title: "Estimate logSD using censored data approaches"
+author: "Michael A. Gilchrist"
+date: "21 Jul 2020"
+output: pdf_document
+---
+
+# Preliminary Information
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+### Evaluate Chunks
+M-n v *
+- v polymode-eval-region-or-chunk
+- b polymode-eval-buffer
+- u or ↑        polymode-eval-buffer-from-beg-to-point
+- d or ↓        polymode-eval-buffer-from-point-to-end
+
+M-n e : Evaluate buffer
+# Load Libraries
+```{r}
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(optimx)
+
+exportData=TRUE
+```
+
+# Estimate SD of log(counts) from E-MTAB Data taking into account data censoring 
+- The lowest count value is 0.1, thus treat all 0 counts (previous empty cells) as coming from a censored distribution at mRNA < 0.1 counts.
+- An example of such an approach can be found [here](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/).
+- An alternative distribution is the 'Zero Modified Log-Normal' which assumes a mixture distribution which is a LogN with an additional probability mass at 0.
+	- Zero Modified Log-Normal (ZMLN)  is included in the [EnvStats](http://finzi.psych.upenn.edu/R/library/EnvStats/html/ZeroModifiedLognormal.html) package.
+	- This package generates CI for the mean, but not the SD.
+   Could bootstrap data to generate CI for the SD
+- "One way to try to assess whether a zero-modified lognormal (delta), zero-modified normal, censored normal, or censored lognormal is the best model for the data is to construct both censored and detects-only probability plots (see qqPlotCensored)" - EnvStats page above
+- Given that ROC does not have a 0 category, we don't want the ZMLN model.
+- This[blog](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/) provides as workflow that we can use w/o any additional packages
+
+## Load Data
+- Original data file is `E-MTAB-2812-query-results.tpms.tsv`
+- Data processed in `../21_Process.Published.Means`
+
+
+```{r}
+
+load("Input/processed.E-MTAB.data.Rdata")
+
+# get some basic info on what we've loaded
+comment(lifeStageCount) 
+comment(lifeStages)
+names(lifeStageCount)
+```
+
+
+## Analyze Data
+- Using code from [here](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/)
+- Note 0 values in dataset were added by myself when processing data. 
+Originally these were blank cells.
+```{r eval=exportData}
+
+## Find lower limits for each stage.
+## Exclude the embryo stage because it has a different threshold and was generated using a different pipeline (mine!)
+
+#filter data
+fData <- lifeStageCount %>% filter(sex=='hermaphrodite' & !(stage=="embryo Ce"))%>%
+    select(-c(sex, tissue))%>%
+    mutate(count=ifelse(count==0, NA, count))
+# get lower limit (which should be 0.1)
+
+
+#lifeStageCountCensored
+lscc <-
+    fData %>% group_by(stage) %>%
+    mutate(threshold = min(count, na.rm=TRUE)) %>%  ## might want to try using threshold set to 1
+    group_by() %>%
+    mutate(count = ifelse(count < threshold, threshold, count)) #, threshold=NULL)
+
+save(fData, lscc, file="filtered.and.censored.data.Rdata")
+```
+Else load data
+```{r eval=!exportData}
+load(file="filtered.and.censored.data.Rdata")
+```
+
+Plot Data
+```{r}
+#hist(log(fData$count))
+hist(log(lscc$count))
+
+mean(fData$count, na.rm=TRUE)
+ggplot(lscc, aes(x = count)) +
+  geom_histogram(bins = 150) +
+  scale_x_continuous() +
+    xlab("count") +
+    xlim(0, 10)
+
+ggplot(lscc, aes(x = count)) +
+  geom_histogram(bins = 150) +
+  scale_x_continuous(trans = "log") +
+    xlab("log(count)")
+    
+
+```
+## Estimate Parameters
+- `logLikCensoredFun` taken from [r-bloggers](https://www.r-bloggers.com/fitting-censored-log-normal-data-2/)
+- Note that `maxLik` 
+	- 'must have the parameter vector as the first argument'
+	- can return a single LLik value or a nmeric vector where each component is a LLik value
+	- Is a headache so **don't** use it.
+	Use `optimx` instead
+```{r}
+
+
+## Create toy dataset
+## tmpData  <- lscc %>% filter(stage=="adult Ce") %>% slice_sample(n=10000) 
+
+### Define objective function: -LogLik
+NLLikCensoredFun <- function(par, count, threshold, print=FALSE){
+    meanlog = par["meanlog"]
+    sdlog = par["sdlog"]
+    #meanlog=par[1]
+    #sdlog=par[2]
+   if(sdlog < 0) return(NA)
+    cdf <-
+        plnorm(threshold, meanlog = meanlog, sdlog = sdlog, log.p = TRUE);
+
+
+
+    
+    llik <-
+        sum(
+            ifelse(
+                (is.na(count) | count < threshold), #Allow use of either criteria
+                cdf,
+                dlnorm(count, meanlog = meanlog, sdlog = sdlog, log = TRUE))
+        )
+    if(print) print(paste0("NLLik = ", -llik, ", meanlog = ", meanlog, ", sdlog = ", sdlog))
+    return(-llik)
+}
+
+
+## THIS WORKS!!!
+## BUt I'd like to use pipes... 
+optim(par=c(meanlog=1, sdlog=0.01),
+      fn=NLLikCensoredFun, ## function to optimize
+      lower=c(-Inf, 1E-10),
+      upper=c(1E5, 100),
+      method = "L-BFGS-B",
+      count=lscc$count,
+      threshold=lscc$threshold, ## additional arguments for the function
+      print=FALSE
+      )
+      ##count=pull(tmpData, count), threshold=1, ## additional arguments for the function
+
+## THis works two, but what a PITA
+resultTibble <- tibble()
+for(threshold in c(0.001, 0.01, 0.1, 1)){
+    for(lifestage in lifeStages[-1]){
+        ##print(lifestage)
+        tmp <- lscc %>% filter(stage==lifestage)
+        count <- tmp$count
+        fit <-
+            optim(
+                par=c(meanlog=1, sdlog=2),
+                fn=NLLikCensoredFun, ## function to optimize
+                lower=c(-Inf, 1E-10), ## c(lower bound, initial value)
+                upper=c(1E5, 100), ## c(upper bound, initial value)
+                method = "L-BFGS-B",
+                count= count,
+                threshold=threshold, 
+                print=FALSE
+            )
+        results <- tibble(threshold, lifestage, count=length(count), NLLik=fit$value, meanlog=fit$par["meanlog"], sdlog=fit$par["sdlog"])
+        resultTibble <- bind_rows(resultTibble, results)
+        print(results, digits=4)
+    }
+}
+
+
+plot(x = resultTibble$threshold, y = resultTibble$NLLik, log="x")
+plot(x = resultTibble$threshold, y = resultTibble$sdlog, log="x")
+
+
+resultTibble %>% group_by(threshold) %>% summarise(mean(sdlog))
+```
+
+
+## Example using functions with summarise()
+### From: https://stackoverflow.com/questions/52718604/passing-a-list-of-arguments-to-a-function-with-quasiquotation
+```{r eval=FALSE}
+sum_fun <- function(.data, .summary_var, .group_vars) {
+  summary_var <- enquo(.summary_var)
+
+  .data %>%
+    group_by_at(.group_vars) %>%
+    summarise(mean = mean(!!summary_var))
+}
+
+sum_fun(mtcars, disp, .group_vars = vars(cyl, am))
+
+```

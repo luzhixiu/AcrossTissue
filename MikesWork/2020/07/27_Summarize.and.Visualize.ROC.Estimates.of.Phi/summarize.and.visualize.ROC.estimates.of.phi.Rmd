@@ -1,0 +1,241 @@
+---
+title: "Summarize and Visualize ROC's Estimates of Phi"
+author: "Michael A. Gilchrist"
+date: "27 Jul 2020"
+output: pdf_document
+---
+
+# Preliminary Information
+- Replacement of ` ../25_Visualize.ROC.Estimates.of.Phi/visualize.ROC.estimates.of.phi.Rmd`.
+- No longer label raw ROC output with gene names, instead that is processed in a separate .Rmd file and loaded here.
+- Create and export summary statistics for genes across each one's various isoforms.
+- This output should be useful for fitting models where ROC output is the predictor variables and E-MTAB data are the explanatory variables.
+- Visualize variation within and across genes at the isoform level.
+- Some nice figures using LaTeX coded and ggplots' facets.
+
+
+# ESS Commands
+See (~/Software/R/r.notes.Rmd)  for more details
+
+
+# Load Packages and Data
+```{r}
+
+##library(Biostrings) ## process first to avoid conflicts
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(ggplot2)
+library(knitr)
+library(ggpubr)
+library(ggpmisc)
+library(gridExtra)
+library(purrr)
+##library(hrbrthemes)  ## Plotting 
+library(viridis)  ## Plotting?
+library(latex2exp)
+## Usage: TeX(sprintf("$\\alpha = %d$", alpha)
+##        TeX('$\\alpha  x^\\alpha$, where $\\alpha \\in 1\\ldots 5$')
+
+creationInfo <- paste0("\tDate: ", date(), "\n\tLocation: ", sub(".*/AcrossTissue", "AcrossTissue", getwd()))
+
+exportData = FALSE
+exportPlots = TRUE ## Flag for exporting plots
+```
+
+# Analyze C. elegans Genome
+Should do a similar analysis of yeast genome.
+
+
+```{r}
+
+labeledPhiFile = "Input/ROC_labeled.phi.summaries.with.sphi.equal.2.8.csv"
+isoformSummaryStatsFile <- "Output/ROC.isoform.summary.stats-WB.fasta.sphi.equal.2.8.Rdata"
+
+
+```
+## Load Data and Calculate Summary Stats Isoforms of a Gene
+```{r eval=exportData}
+## load objects: summaryStatsPhiData, seqData, phiData
+
+tmpData <- read_csv(file=labeledPhiFile)
+phiData <- tmpData %>%
+    dplyr::rename(phi = PHI, log10Phi = log10.PHI, sd = Std.Dev, sdLog10Phi = log10.Std.Dev) %>%
+    mutate(logPhi=log10Phi*log(10), sdLogPhi=sdLog10Phi*log(10))
+
+## isoformSummaryStats was summaryStatsPhiData
+isoformSummaryStats  <-
+    phiData %>%
+    group_by(WormBase.ID) %>%
+    summarize(mean_phi = mean(phi), sd_phi=sd(phi), mean_sd = mean(sd), mean_var = mean(sd^2), mean_length = mean(length), mean_logPhi=mean(logPhi), mean_sdLogPhi=mean(sdLogPhi), mean_logVar=mean(sdLogPhi^2), median_phi = median(phi), median_sd = median(sd), median_length = median(length), median_logPhi=median(logPhi), median_sdLogPhi=median(sdLogPhi), n_isoforms = length(phi), n_isoforms_fct = as.character(n_isoforms) ) %>% 
+    mutate( n_isoforms_fct= fct_reorder(.f=n_isoforms_fct, .x= n_isoforms)) ## Make sure factors follow numerical order    
+
+comment(isoformSummaryStats) <- paste0("Various summary stats of ROC phi output across a WormBase gene's isoforms. Columns include", names(isoformSummaryStats) )
+
+
+save(isoformSummaryStats, file = isoformSummaryStatsFile)
+
+```
+
+
+## Load data instead of calculating
+```{r eval=!(exportData)}
+
+load(isoformSummaryStatsFile)
+comment(isoformSummaryStats)
+
+
+```
+
+
+```{r}
+
+## Plot Means of Isoforms
+ggplot(data=isoformSummaryStats,  aes(x=mean_phi, fill=n_isoforms_fct)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') #+
+    #scale_fill_manual(values=c("#69b3a2", "#404080")) ##+
+    ##theme_ipsum() +
+    ##labs(fill="")
+
+isoformSummaryStats %>% 
+    ggplot( aes(x=mean_phi, color=n_isoforms_fct, fill=n_isoforms_fct)) +
+    geom_histogram(alpha=0.6, bins=30) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    ##theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.1, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
+    ylab("Count") +
+    ggtitle(label = TeX("Distribution of Average $\\bar{\\phi}$ Across a Gene's Isoforms") )+
+    facet_wrap(~n_isoforms_fct, scales = "free_y")
+
+
+
+## Plot SD of Isoforms
+ggplot(data=isoformSummaryStats,  aes(x=sd_phi, fill=n_isoforms_fct)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') #+
+    #scale_fill_manual(values=c("#69b3a2", "#404080")) ##+
+    ##theme_ipsum() +
+    ##labs(fill="")
+
+isoformSummaryStats %>% 
+    ggplot(
+        aes(x=mean_phi,
+            y = sd_phi,
+            color=n_isoforms_fct,
+            fill=n_isoforms_fct)) +
+    scale_x_log10()+
+    scale_y_log10()+
+    geom_point(alpha=0.6) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    ##theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.2, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
+    ylab(TeX("Standard Deviation of $\\bar{\\phi}$ Across Isoforms")) +
+    
+    ggtitle(label = TeX("Mean $\\bar{\phi}$ vs SD$_\\bar{\\phi}$ Across a Gene's Isoforms") )+
+    facet_wrap(~n_isoforms_fct)
+
+## Plot mean_sd of Isoforms
+ggplot(data=isoformSummaryStats,  aes(x=mean_sd, fill=n_isoforms_fct)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') #+
+    #scale_fill_manual(values=c("#69b3a2", "#404080")) ##+
+    ##theme_ipsum() +
+    ##labs(fill="")
+
+isoformSummaryStats %>% 
+    ggplot(
+        aes(x=mean_phi,
+            y = mean_sd,
+            color=n_isoforms_fct,
+            fill=n_isoforms_fct)) +
+    scale_x_log10()+
+    scale_y_log10()+
+    geom_point(alpha=0.6) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    ##theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.2, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    xlab(TeX('Average of $\\bar{\\phi}$ Across Isoforms')) +
+    ylab(TeX("Average of Standard Deviation of Posterior Across Isoforms")) +
+    
+    ggtitle(label = TeX("Mean $\\phi$ vs Mean Posterior SD Across a Gene's Isoforms") )+
+    facet_wrap(~n_isoforms_fct)
+
+
+```
+
+
+
+## Examine Data
+```{r}
+
+str(formals(qplot))
+
+## Isoform Scale
+myPlots <-
+    list(
+        qplot(x = phi, y=sd, log = c("x", "y"), data=phiData),
+        qplot(x = phi, y=1/(sd^2), log = c("x", "y"), data=phiData),
+        qplot(x = phi, y=sd/phi, ylab="CV", log = c("x", "y"), data=phiData),
+        qplot(x = logPhi, y=sdLogPhi, data=phiData)
+    )
+
+do.call(grid.arrange, myPlots)
+
+
+## Gene Scale
+myPlots <-
+    list(
+        qplot(x = mean_phi, y=mean_sd, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_phi, y=median_phi, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_phi, y=mean_sd/mean_phi, ylab="CV", log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_logPhi, y=mean_sdLogPhi, data=isoformSummaryStats)
+    )
+
+do.call(grid.arrange,
+        list(
+            grobs = myPlots,
+            top = "Gene Level",
+            bottom = "Merging Information Across Isoforms"
+        )
+        )
+
+
+## Gene Scale: Median
+myPlots <-
+    list(
+        qplot(x = median_phi, y=median_sd, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = mean_sd, y=median_sd, log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = median_phi, y=median_sd/median_phi, ylab="CV", log = c("x", "y"), data=isoformSummaryStats),
+        qplot(x = median_logPhi, y=median_sdLogPhi, data=isoformSummaryStats)
+    )
+
+do.call(grid.arrange,
+        list(
+            grobs = myPlots,
+            top = "Gene Level",
+            bottom = "Median of Isoforms"
+        )
+        )
+
+
+```
+
+
