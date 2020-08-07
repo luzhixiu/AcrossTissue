@@ -82,6 +82,8 @@ load("Input/session.image.RData")
 ## Remove dangling objects
 rm("mcmc", "genome", "parameter", "model")
 
+## Load objects parameter.round-X.Rda
+data.dir <- paste0(input.dir, "R.Objects/")
 
 ## Load Objects
 parameterSet <-
@@ -91,6 +93,8 @@ parameterSet <-
     
     }
     )
+
+parameter <- parameterSet[[max.round]]
 
 mcmcSet <-
     sapply(1:max.round, function(x){
@@ -150,8 +154,6 @@ emptyCombinedParameterObjectUsingRestartFiles <-
         init.with.restart.file = restart.files[1]
     )
 
-## Load objects parameter.round-X.Rda
-data.dir <- paste0(input.dir, "R.Objects/")
 
 #fs::dir_ls(regexp = "parameter.round-[0-9]+.Rda", path = data.dir)
 
@@ -168,7 +170,7 @@ data.dir <- paste0(input.dir, "R.Objects/")
 traceSet <- lapply(1:max.round,  function(x) parameterSet[[x]]$getTraceObject())
 
 
-## TRy to make below generic
+## Try to make below generic
 
 value = "sphi"
 
@@ -189,7 +191,7 @@ dataTibble <- as_tibble(dataSet)
 
 dataTibbleLong <- gather(dataTibble, names(dataTibble), key="round", value = value)
 
-filter(dataTibbleLong, 
+## filter(dataTibbleLong, 
 
 c <- ggplot(dataTibbleLong, aes(x = value, fill = round) )
 c + geom_histogram( alpha=.5, position="identity")
@@ -197,7 +199,9 @@ c + geom_histogram( alpha=.5, position="identity")
 
 ## This works!
 ## what=c("Mutation", "Selection", "MixtureProbability" ,"Sphi", "Mphi", "Aphi", "Sepsilon", "ExpectedPhi", "Expression","NSEProb","NSERate","InitiationCost","PartitionFunction")
+```
 
+```{r}
 sphiSamplesSet <- map(.x = traceSet, .f = function(x) {
     tmp <- (x$getStdDevSynthesisRateTraces())[[1]]
     return(tmp[((samples-samples.to.keep):samples)+1])
@@ -218,10 +222,11 @@ plot(mcmcSet[[max.round]], what = "LogPosterior", )
 dev.off()
 
 plot(traceSet[[max.round]], what = "Mutation")
-plot(trace[[max.round]], what = "Selection")
+plot(traceSet[[max.round]], what = "Selection")
 
 ## Choose one gene at the 1, 10, 20, 50, 70, 90 and 99 percentile to plot
-plot(trace, what = "Expression", )
+plot(traceSet[max.round], what = "Expression"
+     )
 
 
 ## Plot ACF
