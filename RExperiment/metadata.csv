@@ -1,165 +1,165 @@
-"AtlasAssayGroup","organism","strain","genotype","developmental_stage","sex","organism_part","age","initial_time_point","technical_replicate_group"
-"SRR006511","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","1"
-"SRR006514","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","2"
-"SRR006515","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","2"
-"SRR006516","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","2"
-"SRR006517","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","4"
-"SRR006518","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","4"
-"SRR006519","g35","Caenorhabditis elegans","N2","wild type genotype","L3 larva Ce","hermaphrodite","organism","     ","  ","3"
-"SRR006520","g35","Caenorhabditis elegans","N2","wild type genotype","L3 larva Ce","hermaphrodite","organism","     ","  ","3"
-"SRR016669","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","7"
-"SRR016670","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","7"
-"SRR016674","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","9"
-"SRR016675","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","9"
-"SRR016678","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","10"
-"SRR023579","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","17"
-"SRR023580","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","17"
-"SRR023581","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","17"
-"SRR027187","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","14"
-"SRR027188","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","14"
-"SRR027189","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","15"
-"SRR027190","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","15"
-"SRR027191","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","16"
-"SRR027192","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","16"
-"SRR089352","g26","Caenorhabditis elegans","N2","wild type genotype","adult Ce","hermaphrodite","organism","     ","  ","26"
-"SRR089353","g26","Caenorhabditis elegans","N2","wild type genotype","adult Ce","hermaphrodite","organism","     ","  ","26"
-"SRR089354","g26","Caenorhabditis elegans","N2","wild type genotype","adult Ce","hermaphrodite","organism","     ","  ","26"
-"SRR089405","g35","Caenorhabditis elegans","N2","wild type genotype","L3 larva Ce","hermaphrodite","organism","     ","  ","24"
-"SRR089406","g35","Caenorhabditis elegans","N2","wild type genotype","L3 larva Ce","hermaphrodite","organism","     ","  ","24"
-"SRR089407","g35","Caenorhabditis elegans","N2","wild type genotype","L3 larva Ce","hermaphrodite","organism","     ","  ","24"
-"SRR089784","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","29"
-"SRR089785","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","29"
-"SRR089786","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","29"
-"SRR089795","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","30"
-"SRR089796","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","30"
-"SRR089798","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","32"
-"SRR089821","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","34"
-"SRR089822","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","34"
-"SRR089823","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","34"
-"SRR124255","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","35"
-"SRR124256","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","35"
-"SRR124257","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","35"
-"SRR124275","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","37"
-"SRR124276","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","37"
-"SRR125337","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","38"
-"SRR125481","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","39"
-"SRR136597","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","40"
-"SRR136598","g15","Caenorhabditis elegans","N2","wild type genotype","L4 larva Ce","hermaphrodite","organism","     ","  ","41"
-"SRR136599","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","     ","  ","42"
-"SRR316196","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","20-170 minute","cleavage of the egg cell","45"
-"SRR316753","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","80-270 minute","cleavage of the egg cell","46"
-"SRR316754","g7","Caenorhabditis elegans","N2","wild type genotype","4-cell embryo Ce","hermaphrodite","organism","     ","  ","47"
-"SRR316755","g7","Caenorhabditis elegans","N2","wild type genotype","4-cell embryo Ce","hermaphrodite","organism","     ","  ","48"
-"SRR316756","g7","Caenorhabditis elegans","N2","wild type genotype","4-cell embryo Ce","hermaphrodite","organism","     ","  ","48"
-"SRR317082","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","80-270 minute","cleavage of the egg cell","46"
-"SRR317083","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","20-170 minute","cleavage of the egg cell","45"
-"SRR332921","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","51"
-"SRR332922","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","51"
-"SRR332923","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","50"
-"SRR332924","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","50"
-"SRR332925","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","50-200 minute","cleavage of the egg cell","52"
-"SRR332926","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","50-200 minute","cleavage of the egg cell","52"
-"SRR350954","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","51"
-"SRR350956","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","50"
-"SRR350958","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","50-200 minute","cleavage of the egg cell","52"
-"SRR350977","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","80-270 minute","cleavage of the egg cell","46"
-"SRR350987","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","530-680 minute","cleavage of the egg cell","53"
-"SRR350988","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","530-680 minute","cleavage of the egg cell","53"
-"SRR350989","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","530-680 minute","cleavage of the egg cell","53"
-"SRR350990","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","560-710 minute","cleavage of the egg cell","54"
-"SRR350991","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","560-710 minute","cleavage of the egg cell","54"
-"SRR350992","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","560-710 minute","cleavage of the egg cell","54"
-"SRR350994","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","590-740 minute","cleavage of the egg cell","56"
-"SRR350996","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","590-740 minute","cleavage of the egg cell","56"
-"SRR350997","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","620-770 minute","cleavage of the egg cell","57"
-"SRR350999","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","620-770 minute","cleavage of the egg cell","57"
-"SRR351001","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","290-440 minute","cleavage of the egg cell","58"
-"SRR351002","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","320-470 minute","cleavage of the egg cell","59"
-"SRR351004","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","350-500 minute","cleavage of the egg cell","60"
-"SRR351005","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","350-500 minute","cleavage of the egg cell","60"
-"SRR351007","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","380-530 minute","cleavage of the egg cell","61"
-"SRR351008","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","380-530 minute","cleavage of the egg cell","61"
-"SRR351009","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","140-290 minute","cleavage of the egg cell","62"
-"SRR351010","g11","Caenorhabditis elegans","N2","wild type genotype","enclosing embryo Ce","hermaphrodite","organism","200-350 minute","cleavage of the egg cell","63"
-"SRR351011","g11","Caenorhabditis elegans","N2","wild type genotype","enclosing embryo Ce","hermaphrodite","organism","200-350 minute","cleavage of the egg cell","63"
-"SRR351013","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","440-590 minute","cleavage of the egg cell","64"
-"SRR351014","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","440-590 minute","cleavage of the egg cell","64"
-"SRR351015","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","440-590 minute","cleavage of the egg cell","64"
-"SRR351017","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","500-650 minute","cleavage of the egg cell","65"
-"SRR351018","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","500-650 minute","cleavage of the egg cell","65"
-"SRR351019","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","500-650 minute","cleavage of the egg cell","65"
-"SRR351021","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","650-800 minute","cleavage of the egg cell","66"
-"SRR351022","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","650-800 minute","cleavage of the egg cell","66"
-"SRR351023","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","110-300 minute","cleavage of the egg cell","67"
-"SRR351024","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","110-300 minute","cleavage of the egg cell","67"
-"SRR351027","g11","Caenorhabditis elegans","N2","wild type genotype","enclosing embryo Ce","hermaphrodite","organism","170-320 minute","cleavage of the egg cell","68"
-"SRR351028","g11","Caenorhabditis elegans","N2","wild type genotype","enclosing embryo Ce","hermaphrodite","organism","170-320 minute","cleavage of the egg cell","68"
-"SRR351030","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","230-380 minute","cleavage of the egg cell","69"
-"SRR351031","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","230-380 minute","cleavage of the egg cell","69"
-"SRR351032","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","230-380 minute","cleavage of the egg cell","69"
-"SRR351034","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","410-560 minute","cleavage of the egg cell","70"
-"SRR351035","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","410-560 minute","cleavage of the egg cell","70"
-"SRR351036","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","470-620 minute","cleavage of the egg cell","71"
-"SRR351037","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","470-620 minute","cleavage of the egg cell","71"
-"SRR351038","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","470-620 minute","cleavage of the egg cell","71"
-"SRR351040","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","680-830 minute","cleavage of the egg cell","72"
-"SRR351041","g19","Caenorhabditis elegans","N2","wild type genotype","fully-elongated embryo Ce","hermaphrodite","organism","680-830 minute","cleavage of the egg cell","72"
-"SRR352279","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","260-410 minute","cleavage of the egg cell","75"
-"SRR352280","g9","Caenorhabditis elegans","N2","wild type genotype","late cleavage stage embryo Ce","hermaphrodite","organism","260-410 minute","cleavage of the egg cell","75"
-"SRR358683","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","76"
-"SRR358684","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","76"
-"SRR358685","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","76"
-"SRR358686","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","76"
-"SRR358688","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","77"
-"SRR358690","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","77"
-"SRR358691","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","77"
-"SRR358693","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","78"
-"SRR358694","g31","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","L2d-dauer molt Ce","hermaphrodite","organism","     ","  ","78"
-"SRR358695","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","79"
-"SRR358696","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","79"
-"SRR358697","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","79"
-"SRR358698","g28","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","post dauer stage Ce","hermaphrodite","organism","     ","  ","79"
-"SRR359065","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","50"
-"SRR359066","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","50-200 minute","cleavage of the egg cell","52"
-"SRR359067","g11","Caenorhabditis elegans","N2","wild type genotype","enclosing embryo Ce","hermaphrodite","organism","170-320 minute","cleavage of the egg cell","68"
-"SRR359087","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","500-650 minute","cleavage of the egg cell","65"
-"SRR359088","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","560-710 minute","cleavage of the egg cell","54"
-"SRR359089","g8","Caenorhabditis elegans","N2","wild type genotype","3-fold embryo Ce","hermaphrodite","organism","530-680 minute","cleavage of the egg cell","53"
-"SRR359090","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","440-590 minute","cleavage of the egg cell","64"
-"SRR359091","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","470-620 minute","cleavage of the egg cell","71"
-"SRR360120","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","80"
-"SRR360121","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","80"
-"SRR360122","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","81"
-"SRR360123","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","81"
-"SRR360124","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","82"
-"SRR360125","g20","Caenorhabditis elegans","CB1370","daf-2(e1370)III.","dauer larva Ce","hermaphrodite","organism","     ","  ","82"
-"SRR360126","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR360127","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR360128","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR360129","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR360130","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR360133","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","84"
-"SRR360134","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","84"
-"SRR473085","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","87"
-"SRR473297","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR473298","g13","Caenorhabditis elegans","N2","wild type genotype","newly molted young adult hermaphrodite Ce","hermaphrodite","organism","     ","  ","83"
-"SRR473299","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","86"
-"SRR478539","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","-150 minute","cleavage of the egg cell","51"
-"SRR478540","g34","Caenorhabditis elegans","N2","wild type genotype","elongating embryo Ce","hermaphrodite","organism","350-500 minute","cleavage of the egg cell","60"
-"SRR493076","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","92"
-"SRR493079","g24","Caenorhabditis elegans","N2","wild type genotype","L1 larva Ce","hermaphrodite","organism","     ","  ","95"
-"SRR493099","g7","Caenorhabditis elegans","N2","wild type genotype","4-cell embryo Ce","hermaphrodite","organism","     ","  ","96"
-"SRR493100","g7","Caenorhabditis elegans","N2","wild type genotype","4-cell embryo Ce","hermaphrodite","organism","     ","  ","96"
-"SRR493102","g14","Caenorhabditis elegans","N2","wild type genotype","gastrulating embryo Ce","hermaphrodite","organism","     ","  ","97"
-"SRR493105","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","98"
-"SRR493358","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","99"
-"SRR493359","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","99"
-"SRR493360","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","99"
-"SRR493361","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","99"
-"SRR493362","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","100"
-"SRR493363","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","100"
-"SRR493364","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","100"
-"SRR504316","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","101"
-"SRR504324","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","105"
-"SRR504325","g17","Caenorhabditis elegans","N2","wild type genotype","L2 larva Ce","hermaphrodite","organism","     ","  ","105"
-"SRR554453","g23","Caenorhabditis elegans","N2","wild type genotype","proliferating embryo Ce","hermaphrodite","organism","     ","  ","98"
+,AtlasAssayGroup,organism,strain,genotype,developmental_stage,sex,organism_part,age,initial_time_point,technical_replicate_group
+SRR006511,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,1
+SRR006514,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,2
+SRR006515,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,2
+SRR006516,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,2
+SRR006517,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,4
+SRR006518,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,4
+SRR006519,g35,Caenorhabditis elegans,N2,wild type genotype,L3 larva Ce,hermaphrodite,organism,     ,  ,3
+SRR006520,g35,Caenorhabditis elegans,N2,wild type genotype,L3 larva Ce,hermaphrodite,organism,     ,  ,3
+SRR016669,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,7
+SRR016670,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,7
+SRR016674,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,9
+SRR016675,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,9
+SRR016678,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,10
+SRR023579,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,17
+SRR023580,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,17
+SRR023581,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,17
+SRR027187,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,14
+SRR027188,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,14
+SRR027189,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,15
+SRR027190,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,15
+SRR027191,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,16
+SRR027192,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,16
+SRR089352,g26,Caenorhabditis elegans,N2,wild type genotype,adult Ce,hermaphrodite,organism,     ,  ,26
+SRR089353,g26,Caenorhabditis elegans,N2,wild type genotype,adult Ce,hermaphrodite,organism,     ,  ,26
+SRR089354,g26,Caenorhabditis elegans,N2,wild type genotype,adult Ce,hermaphrodite,organism,     ,  ,26
+SRR089405,g35,Caenorhabditis elegans,N2,wild type genotype,L3 larva Ce,hermaphrodite,organism,     ,  ,24
+SRR089406,g35,Caenorhabditis elegans,N2,wild type genotype,L3 larva Ce,hermaphrodite,organism,     ,  ,24
+SRR089407,g35,Caenorhabditis elegans,N2,wild type genotype,L3 larva Ce,hermaphrodite,organism,     ,  ,24
+SRR089784,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,29
+SRR089785,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,29
+SRR089786,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,29
+SRR089795,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,30
+SRR089796,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,30
+SRR089798,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,32
+SRR089821,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,34
+SRR089822,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,34
+SRR089823,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,34
+SRR124255,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,35
+SRR124256,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,35
+SRR124257,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,35
+SRR124275,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,37
+SRR124276,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,37
+SRR125337,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,38
+SRR125481,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,39
+SRR136597,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,40
+SRR136598,g15,Caenorhabditis elegans,N2,wild type genotype,L4 larva Ce,hermaphrodite,organism,     ,  ,41
+SRR136599,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,     ,  ,42
+SRR316196,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,20-170 minute,cleavage of the egg cell,45
+SRR316753,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,80-270 minute,cleavage of the egg cell,46
+SRR316754,g7,Caenorhabditis elegans,N2,wild type genotype,4-cell embryo Ce,hermaphrodite,organism,     ,  ,47
+SRR316755,g7,Caenorhabditis elegans,N2,wild type genotype,4-cell embryo Ce,hermaphrodite,organism,     ,  ,48
+SRR316756,g7,Caenorhabditis elegans,N2,wild type genotype,4-cell embryo Ce,hermaphrodite,organism,     ,  ,48
+SRR317082,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,80-270 minute,cleavage of the egg cell,46
+SRR317083,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,20-170 minute,cleavage of the egg cell,45
+SRR332921,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,51
+SRR332922,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,51
+SRR332923,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,50
+SRR332924,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,50
+SRR332925,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,50-200 minute,cleavage of the egg cell,52
+SRR332926,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,50-200 minute,cleavage of the egg cell,52
+SRR350954,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,51
+SRR350956,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,50
+SRR350958,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,50-200 minute,cleavage of the egg cell,52
+SRR350977,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,80-270 minute,cleavage of the egg cell,46
+SRR350987,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,530-680 minute,cleavage of the egg cell,53
+SRR350988,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,530-680 minute,cleavage of the egg cell,53
+SRR350989,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,530-680 minute,cleavage of the egg cell,53
+SRR350990,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,560-710 minute,cleavage of the egg cell,54
+SRR350991,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,560-710 minute,cleavage of the egg cell,54
+SRR350992,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,560-710 minute,cleavage of the egg cell,54
+SRR350994,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,590-740 minute,cleavage of the egg cell,56
+SRR350996,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,590-740 minute,cleavage of the egg cell,56
+SRR350997,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,620-770 minute,cleavage of the egg cell,57
+SRR350999,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,620-770 minute,cleavage of the egg cell,57
+SRR351001,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,290-440 minute,cleavage of the egg cell,58
+SRR351002,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,320-470 minute,cleavage of the egg cell,59
+SRR351004,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,350-500 minute,cleavage of the egg cell,60
+SRR351005,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,350-500 minute,cleavage of the egg cell,60
+SRR351007,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,380-530 minute,cleavage of the egg cell,61
+SRR351008,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,380-530 minute,cleavage of the egg cell,61
+SRR351009,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,140-290 minute,cleavage of the egg cell,62
+SRR351010,g11,Caenorhabditis elegans,N2,wild type genotype,enclosing embryo Ce,hermaphrodite,organism,200-350 minute,cleavage of the egg cell,63
+SRR351011,g11,Caenorhabditis elegans,N2,wild type genotype,enclosing embryo Ce,hermaphrodite,organism,200-350 minute,cleavage of the egg cell,63
+SRR351013,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,440-590 minute,cleavage of the egg cell,64
+SRR351014,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,440-590 minute,cleavage of the egg cell,64
+SRR351015,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,440-590 minute,cleavage of the egg cell,64
+SRR351017,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,500-650 minute,cleavage of the egg cell,65
+SRR351018,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,500-650 minute,cleavage of the egg cell,65
+SRR351019,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,500-650 minute,cleavage of the egg cell,65
+SRR351021,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,650-800 minute,cleavage of the egg cell,66
+SRR351022,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,650-800 minute,cleavage of the egg cell,66
+SRR351023,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,110-300 minute,cleavage of the egg cell,67
+SRR351024,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,110-300 minute,cleavage of the egg cell,67
+SRR351027,g11,Caenorhabditis elegans,N2,wild type genotype,enclosing embryo Ce,hermaphrodite,organism,170-320 minute,cleavage of the egg cell,68
+SRR351028,g11,Caenorhabditis elegans,N2,wild type genotype,enclosing embryo Ce,hermaphrodite,organism,170-320 minute,cleavage of the egg cell,68
+SRR351030,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,230-380 minute,cleavage of the egg cell,69
+SRR351031,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,230-380 minute,cleavage of the egg cell,69
+SRR351032,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,230-380 minute,cleavage of the egg cell,69
+SRR351034,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,410-560 minute,cleavage of the egg cell,70
+SRR351035,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,410-560 minute,cleavage of the egg cell,70
+SRR351036,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,470-620 minute,cleavage of the egg cell,71
+SRR351037,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,470-620 minute,cleavage of the egg cell,71
+SRR351038,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,470-620 minute,cleavage of the egg cell,71
+SRR351040,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,680-830 minute,cleavage of the egg cell,72
+SRR351041,g19,Caenorhabditis elegans,N2,wild type genotype,fully-elongated embryo Ce,hermaphrodite,organism,680-830 minute,cleavage of the egg cell,72
+SRR352279,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,260-410 minute,cleavage of the egg cell,75
+SRR352280,g9,Caenorhabditis elegans,N2,wild type genotype,late cleavage stage embryo Ce,hermaphrodite,organism,260-410 minute,cleavage of the egg cell,75
+SRR358683,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,76
+SRR358684,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,76
+SRR358685,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,76
+SRR358686,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,76
+SRR358688,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,77
+SRR358690,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,77
+SRR358691,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,77
+SRR358693,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,78
+SRR358694,g31,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,L2d-dauer molt Ce,hermaphrodite,organism,     ,  ,78
+SRR358695,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,79
+SRR358696,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,79
+SRR358697,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,79
+SRR358698,g28,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,post dauer stage Ce,hermaphrodite,organism,     ,  ,79
+SRR359065,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,50
+SRR359066,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,50-200 minute,cleavage of the egg cell,52
+SRR359067,g11,Caenorhabditis elegans,N2,wild type genotype,enclosing embryo Ce,hermaphrodite,organism,170-320 minute,cleavage of the egg cell,68
+SRR359087,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,500-650 minute,cleavage of the egg cell,65
+SRR359088,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,560-710 minute,cleavage of the egg cell,54
+SRR359089,g8,Caenorhabditis elegans,N2,wild type genotype,3-fold embryo Ce,hermaphrodite,organism,530-680 minute,cleavage of the egg cell,53
+SRR359090,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,440-590 minute,cleavage of the egg cell,64
+SRR359091,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,470-620 minute,cleavage of the egg cell,71
+SRR360120,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,80
+SRR360121,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,80
+SRR360122,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,81
+SRR360123,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,81
+SRR360124,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,82
+SRR360125,g20,Caenorhabditis elegans,CB1370,daf-2(e1370)III.,dauer larva Ce,hermaphrodite,organism,     ,  ,82
+SRR360126,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR360127,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR360128,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR360129,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR360130,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR360133,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,84
+SRR360134,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,84
+SRR473085,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,87
+SRR473297,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR473298,g13,Caenorhabditis elegans,N2,wild type genotype,newly molted young adult hermaphrodite Ce,hermaphrodite,organism,     ,  ,83
+SRR473299,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,86
+SRR478539,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,-150 minute,cleavage of the egg cell,51
+SRR478540,g34,Caenorhabditis elegans,N2,wild type genotype,elongating embryo Ce,hermaphrodite,organism,350-500 minute,cleavage of the egg cell,60
+SRR493076,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,92
+SRR493079,g24,Caenorhabditis elegans,N2,wild type genotype,L1 larva Ce,hermaphrodite,organism,     ,  ,95
+SRR493099,g7,Caenorhabditis elegans,N2,wild type genotype,4-cell embryo Ce,hermaphrodite,organism,     ,  ,96
+SRR493100,g7,Caenorhabditis elegans,N2,wild type genotype,4-cell embryo Ce,hermaphrodite,organism,     ,  ,96
+SRR493102,g14,Caenorhabditis elegans,N2,wild type genotype,gastrulating embryo Ce,hermaphrodite,organism,     ,  ,97
+SRR493105,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,98
+SRR493358,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,99
+SRR493359,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,99
+SRR493360,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,99
+SRR493361,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,99
+SRR493362,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,100
+SRR493363,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,100
+SRR493364,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,100
+SRR504316,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,101
+SRR504324,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,105
+SRR504325,g17,Caenorhabditis elegans,N2,wild type genotype,L2 larva Ce,hermaphrodite,organism,     ,  ,105
+SRR554453,g23,Caenorhabditis elegans,N2,wild type genotype,proliferating embryo Ce,hermaphrodite,organism,     ,  ,98
