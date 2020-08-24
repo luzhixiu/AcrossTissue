@@ -9,6 +9,44 @@ output: pdf_document
 - Use restart file from July 30 fit to start this one and run it for a long time with lots of thinning to get adquate sampling.
 - Output from 30 July indicates ACF for CSP are still high at 40 samples (we used thinning = 1).
 Recommend using thin=20.
+- This code *doesn't work*.  I get the following errors
+```
+> sys.runtime<-system.time(
++ runMCMC(mcmc = mcmc, genome = genome, model = model, ncores = ncores, divergence.iteration = divergence.iteration)
++ )
+Allowing divergence from initial conditions for 0 iterations.
+
+maxGrouping: 22
+Type: 
+Starting MCMC
+	Estimate Codon Specific Parameters? TRUE 
+	Estimate Hyper Parameters? TRUE 
+	Estimate Synthesis rates? TRUE 
+	Starting MCMC with 40000 iterations
+	Adapting will stop after 20000 steps
+
+ *** caught segfault ***
+address 0x56178db95d38, cause 'memory not mapped'
+
+Traceback:
+ 1: .External(list(name = "CppMethod__invoke_void", address = <pointer: 0x5615440bdee0>,     dll = list(name = "Rcpp", path = "/usr/lib/R/site-library/Rcpp/libs/Rcpp.so",         dynamicLookup = TRUE, handle = <pointer: 0x5615450b84c0>,         info = <pointer: 0x561542eb0310>), numParameters = -1L),     <pointer: 0x561546de8810>, <pointer: 0x561545841060>, .pointer,     ...)
+ 2: mcmc$run(genome, model, ncores, divergence.iteration)
+ 3: runMCMC(mcmc = mcmc, genome = genome, model = model, ncores = ncores,     divergence.iteration = divergence.iteration)
+ 4: system.time(runMCMC(mcmc = mcmc, genome = genome, model = model,     ncores = ncores, divergence.iteration = divergence.iteration))
+
+Possible actions:
+1: abort (with core dump, if enabled)
+2: normal R exit
+3: exit R without saving workspace
+4: exit R saving workspace
+Selection:
+ *** caught segfault ***
+address 0x561b54dd0438, cause 'memory not mapped'
+
+Traceback:
+ 1: .External(list(name = "CppMethod__invoke_void", address = <pointer: 0x5615440bdee0>,     dll = list(name = "Rcpp", path = "/usr/lib/R/site-library/Rcpp/libs/Rcpp.so",         dynamicLookup = TRUE, handle = <pointer: 0x5615450b84c0>,         info = <pointer: 0x561542eb0310>), numParameters = -1L),     <pointer: 0x561546de8810>, <pointer: 0x561545841060>, .pointer,     ...)
+[cheoah ~/Repositories/(4)/06_Fit.ROC.to.Sequences-Long.Fit.Using.Previous.Starting.Val
+```
 
 # ESS Commands
 See (~/Software/R/r.notes.Rmd)  for more details

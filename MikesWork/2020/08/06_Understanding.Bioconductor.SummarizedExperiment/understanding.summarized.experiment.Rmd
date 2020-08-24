@@ -16,6 +16,12 @@ Specifically the data on celegans lifestage expression data (`E-MTAB`)
 > (FPKMs) are calculated from the raw counts by iRAP. These are averaged for each set of technical replicates, and then quantile normalized within each set of biological replicates using limma. Finally, they are averaged for all biological replicates (if any)
 	- If technical replicates vary in their library size, why would you want to average the raw counts?
 	- Seems to imply there might be multiple technical replicate per biological replicate.
+	
+## TODO
+### 06 Aug 2020
+- Figure out how they processed data? 
+Specifically, did they do any normalization between technical or biological replicates
+
 # Set Up Session
 ```{r}
 library(SummarizedExperiment)
