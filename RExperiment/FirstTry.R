@@ -58,31 +58,37 @@ res <- results(dds)
 
 
 
-countMatrix=assays(ddsColl)$counts
+countMatrix=assays(dds)$counts
 write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv", sep=",",col.names=NA)
-res <- results(ddsColl)
-colData(ddsColl)
-sum(res$padj < 0.1, na.rm=TRUE)
-p=plotMA(res)
+res <- results(dds)
+dds$group <- dds$developmental_stage
+dds$group <- factor(paste0(dds$developmental_stage,dds$AtlasAssayGroup))
+dds <- DESeq(dds)
+
+
+lfstages=colData(dds)$developmental_stage
+
+
 
 
 ntd <- normTransform(dds)
 library("vsn")
+res <- results(ntd)
+
+
+colData(ntd)
+write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/log_normal_collasedReplicate.csv", sep=",",col.names=NA)
+
 meanSdPlot(assay(ntd))
 
-write.table(res, "/home/lu/AcrossTissue/RExperiment/DEGSEQ_filter_result.csv", sep=",",col.names=NA)
+plotMA(res, ylim=c(-2,2))
+library(ggfortify)
 
 
-# dds <- dds[keep,]
-# rld <- rlog(dds)
-# plotPCA(rld)
+df <- read.csv(file = '/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv',header = TRUE, row.names = 1, sep = ",")
+??result
 
-# res <- results(dds)
-# plotMA(res) #simple plot function
-# # moderated log2 fold changes
-# resultsNames(dds)
-# resLFC <- lfcShrink(dds, coef=2, type="apeglm")
-# # an alternate analysis: likelihood ratio test
-# ddsLRT <- DESeq(dds, test="LRT", reduced= ~ 1)
-# resLRT <- results(ddsLRT)
+colData(dds)
+results(dds,contrast = c("developmental_stage","X4.cell.embryo.Ce","newly.molted.young.adult.hermaphrodite.Ce"))
+
 
