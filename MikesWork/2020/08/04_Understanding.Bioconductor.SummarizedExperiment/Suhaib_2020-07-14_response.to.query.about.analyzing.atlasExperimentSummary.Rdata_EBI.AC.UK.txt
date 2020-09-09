@@ -1,0 +1,80 @@
+From feedback@ebi.ac.uk Tue Jul 14 09:20:44 2020
+Date: Tue, 14 Jul 2020 14:20:07 +0100
+From: Suhaib Mohammed via RT <feedback@ebi.ac.uk>
+To: mikeg@utk.edu
+Subject: [Functional_Genomics #430248] More Information on Pipeline for Processing E-MTAB-2812
+Resent-From: <mikeg@utk.edu>
+
+
+<URL: https://helpdesk.ebi.ac.uk/Ticket/Display.html?id=430248 >
+
+Hi Mike,
+
+
+Apologies for the late reply. So the atlasExperimentSummary.Rdata contains of
+raw expression counts in addition to metadata and phenotype information for
+each assay. In order to convert the expression counts to RPKM, you can use our
+iRAP function counts2RPKMsthat does that for you.
+
+ 
+
+ https://github.com/ebi-gene-expression-group/irap/blob/
+75f5b1fa2c2733e32ee972e98295cda746eef73f/aux/R/irap_utils.R#L479 for the
+function.
+
+counts2RPKMs <- function(count.matrix,annot.table=NULL)
+
+ 
+
+I hope this helps.
+ 
+
+All the best,
+
+Suhaib
+
+--
+Suhaib Mohammed, Ph.D.
+Senior Bioinformatician
+European Bioinformatics Institute (EMBL-EBI)
+European Molecular Biology Laboratory
+Wellcome Trust Genome Campus
+Hinxton, Cambridge CB10 1SD
+United Kingdom
+tel : +44-1223494296
+email: suhaib@ebi.ac.uk
+
+On Mon Jul 06 19:08:07 2020, mikeg@utk.edu wrote:
+
+    User's email address: mikeg@utk.edu
+    Feedback topic: GXA
+    Referrer URL: https://www.ebi.ac.uk/gxa/FAQ.html
+    User's IP address: 160.36.155.102
+    Web browser used: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/
+    20100101 Firefox/77.0
+    Message sent: Monday 6 July 2020 18:07
+    Message content:
+    ------------------------
+
+    Hi,
+
+    I'm trying to estimate the uncertainty in the count values (which are
+    averages across technical and biological replicates) in E-MTAB-2812. In
+    order to do so I have downloaded and begun looking at the .RData object
+    associated with this dataset (https://www.ebi.ac.uk/gxa/
+    experiments-content/E-MTAB-2812/static/
+    E-MTAB-2812-atlasExperimentSummary.Rdata).
+
+    While I realize the general outline of the data analysis is described in
+    the "Analysis Methods", it is not detailed enough for me to be able to
+    replicate how the data was processed to get the final mean RPKM values. Is
+    there anyway to get a copy of the R code that was used to process these
+    data?
+
+    Many thanks,
+
+    Mike
+
+
+ 
+

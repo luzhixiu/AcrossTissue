@@ -1,0 +1,451 @@
+---
+title: "Fit ROC to Sequence Data in a FASTA File"
+author: "Michael A. Gilchrist"
+date: "27 Jul 2020"
+output: pdf_document
+---
+
+# Background
+- This file and `../27_Plot.Output.from.Fit.ROC.to.Sequence/plot.output.from.fit.ROC.to.sequence.Rmd` were created from the `updateROC.R` file that Lu has been using.
+
+# ESS Commands
+See (~/Software/R/r.notes.Rmd)  for more details
+
+# Purpose
+- Fit ROC to data using easier to understand and modify code
+- Save output for future plotting.
+
+# Load Libraries
+```{r}
+
+## Clear out any previously defined objects and parameters
+rm(list=ls())
+
+## Load Needed Libraries
+library(AnaCoDa, verbose = TRUE, lib.loc = "~/R/x86_64-pc-linux-gnu-library/3.6") ## Could use Version(); if it's not there build locally using script
+library(profmem, verbose = TRUE)  #is this still necessary?
+
+
+use.cl.parser <- FALSE ## whether to use command line parser
+```
+
+
+# Load Gene Lists
+- Loads tibbles: nuclearGenes and monoisoformGenes
+```{r}
+
+load("../28_Create.Filtered.Lists.of.Genes.from.FASTA/Output/nuclear.and.monoform.gene.lists.Rdata")
+
+names(nuclearGenes)
+
+```
+
+# Define Local Parameters
+
+## Variables for Both Local and CommandLine Fitting
+
+```{r}
+max_round <- 6 ## Max number of rounds of fitting
+model="ROC"
+
+## Local settings
+with.phi  <-  FALSE
+init_sphi <- 2.8 ## initial value for s_phi
+## Hyperparameters include s_phi, measurement error, and ??
+est_hyp  <- FALSE ## FALSE keeps s_phi fixed
+mixDef <- "allUnique"
+percent.to.keep <- 1  # really a proportion
+```
+
+## Define Parameters Previously Set via CL
+Locally define variables usually passed from command line
+```{r eval=!use.cl.parser}
+div <- 4  ## divergence.steps - randomizes ICs
+input.dir <- "./Input/"  ## Location of FASTA and possibly empirical phi
+output.directory <- "./Output/" 
+samp <- 2000  ## steps = samples * thin
+thin <- 5    ## only 1/thin steps (iterations) are kept (in memory?)
+adapt <- 100  ## adaptive width, in units of samples
+num_threads <- (system(command="nproc")-1) #use n local cores -1
+## could use `detectCores()` from library(parallel)
+```
+
+## Define Parameters Via Command Line
+- May not work with knitr.
+```{bash eval=FALSE}
+# Modified from Lu's original shell script for running updateROC.R
+Rscript updateROC.R -i './Input/' -o './Output/' -n 8 -a 20 -t 10 -n 8 > Crei.Rout 2>&1 | tee crei.txt &
+```
+
+```{r eval=use.cl.parser}
+library(argparse, verbose = TRUE)  
+
+
+parser <- ArgumentParser()
+parser$add_argument("-i","--input",type="character",default="./")
+parser$add_argument("-o","--output",type="character",default="./")
+parser$add_argument("-d","--div",type="integer",default=4) ## divergence iterations
+parser$add_argument("-s","--samp",type="integer",default=1000)
+parser$add_argument("-a","--adapt",type="integer",default=100)
+parser$add_argument("-t","--thin",type="integer",default=10)
+parser$add_argument("-n","--threads",type="integer",default=1)
+
+
+args <- parser$parse_args()
+div <- args$div
+input.dir <- args$input
+output.directory <- args$output
+thin <- args$thin
+adapt <- args$adapt
+samp <- args$samp
+num_threads <- args$threads
+
+```
+
+
+# Identify FASTA Folders and Files
+```{r}
+fasta.folders <- input.dir #, "../data/cds/sampled/",  "../data/cds/sampled/", "../data/cds/filtered/")
+fasta.files <- list.files(path=fasta.folders,pattern="*.fasta",full.names = FALSE)
+print(fasta.files)
+mixture.labels <- unlist(strsplit(fasta.files,split=".fasta"))
+fasta.paths <- paste0(fasta.folders, fasta.files)
+max.mixture <- length(fasta.files)
+mixture.sizes <- rep(0, max.mixture)
+```
+
+## Save Key Parameters and Settings
+```{r}
+## Parameters that would be useful to have when plotting which is now in a separate file.
+parameterSaveList <- ls()
+#c("fasta.files",
+#                       "mixture.labels",
+#                       "fasta.paths",
+#                       "max.mixture",
+#                       "mixture.sizes")
+
+```
+	
+
+# Define local functions
+```{r}
+## This code gets reused so create a function?
+## createROCOutputDirectoryStructure <- function(output.directory, round, mcmc, adaptiveWidth) 
+createROCOutputDirectories <- function(dir_name){
+    dir.create(dir_name)
+    dir.create(paste(dir_name,"Graphs",sep="/"))
+    dir.create(paste(dir_name,"Restart_files",sep="/"))
+    dir.create(paste(dir_name,"Parameter_est",sep="/"))
+    dir.create(paste(dir_name,"R_objects",sep="/"))
+} 
+
+
+createParameterOutput <- function(parameter, output.dir, max.mixture, samples, mixture.labels, samples.percent.keep=1, relative.to.optimal.codon=FALSE, report.original.ref=TRUE) {
+    for (i in 1:max.mixture)
+    {
+        getCSPEstimates(parameter,paste(output.dir,"Parameter_est",mixture.labels[i],sep="/"),i,samples*samples.percent.keep,relative.to.optimal.codon=relative.to.optimal.codon,report.original.ref = report.original.ref)
+    }
+}
+
+```
+
+# Initialize AnaCoDa Objects
+## Initialize Genome Object using isoform.IDs
+- Was `Initialize Genome Object using FASTA Files`
+```{r}
+
+## Previously we had separate files for each mixture.
+## Here we load one file into the genome and then modify it afterwards
+
+for(mixture in 1:max.mixture)
+{
+    tmp.length <- ifelse(mixture ==1, 0, length(genome) )
+    genome <-
+        initializeGenomeObject(
+            file=fasta.paths[mixture],
+            genome=genome,
+            match.expression.by.id = FALSE,
+            append = (mixture == 1),
+            positional = TRUE)
+    mixture.sizes[mixture] <- length(genome) - tmp.length
+  }
+}
+
+if(length(genome) != sum(mixture.sizes)){
+  stop("length(genomeObj) != sum(mixture.sizes), but it should.")
+}else{
+  print("FASTA successfully files loaded:");
+  print(fasta.files[1:max.mixture])
+}
+
+cat("Genome loaded\n")
+```
+
+
+## Filter Genome Object
+
+
+## Do Multiple Rounds of Model Fitting 
+```{r}
+
+round <- 1
+
+while(round <= max_round){
+
+    output.dir <- paste0(output.directory,"/round_",round)
+    createROCOutputDirectories <- function(output.dir, round, mcmc, adaptiveWidth)
+
+        restart.file <- paste(output.dir,"Restart_files/rstartFile.rst_final",sep="/")
+    
+        setRestartSettings(mcmc = mcmc, filename = restart.file, adaptiveWidth, write.multiple = FALSE)
+
+
+if(round==1){ #initial set up
+    ## Initialize parameter object
+    ## Set initial phi value
+    sphi_init <- init_sphi
+    genome.length <- length(genome)
+    ## haphazardly assign genes to mixtures
+    geneAssignment <- rep(1:max.mixture, mixture.sizes)
+
+    parameter <-
+    initializeParameterObject(
+        genome,
+        model=model,
+        sphi_init,
+        max.mixture,
+        geneAssignment,
+        split.serine = TRUE,
+        mixture.definition = mixDef)
+
+} else{  ## not the first round, use a restart file
+    restart.file <-
+        paste(output.dir,"Restart_files/rstartFile.rst_final",sep="/"),
+
+    ##setRestartSettings(mcmc, paste(output.dir,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, FALSE)  #what does this F do?
+
+    parameter <-
+        initializeParameterObject(
+            init.with.restart.file = restart.file,
+
+            model=model)
+
+}
+
+# Initialize model object
+model_initial <- initializeModelObject(parameter, "ROC", with.phi)
+
+
+## Initialize MCMC and Model Object
+
+## Could move these to front of file and replace abbreviated terms with full terms
+samples <-samp
+thinning <- thin
+adaptiveWidth <-adapt
+mcmc_initial <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth, est.expression=T, est.csp=TRUE, est.hyper=FALSE, est.mix = FALSE)
+
+
+
+#this part set steps 
+adaptiveRatio=0.5
+adaptiveSamples=samples*thinning*adaptiveRatio
+mcmc_initial$setStepsToAdapt(adaptiveSamples)
+
+
+mcmc <- 
+    
+#run mcmc on genome with parameter using model
+sys.runtime<-system.time(
+  runMCMC(mcmc, genome, model, num_threads,divergence.iteration = div)
+)
+sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
+write.table(sys.runtime,file=paste(output.dir,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=FALSE)
+
+# Process Output
+createParameterOutput(parameter = parameter,max.mixture = max.mixture,mixture.labels = mixture.labels,samples = samples,samples.percent.keep = percent.to.keep,relative.to.optimal.codon = FALSE, report.original.ref = T)
+expressionValues <- getExpressionEstimates(parameter,c(1:genome.length),samples*percent.to.keep)
+
+writeParameterObject(parameter,paste(output.dir,"R_objects/parameter.Rda",sep="/"))
+writeMCMCObject(mcmc,file=paste(output.dir,"R_objects/mcmc.Rda",sep="/"))
+write.table(expressionValues,file=paste(output.dir,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = FALSE, row.names = F)
+
+
+## Calculate & Export Diagnostics
+for (i in 1:max.mixture)
+{
+  param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Selection",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(output.dir,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
+}
+
+
+```
+
+
+
+
+```{r}
+rm(parameter)
+rm(trace)
+rm(model)
+
+```
+
+```{r}
+## This code goes to another folder
+## Plot
+pdf(paste(output.dir,"Graphs/Parameter_comparisons.pdf",sep="/"), width = 11, height = 12)
+plot(parameter,what="Mutation",samples=samples*percent.to.keep,mixture.name=mixture.labels)
+plot(parameter,what="Selection",samples=samples*percent.to.keep,mixture.name=mixture.labels)
+dev.off()
+
+trace <- parameter$getTraceObject()
+pdf(paste(output.dir,"Graphs/CSP_traces_CUB_plot.pdf",sep="/"), width = 11, height = 12)
+createTracePlots(trace=trace,model=model,genome=genome,max.mixture=max.mixture,samples=samples,samples.percent.keep = 1,mixture.labels = mixture.labels)
+dev.off()
+
+
+
+
+
+diag <- convergence.test(mcmc,samples = samples*percent.to.keep,thin=thinning,frac1=0.2)
+z<-abs(diag$z)
+done <- (z > 1.96) && param.conv
+rm(parameter)
+rm(trace)
+rm(model)
+
+
+while((!done) && (round <= 3))
+{
+  parameter<-initializeParameterObject(init.with.restart.file = paste(output.dir,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
+  round <- round + 1
+  output.dir <- paste0(output.directory,"/round_",round)
+  dir.create(output.dir)
+  dir.create(paste(output.dir,"Graphs",sep="/"))
+  dir.create(paste(output.dir,"Restart_files",sep="/"))
+  dir.create(paste(output.dir,"Parameter_est",sep="/"))
+  dir.create(paste(output.dir,"R_objects",sep="/"))
+  
+  mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
+                               est.expression=T, est.csp=TRUE, est.hyper=FALSE, est.mix=FALSE)
+  
+  model <- initializeModelObject(parameter, "ROC", with.phi)
+  setRestartSettings(mcmc, paste(output.dir,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
+  sys.runtime <- system.time(
+    runMCMC(mcmc, genome, model, num_threads,div=0)
+  )
+  sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
+  write.table(sys.runtime,file=paste(output.dir,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
+  
+  createParameterOutput(parameter = parameter,max.mixture = max.mixture,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = percent.to.keep,relative.to.optimal.codon = FALSE, report.original.ref = T)
+  
+  expressionValues <- getExpressionEstimates(parameter,c(1:genome.length),samples*percent.to.keep)
+  write.table(expressionValues,file=paste(output.dir,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = FALSE, row.names = F)
+  
+   
+  for (i in 1:max.mixture)
+  {
+    param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Selection",mixture=i,frac1=0.1)
+    z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+    if (length(z.scores) > 0)
+    {
+      param.conv <- FALSE
+    }
+    write(param.diag$z,paste0(output.dir,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
+  }
+  
+  
+  for (i in 1:max.mixture)
+  {
+    param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Mutation",mixture=i,frac1=0.1)
+    z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+    if (length(z.scores) > 0)
+    {
+      param.conv <- FALSE
+    }
+    write(param.diag$z,paste0(output.dir,"/Parameter_est/convergence_delta_m_",i,".txt"),ncolumns = 1)
+  }
+
+  writeParameterObject(parameter,paste(output.dir,"R_objects/parameter.Rda",sep="/"))
+  writeMCMCObject(mcmc,file=paste(output.dir,"R_objects/mcmc.Rda",sep="/"))
+  
+  diag <- convergence.test(mcmc,samples = samples*percent.to.keep,thin=thinning,frac1=0.1)
+  z<-abs(diag$z)
+  done <- (z > 1.96) && param.conv
+  rm(parameter)
+  rm(trace)
+  rm(model)
+}
+
+samples <- 10000
+thinning <- 5
+parameter<-initializeParameterObject(init.with.restart.file = paste(output.dir,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
+round <- round + 1
+output.dir <- paste0(output.directory,"/final_round")
+dir.create(output.dir)
+dir.create(paste(output.dir,"Graphs",sep="/"))
+dir.create(paste(output.dir,"Restart_files",sep="/"))
+dir.create(paste(output.dir,"Parameter_est",sep="/"))
+dir.create(paste(output.dir,"R_objects",sep="/"))
+
+mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
+                             est.expression=TRUE, est.csp=TRUE, est.hyper=FALSE, est.mix=FALSE)
+
+mcmc$setStepsToAdapt(0)
+
+model <- initializeModelObject(parameter, "ROC", with.phi)
+setRestartSettings(mcmc, paste(output.dir,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
+#run mcmc on genome with parameter using model
+#p<-profmem({
+sys.runtime <- system.time(
+  runMCMC(mcmc, genome, model, num_threads)
+)
+sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
+write.table(sys.runtime,file=paste(output.dir,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
+
+
+createParameterOutput(parameter = parameter,max.mixture = max.mixture,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = 1,relative.to.optimal.codon = FALSE, report.original.ref = T)
+
+# mixtureAssignment <- getMixtureAssignmentEstimate(parameter,c(1:genome.length),samples*0.5)
+expressionValues <- getExpressionEstimates(parameter,c(1:genome.length),samples)
+write.table(expressionValues,file=paste(output.dir,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = FALSE, row.names = F)
+
+
+
+
+writeParameterObject(parameter,paste(output.dir,"R_objects/parameter.Rda",sep="/"))
+writeMCMCObject(mcmc,file=paste(output.dir,"R_objects/mcmc.Rda",sep="/"))
+
+for (i in 1:max.mixture)
+{
+  param.diag<-convergence.test(trace,samples=samples,thin = thinning,what="Selection",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(output.dir,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
+}
+
+for (i in 1:max.mixture)
+{
+  param.diag<-convergence.test(trace,samples=samples,thin = thinning,what="Mutation",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(output.dir,"/Parameter_est/convergence_delta_m_",i,".txt"),ncolumns = 1)
+}
+rm(trace)
+rm(model)
+
+writeParameterObject(parameter,paste(output.dir,"R_objects/parameter.Rda",sep="/"))
+writeMCMCObject(mcmc,file=paste(output.dir,"R_objects/mcmc.Rda",sep="/"))
+
+
