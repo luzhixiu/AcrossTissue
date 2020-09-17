@@ -7,9 +7,11 @@ library(SummarizedExperiment)
 load("/home/lu/AcrossTissue/RExperiment/E-MTAB-2812-atlasExperimentSummary.Rdata")
 
 rse <- experimentSummary$rnaseq
-
-
-
+rse
+df=read.csv("/home/lu/AcrossTissue/RExperiment/WBID_Coding.csv")
+#Filter the gene names based on the cds gene names Mike provided
+rse=subset(rse, rownames(rse) %in% df$WBID_Coding)
+rse
 # write.table(fdf, "mydata.csv", sep=",")
 
 #this gives the count information
@@ -30,7 +32,7 @@ srse=subset(rse, select = (sex == "hermaphrodite" & organism_part == "organism" 
 
 
 # #create the metadata
-# write.table(colData(srse), "/home/lu/AcrossTissue/RExperiment/metadata.csv", sep=",",col.names=NA)
+# write.table(colData(srse), "/home/lu/AcrossTissue/RExperiment/metadata.SRR.csv", sep=",",col.names=NA)
 # #create the countMatrix
 countMatrix=assays(srse)$counts
 # write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/count.csv", sep=",",col.names=NA)
@@ -38,14 +40,75 @@ library("DESeq2")
 
 colData(srse)
 countMatrix
-srseDegObj=DESeqDataSet(rse,design = ~ 1)
-dds <- DESeq(srseDegObj)
 
+
+
+srseDegObj=DESeqDataSet(srse,design = ~developmental_stage )
+dds <- DESeq(srseDegObj)
+dds_bkup=dds
+res <- results(dds,contrast = c("developmental_stage","4.cell.embryo.Ce","L1.larva.Ce"))
+
+
+
+#collapse the techinical replicates, grouped by the developmental stages
+dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
+
+#write the result to file
+countMatrix=assays(dds)$counts
+write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv", sep=",",col.names=NA)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+res
 #filter out ones with low counts, genes with the sum of counts less than 10 are removed 
 keep <- rowSums(counts(dds)) >= 10
 dds <- dds[keep,]
-resultsNames(dds)
+rn=resultsNames(dds)
 res <- results(dds)
+
+
+
+
+
+#collapse the techinical replicates, grouped by the developmental stages
+#dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
+
+res <- results(dds, contrast=inputList)
+resultsNames(dds)
+
+
+
+
 
 #collapse the techinical replicates, grouped by the developmental stages
 dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
@@ -65,30 +128,13 @@ dds$group <- dds$developmental_stage
 dds$group <- factor(paste0(dds$developmental_stage,dds$AtlasAssayGroup))
 dds <- DESeq(dds)
 
-
+summary(res)
 lfstages=colData(dds)$developmental_stage
-
 
 
 
 ntd <- normTransform(dds)
 library("vsn")
-res <- results(ntd)
-
-
-colData(ntd)
-write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/log_normal_collasedReplicate.csv", sep=",",col.names=NA)
-
-meanSdPlot(assay(ntd))
-
-plotMA(res, ylim=c(-2,2))
-library(ggfortify)
-
-
-df <- read.csv(file = '/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv',header = TRUE, row.names = 1, sep = ",")
-??result
-
-colData(dds)
-results(dds,contrast = c("developmental_stage","X4.cell.embryo.Ce","newly.molted.young.adult.hermaphrodite.Ce"))
+meanSdPlot(assay(ntd),rank=F)
 
 
