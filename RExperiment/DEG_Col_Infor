@@ -1,0 +1,6 @@
+## [1] "mean of normalized counts for all samples"             
+## [2] "log2 fold change (MLE): condition treated vs untreated"
+## [3] "standard error: condition treated vs untreated"        
+## [4] "Wald statistic: condition treated vs untreated"        
+## [5] "Wald test p-value: condition treated vs untreated"     
+## [6] "BH adjusted p-values"

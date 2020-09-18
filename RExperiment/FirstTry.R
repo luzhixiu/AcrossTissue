@@ -1,18 +1,23 @@
 
+#This hunk of code makes the script run in multi-thread, doesn't affect the outcome of the code
+library("BiocParallel")
+register(MulticoreParam(4))
 
 library(SummarizedExperiment)
 load("/home/lu/AcrossTissue/RExperiment/E-MTAB-2812-atlasExperimentSummary.Rdata")
 
 rse <- experimentSummary$rnaseq
-
-
-
+rse
+df=read.csv("/home/lu/AcrossTissue/RExperiment/WBID_Coding.csv")
+#Filter the gene names based on the cds gene names Mike provided
+rse=subset(rse, rownames(rse) %in% df$WBID_Coding)
+rse
 # write.table(fdf, "mydata.csv", sep=",")
 
 #this gives the count information
 countMatrix=assays(rse)$counts
 
-# write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/count.csv", sep=",")
+# write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/count.csv", sep=",",col.names=NA)
 
 #This shows the col information
 colData(rse)
@@ -27,39 +32,109 @@ srse=subset(rse, select = (sex == "hermaphrodite" & organism_part == "organism" 
 
 
 # #create the metadata
-# write.table(colData(srse), "/home/lu/AcrossTissue/RExperiment/metadata.csv", sep=",")
+# write.table(colData(srse), "/home/lu/AcrossTissue/RExperiment/metadata.SRR.csv", sep=",",col.names=NA)
 # #create the countMatrix
 countMatrix=assays(srse)$counts
-# write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/count.csv", sep=",")
+# write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/count.csv", sep=",",col.names=NA)
 library("DESeq2")
 
 colData(srse)
-library("airway")
-data("airway")
-se <- airway
-
 countMatrix
 
 
 
-
-srseDegObj=DESeqDataSet(rse,design = ~ 1)
-
-
-
-
+srseDegObj=DESeqDataSet(srse,design = ~developmental_stage )
 dds <- DESeq(srseDegObj)
+dds_bkup=dds
+res <- results(dds,contrast = c("developmental_stage","4.cell.embryo.Ce","L1.larva.Ce"))
+
+
+
+#collapse the techinical replicates, grouped by the developmental stages
+dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
+
+#write the result to file
+countMatrix=assays(dds)$counts
+write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv", sep=",",col.names=NA)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+res
+#filter out ones with low counts, genes with the sum of counts less than 10 are removed 
 keep <- rowSums(counts(dds)) >= 10
 dds <- dds[keep,]
-rld <- rlog(dds)
-plotPCA(rld)
+rn=resultsNames(dds)
+res <- results(dds)
 
-# res <- results(dds)
-# plotMA(res) #simple plot function
-# # moderated log2 fold changes
-# resultsNames(dds)
-# resLFC <- lfcShrink(dds, coef=2, type="apeglm")
-# # an alternate analysis: likelihood ratio test
-# ddsLRT <- DESeq(dds, test="LRT", reduced= ~ 1)
-# resLRT <- results(ddsLRT)
+
+
+
+
+#collapse the techinical replicates, grouped by the developmental stages
+#dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
+
+res <- results(dds, contrast=inputList)
+resultsNames(dds)
+
+
+
+
+
+#collapse the techinical replicates, grouped by the developmental stages
+dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
+
+#filter out ones with low counts, genes with the sum of counts less than 10 are removed 
+keep <- rowSums(counts(dds)) >= 10
+dds <- dds[keep,]
+resultsNames(dds)
+res <- results(dds)
+
+
+
+countMatrix=assays(dds)$counts
+write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv", sep=",",col.names=NA)
+res <- results(dds)
+dds$group <- dds$developmental_stage
+dds$group <- factor(paste0(dds$developmental_stage,dds$AtlasAssayGroup))
+dds <- DESeq(dds)
+
+summary(res)
+lfstages=colData(dds)$developmental_stage
+
+
+
+ntd <- normTransform(dds)
+library("vsn")
+meanSdPlot(assay(ntd),rank=F)
+
 
