@@ -43,48 +43,39 @@ countMatrix
 
 
 
-srseDegObj=DESeqDataSet(srse,design = ~developmental_stage )
+srseDegObj=DESeqDataSet(srse,design = ~0+developmental_stage )
 dds <- DESeq(srseDegObj)
 dds_bkup=dds
-res <- results(dds,contrast = c("developmental_stage","4.cell.embryo.Ce","L1.larva.Ce"))
+resultsNames(dds)
+dds
+dds=dds_bkup
+
+#Validate it was correct to use the list factors
+
+res <- results(dds,contrast = c("developmental_stage","4.cell.embryo.Ce","adult.Ce"))
+res
+res <- results(dds,contrast=c(0,1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
+res
+
+
+
 
 
 
 #collapse the techinical replicates, grouped by the developmental stages
 dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
 
+
+
+
+
+
+
+
+
 #write the result to file
 countMatrix=assays(dds)$counts
-write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv", sep=",",col.names=NA)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/worm_collasedReplicate.csv", sep=",",col.names=NA)
 
 
 
@@ -103,8 +94,6 @@ res <- results(dds)
 #collapse the techinical replicates, grouped by the developmental stages
 #dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
 
-res <- results(dds, contrast=inputList)
-resultsNames(dds)
 
 
 
@@ -128,13 +117,30 @@ dds$group <- dds$developmental_stage
 dds$group <- factor(paste0(dds$developmental_stage,dds$AtlasAssayGroup))
 dds <- DESeq(dds)
 
+
+
+
 summary(res)
 lfstages=colData(dds)$developmental_stage
 
 
 
+
+
+
+?meanSdPlot
+
+id_map= read.csv("/home/lu/AcrossTissue/csvs/c_elegan_geneName_WBID_Phi.csv")
+head(id_map,10)
+
+
+
+
+
+
 ntd <- normTransform(dds)
+
 library("vsn")
+
 meanSdPlot(assay(ntd),rank=F)
-
-
+?meanSdPlot

@@ -4,4 +4,5 @@ df <- read.csv(file = '/home/lu/AcrossTissue/RExperiment/collasedReplicate.csv',
 
 
 
-dds <- DESeqDataSetFromMatrix(cnts, DataFrame(cond), ~ cond)
+dds <- DESeqDataSetFromMatrix(df, df$, ~-1)
+

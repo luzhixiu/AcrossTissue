@@ -55,33 +55,6 @@ write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/collasedReplicate.cs
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 res
 #filter out ones with low counts, genes with the sum of counts less than 10 are removed 
 keep <- rowSums(counts(dds)) >= 10
@@ -146,5 +119,6 @@ ntd <- normTransform(dds)
 
 ntd <- normTransform(dds)
 library("vsn")
+assay(ntd)
 meanSdPlot(assay(ntd),rank=F)
 ?meanSdPlot
