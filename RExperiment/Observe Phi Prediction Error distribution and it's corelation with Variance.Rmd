@@ -1,0 +1,55 @@
+---
+title: "Observe Phi Prediction Error distribution and it's corelation with Variance"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+##Start with loading the organized input file
+
+```{r}
+library("DESeq2")
+library("tidyverse")
+
+id_map= read.csv("../csvs/c_elegan_geneName_WBID_Phi.csv",stringsAsFactors=FALSE)
+head(id_map,10)
+
+worm_dataset=read.csv("/home/lu/AcrossTissue/RExperiment/worm_collasedReplicate.csv",header = TRUE, row.names = 1, sep = ",")
+x=worm_dataset
+
+x[!x %in% boxplot.stats(x)$out]
+normalize(worm_dataset, method = "standardize", range = c(0, 1), margin = 1L, on.constant = "quiet")
+
+
+worm_norm <- as.data.frame(apply(worm_dataset, 2, function(x) (x - min(x))/(max(x)-min(x))))
+
+worm_mean=rowMeans(data.matrix(worm_norm))
+worm_std=rowSds(data.matrix(worm_norm))
+?rowMeans
+
+
+plot(worm_mean, worm_std, main="title",
+   xlab="Mean", ylab="Std", pch=19,)
+
+library(dplyr)
+
+
+worm_norm
+
+
+```
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
