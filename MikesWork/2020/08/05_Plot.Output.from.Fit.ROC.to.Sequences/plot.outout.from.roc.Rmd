@@ -1,0 +1,551 @@
+---
+title: "Plot Output from Fit ROC to Sequence Data"
+author: "Michael A. Gilchrist"
+date: "30 Jul 2020"
+output: pdf_document
+---
+
+	
+# Background
+- This file and `../28_Fit.ROC.to.Sequence/fit.roc.to.sequenceRmd` were created from the `updateROC.R` file that Lu has been using.
+- Shifting from using filtered fasta files to filtering genome object after initializing it.
+
+# ESS Commands
+See (~/Software/R/r.notes.Rmd)  for more details
+
+# Purpose
+- Plot ROC output from previous session.
+
+
+# Load Libraries
+```{r}
+
+## Clear out any previously defined objects and parameters
+rm(list=ls())
+
+## Load Needed Libraries
+library(tidyr)
+library(tibble)
+library(readr)
+library(dplyr)
+library(stringr)
+library(forcats)
+library(knitr)
+library(purrr)
+library(AnaCoDa, verbose = TRUE, lib.loc = "~/R/x86_64-pc-linux-gnu-library/3.6") ## Could use Version(); if it's not there build locally using script
+## library(profmem, verbose = TRUE)  #is this still necessary?
+library(ggplot2)
+library(ggpubr)
+library(ggpmisc)
+library(gridExtra)
+library(viridis)
+library(latex2exp)
+      ## Usage: TeX(sprintf("$\\alpha = %d$", alpha)
+      ##        TeX('$\\alpha  x^\\alpha$, where $\\alpha \\in 1\\ldots 5$')
+
+```
+
+# ROC Functions (some)
+```{r}
+## Functions available for Objects
+methods(class = "Rcpp_ROCParameter")
+methods(class = "Rcpp_ROCModel")
+methods(class = "Rcpp_ROCTrace") ## stored as part of parameter object
+methods(class = "Rcpp_Genome")
+methods(class = "Rcpp_MCMCAlgorithm")
+```
+
+# Define Local Functions
+```{r}
+## THis was written by Alex Cope
+createTracePlots <- function(trace, model, genome, numMixtures, samples, mixture.labels, samples.percent.keep=1)
+{
+  for (i in 1:numMixtures)
+  {
+    plot(trace, what = "Mutation", mixture = i)
+    plot(trace, what = "Selection", mixture = i)
+    plot(model, genome, samples = samples*samples.percent.keep, mixture = i,main = mixture.labels[i])
+  }
+}
+
+```
+
+# Load Output From ROC
+
+```{r}
+
+## Load previous session info.
+## Note while this include the Rcpp objects 'mcmc', 'model', 'genome', and 'parameter', they are dangling references that should be removed.
+load("Input/session.image.RData")
+
+
+## Remove dangling objects
+rm("mcmc", "genome", "parameter", "model")
+
+
+## Load Objects
+parameterSet <-
+    sapply(1:max.round, function(x){
+    loadParameterObject(paste0(data.dir, "parameter.round-", x, ".Rda")
+         )
+    
+    }
+    )
+
+mcmcSet <-
+    sapply(1:max.round, function(x){
+    loadMCMCObject(paste0(data.dir, "mcmc.round-", x, ".Rda")
+         )
+    
+    }
+    )
+
+```
+
+## Attempt to Create a Genome Object Combined from Individual Rounds of Model Fitting
+```{r eval = FALSE}
+## Create Genome Object
+##   Use mixture structure where mixture x = round x and all unique
+##   Take parallel approach with parameter and mcmc object.
+
+max.round  <- 3 ## up to 10
+#max.round <- 2
+fasta.files  <- rep(fasta.file, max.round)
+gene.index <- as.list(rep(as_tibble(sampleIndex), max.round))
+genome <-
+    myCreateGenomeObject(
+        fasta.file = fasta.files,
+        gene.index = gene.index
+    )
+
+mixture.length <- map(gene.index, length)
+
+mixture.assignment <- as.vector(
+    sapply(1:length(gene.index),
+           function(x){
+               rep(x, mixture.length[x])
+           }
+           )
+)
+
+
+
+
+emptyCombinedParameterObject <-
+    initializeParameterObject(
+        genome = genome,
+        sphi = rep(1, max.round), ## if this is the default NULL it doesn't work, I get  'Not all mixtures have an Sphi value assigned!'
+        num.mixtures = max.round,
+        gene.assignment = mixture.assignment,
+        mixture.definition = "allUnique",
+        model = "ROC"
+    )
+
+restart.files  <-  paste0(input.dir,"Restart/rstart.round.", 1:max.round, ".rst_final")
+
+
+emptyCombinedParameterObjectUsingRestartFiles <-
+    initializeParameterObject(
+        genome = genome,
+        init.with.restart.file = restart.files[1]
+    )
+
+## Load objects parameter.round-X.Rda
+data.dir <- paste0(input.dir, "R.Objects/")
+
+#fs::dir_ls(regexp = "parameter.round-[0-9]+.Rda", path = data.dir)
+
+
+## Create combined parameters and mcmc objects
+
+```
+
+
+## Plotting Routines
+
+```{r}
+
+traceSet <- lapply(1:max.round,  function(x) parameterSet[[x]]$getTraceObject())
+
+
+## TRy to make below generic
+
+value = "sphi"
+
+
+dataSet <- sapply(1:max.round,  function(x) {
+    tmp <- (traceSet[[x]]$getStdDevSynthesisRateTraces())
+    tmp <- tmp[[1]]
+    mySamples  <- (1+(samples-samples.to.keep:samples))
+    tmp <- tmp[mySamples]
+    return(tmp)
+}
+)
+
+
+## names(dataSet) <- c(paste0("round_", 1:max.round))
+dataTibble <- as_tibble(dataSet)
+
+
+dataTibbleLong <- gather(dataTibble, names(dataTibble), key="round", value = value)
+
+filter(dataTibbleLong, 
+
+c <- ggplot(dataTibbleLong, aes(x = value, fill = round) )
+c + geom_histogram( alpha=.5, position="identity")
+
+
+## This works!
+## what=c("Mutation", "Selection", "MixtureProbability" ,"Sphi", "Mphi", "Aphi", "Sepsilon", "ExpectedPhi", "Expression","NSEProb","NSERate","InitiationCost","PartitionFunction")
+
+sphiSamplesSet <- map(.x = traceSet, .f = function(x) {
+    tmp <- (x$getStdDevSynthesisRateTraces())[[1]]
+    return(tmp[((samples-samples.to.keep):samples)+1])
+}
+)
+
+
+par(mfrow=c(2, 2), new=TRUE)
+plot(traceSet[[max.round-1]], what = "ExpectedPhi")
+plot(traceSet[[max.round]], what = "ExpectedPhi")
+
+plot(traceSet[[max.round-1]], trace, what = "Sphi")
+plot(traceSet[[max.round]], trace, what = "Sphi")
+
+par(mfrow = c(2,1))
+plot(mcmcSet[[max.round - 1]], what = "LogPosterior")
+plot(mcmcSet[[max.round]], what = "LogPosterior", )
+dev.off()
+
+plot(traceSet[[max.round]], what = "Mutation")
+plot(trace[[max.round]], what = "Selection")
+
+## Choose one gene at the 1, 10, 20, 50, 70, 90 and 99 percentile to plot
+plot(trace, what = "Expression", )
+
+
+## Plot ACF
+numMixtures = 1
+
+par(mfrow=c(5,4), new=TRUE) 
+acfCSP(parameter,
+       csp="Selection",
+       numMixtures = numMixtures,
+       samples=samples.to.keep)
+
+
+par(mfrow=c(5,4), new=TRUE) 
+acfCSP(parameter,
+       csp="Mutation",
+       numMixtures = numMixtures,
+       samples=samples.to.keep)
+
+
+## Plot Acceptance Rates
+aa <- aminoAcids()
+
+aa <- aa[!(aa %in% c("M", "X", "W"))]
+trace$getCodonSpecificAcceptanceRateTraceForAA("A");
+
+
+tmp  <- lapply(aa, function(x){
+    yvals <- trace$getCodonSpecificAcceptanceRateTraceForAA(x)
+    xvals  <-  1:length(yvals)
+    data <- as_tibble(cbind(window = xvals, acceptance.rate = yvals))
+    plt <- qplot(data = data,
+                 y = acceptance.rate,
+                 x = window,
+                 geom = "line",
+                 ylim = c(0, 0.6),
+                 main = x) +
+        ## Plot target range for reference
+        geom_hline(yintercept = 0.225, linetype = 2) +
+        geom_hline(yintercept = 0.325, linetype = 2) 
+    return(plt)
+}
+)
+
+## Need to use grobs argument when using a list
+grid.arrange(grobs = tmp, ncol=4)
+
+
+## Plot Model
+## Does this create codon freq vs. log(phi) plots?
+## If so, where does it get the information from?
+## I thought the samples were stored in the parameter object
+plot(model, genome,
+     samples = samples*samples.percent.keep,
+     mixture = i,
+     main = mixture.labels[i])
+
+
+
+
+
+for(a in aa)
+{
+  if (a=="M"||a=="X"||a=="W") next
+  accept.trace <- trace$getCodonSpecificAcceptanceRateTraceForAA(a)
+  len <- length(accept.trace)
+  mean.acceptance <- mean(accept.trace[(len-len*0.5):len])
+  if (mean.acceptance < 0.1 || mean.acceptance > 0.44) done.adapt <- FALSE
+  plot(accept.trace,main=paste0("Acceptace Rate for ",a), xlab="Samples",ylab="Acceptance Rate",type="l")
+}
+
+
+
+## Export plots
+pdf(paste0(output.dir,"Graphs/CSP_traces_CUB_plot.pdf"), width = 11, height = 12)
+
+## This is a locally defined function.
+createTracePlots(trace=trace,model=model,genome=genome,numMixtures=numMixtures,samples=samples,samples.percent.keep = 1,mixture.labels = mixture.labels)
+
+dev.off()
+
+
+## pdf(paste(dir_name,"Graphs/Parameter_comparisons.pdf",sep="/"), width = 11, height = 12)
+
+## This fails with "Error in x$getCodonSpecificPosteriorMean(mixture, samples, codons[i],  :  could not find valid method"
+## I believe it's set up to compare two mixtures and since we only have one it fails.
+## How do we do a plot this to compare two parameter objects?
+plot(parameter, what="Mutation",
+     mixture.name = "round",
+     samples=samples.to.keep)
+
+plot(parameter,what="Selection",
+     samples=samples*percent.to.keep,
+     mixture.name=mixture.labels)
+dev.off()
+
+trace <- parameter$getTraceObject()
+
+
+#plots different aspects of trace
+
+pdf(paste(dir_name,"Graphs/mcmc_traces.pdf",sep="/"))
+plot(mcmc,what = "LogPosterior")
+plot(trace, what = "ExpectedPhi")
+aa <- aminoAcids()
+done.adapt <- TRUE
+for(a in aa)
+{
+  if (a=="M"||a=="X"||a=="W") next
+  accept.trace <- trace$getCodonSpecificAcceptanceRateTraceForAA(a)
+  len <- length(accept.trace)
+  mean.acceptance <- mean(accept.trace[(len-len*0.5):len])
+  if (mean.acceptance < 0.1 || mean.acceptance > 0.44) done.adapt <- FALSE
+  plot(accept.trace,main=paste0("Acceptace Rate for ",a),xlab="Samples",ylab="Acceptance Rate",type="l")
+}
+acfCSP(parameter,csp="Selection",numMixtures = numMixtures,samples=samples*percent.to.keep)
+acfCSP(parameter,csp="Mutation",numMixtures = numMixtures,samples=samples*percent.to.keep)
+dev.off()
+
+
+for (i in 1:numMixtures)
+{
+  param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Selection",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
+}
+
+
+for (i in 1:numMixtures)
+{
+  param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Mutation",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_m_",i,".txt"),ncolumns = 1)
+}
+
+
+writeParameterObject(parameter,paste(dir_name,"R_objects/parameter.Rda",sep="/"))
+writeMCMCObject(mcmc,file=paste(dir_name,"R_objects/mcmc.Rda",sep="/"))
+
+
+diag <- convergence.test(mcmc,samples = samples*percent.to.keep,thin=thinning,frac1=0.2)
+z<-abs(diag$z)
+done <- (z > 1.96) && param.conv
+rm(parameter)
+rm(trace)
+rm(model)
+while((!done) && (run_number <= 3))
+{
+  parameter<-initializeParameterObject(init.with.restart.file = paste(dir_name,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
+  run_number <- run_number + 1
+  dir_name <- paste0(directory,"/run_",run_number)
+  dir.create(dir_name)
+  dir.create(paste(dir_name,"Graphs",sep="/"))
+  dir.create(paste(dir_name,"Restart_files",sep="/"))
+  dir.create(paste(dir_name,"Parameter_est",sep="/"))
+  dir.create(paste(dir_name,"R_objects",sep="/"))
+  
+  mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
+                               est.expression=T, est.csp=TRUE, est.hyper=F,est.mix=FALSE)
+  
+  model <- initializeModelObject(parameter, "ROC", with.phi)
+  setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
+  sys.runtime <- system.time(
+    runMCMC(mcmc, genome, model, num_threads,div=0)
+  )
+  sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
+  write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
+  
+  createParameterOutput(parameter = parameter,numMixtures = numMixtures,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = percent.to.keep,relative.to.optimal.codon = F,report.original.ref = T)
+  
+  expressionValues <- getExpressionEstimates(parameter,c(1:size),samples*percent.to.keep)
+  write.table(expressionValues,file=paste(dir_name,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = F,row.names = F)
+  
+  #
+  #plots different aspects of trace
+  trace <- parameter$getTraceObject()
+  pdf(paste(dir_name,"Graphs/mcmc_traces.pdf",sep="/"))
+  plot(mcmc,what = "LogPosterior")
+  plot(trace, what = "ExpectedPhi")
+  aa <- aminoAcids()
+  done.adapt <- TRUE
+  for(a in aa)
+  {
+    if (a=="M"||a=="X"||a=="W") next
+    accept.trace <- trace$getCodonSpecificAcceptanceRateTraceForAA(a)
+    len <- length(accept.trace)
+    mean.acceptance <- mean(accept.trace[(len-len*0.5):len])
+    if (mean.acceptance < 0.1 || mean.acceptance > 0.44) done.adapt <- FALSE
+    plot(accept.trace,main=paste0("Acceptace Rate for ",a),xlab="Samples",ylab="Acceptance Rate",type="l")
+  }
+  acfCSP(parameter,csp="Selection",numMixtures = numMixtures,samples=samples*percent.to.keep)
+  acfCSP(parameter,csp="Mutation",numMixtures = numMixtures,samples=samples*percent.to.keep)
+  dev.off()
+  
+  
+  for (i in 1:numMixtures)
+  {
+    param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Selection",mixture=i,frac1=0.1)
+    z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+    if (length(z.scores) > 0)
+    {
+      param.conv <- FALSE
+    }
+    write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
+  }
+  
+  
+  for (i in 1:numMixtures)
+  {
+    param.diag<-convergence.test(trace,samples=samples*percent.to.keep,thin = thinning,what="Mutation",mixture=i,frac1=0.1)
+    z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+    if (length(z.scores) > 0)
+    {
+      param.conv <- FALSE
+    }
+    write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_m_",i,".txt"),ncolumns = 1)
+  }
+  pdf(paste(dir_name,"Graphs/Parameter_comparisons.pdf",sep="/"), width = 11, height = 12)
+  plot(parameter,what="Mutation",samples=samples*percent.to.keep,mixture.name=mixture.labels)
+  plot(parameter,what="Selection",samples=samples*percent.to.keep,mixture.name=mixture.labels)
+  dev.off()
+  
+  
+  pdf(paste(dir_name,"Graphs/CSP_traces_CUB_plot.pdf",sep="/"), width = 11, height = 12)
+  createTracePlots(trace=trace,model=model,genome=genome,numMixtures=numMixtures,samples=samples,samples.percent.keep = percent.to.keep,mixture.labels = mixture.labels)
+  dev.off()
+  writeParameterObject(parameter,paste(dir_name,"R_objects/parameter.Rda",sep="/"))
+  writeMCMCObject(mcmc,file=paste(dir_name,"R_objects/mcmc.Rda",sep="/"))
+  
+  diag <- convergence.test(mcmc,samples = samples*percent.to.keep,thin=thinning,frac1=0.1)
+  z<-abs(diag$z)
+  done <- (z > 1.96) && param.conv
+  rm(parameter)
+  rm(trace)
+  rm(model)
+}
+
+samples <- 10000
+thinning <- 5
+parameter<-initializeParameterObject(init.with.restart.file = paste(dir_name,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
+run_number <- run_number + 1
+dir_name <- paste0(directory,"/final_run")
+dir.create(dir_name)
+dir.create(paste(dir_name,"Graphs",sep="/"))
+dir.create(paste(dir_name,"Restart_files",sep="/"))
+dir.create(paste(dir_name,"Parameter_est",sep="/"))
+dir.create(paste(dir_name,"R_objects",sep="/"))
+
+mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
+                             est.expression=TRUE, est.csp=TRUE, est.hyper=F,est.mix=FALSE)
+
+mcmc$setStepsToAdapt(0)
+
+model <- initializeModelObject(parameter, "ROC", with.phi)
+setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
+#run mcmc on genome with parameter using model
+#p<-profmem({
+sys.runtime <- system.time(
+  runMCMC(mcmc, genome, model, num_threads)
+)
+sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
+write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
+
+
+createParameterOutput(parameter = parameter,numMixtures = numMixtures,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = 1,relative.to.optimal.codon = F,report.original.ref = T)
+
+# mixtureAssignment <- getMixtureAssignmentEstimate(parameter,c(1:size),samples*0.5)
+expressionValues <- getExpressionEstimates(parameter,c(1:size),samples)
+
+write.table(expressionValues,file=paste(dir_name,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = F,row.names = F)
+writeParameterObject(parameter,paste(dir_name,"R_objects/parameter.Rda",sep="/"))
+writeMCMCObject(mcmc,file=paste(dir_name,"R_objects/mcmc.Rda",sep="/"))
+
+
+#plots different aspects of trace
+trace <- parameter$getTraceObject()
+pdf(paste(dir_name,"Graphs/mcmc_traces.pdf",sep="/"))
+plot(mcmc,what = "LogPosterior")
+plot(trace, what = "ExpectedPhi")
+acfCSP(parameter,csp="Selection",numMixtures = numMixtures,samples=samples)
+acfCSP(parameter,csp="Mutation",numMixtures = numMixtures,samples=samples)
+dev.off()
+
+pdf(paste(dir_name,"Graphs/Parameter_comparisons.pdf",sep="/"), width = 11, height = 12)
+plot(parameter,what="Mutation",samples=samples,mixture.name=mixture.labels)
+plot(parameter,what="Selection",samples=samples,mixture.name=mixture.labels)
+dev.off()
+
+
+pdf(paste(dir_name,"Graphs/CSP_traces_CUB_plot.pdf",sep="/"), width = 11, height = 12)
+createTracePlots(trace=trace,model=model,genome=genome,numMixtures=numMixtures,samples=samples,samples.percent.keep = 1,mixture.labels = mixture.labels)
+dev.off()
+
+for (i in 1:numMixtures)
+{
+  param.diag<-convergence.test(trace,samples=samples,thin = thinning,what="Selection",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
+}
+
+for (i in 1:numMixtures)
+{
+  param.diag<-convergence.test(trace,samples=samples,thin = thinning,what="Mutation",mixture=i,frac1=0.1)
+  z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
+  if (length(z.scores) > 0)
+  {
+    param.conv <- FALSE
+  }
+  write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_m_",i,".txt"),ncolumns = 1)
+}
+rm(trace)
+rm(model)
+writeParameterObject(parameter,paste(dir_name,"R_objects/parameter.Rda",sep="/"))
+writeMCMCObject(mcmc,file=paste(dir_name,"R_objects/mcmc.Rda",sep="/"))
+
+

@@ -1,0 +1,235 @@
+---
+title: "Understanding SummarizedExperiment Objects"
+author: "Michael A. Gilchrist"
+date: "04 Aug 2020"
+output: pdf_document
+---
+
+# Goal
+- Understand how to use data held w/in one of Bioconductor SummarizedExperiment objects.
+Specifically the data on celegans lifestage expression data (`E-MTAB`)
+## Documentation Used
+- Initally, trying to follow steps in this [Bioconductor vignette](https://www.bioconductor.org/packages/devel/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html) illustrating RNASeq workflow 
+- Additional info on [SummarizedExperiments](https://www.bioconductor.org/help/course-materials/2019/BSS2019/04_Practical_CoreApproachesInBioconductor.html)
+- Info on working with ExpressionAtlas [data](https://www.bioconductor.org/packages/release/bioc/vignettes/ExpressionAtlas/inst/doc/ExpressionAtlas.html)
+- Note that the ExpressionAtlas page above seems to indicate that the counts in the summary dataset (which is not this one) is created by...
+> (FPKMs) are calculated from the raw counts by iRAP. These are averaged for each set of technical replicates, and then quantile normalized within each set of biological replicates using limma. Finally, they are averaged for all biological replicates (if any)
+	- If technical replicates vary in their library size, why would you want to average the raw counts?
+	- Seems to imply there might be multiple technical replicate per biological replicate.
+# Set Up Session
+```{r}
+library(SummarizedExperiment)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Work with Vignette 
+```{r}
+#print("test")
+## Note it's necessary to set the lib argument, or else, for reasons I don't understand, it tries to use the global lib path
+data(airway, package="airway") 
+#se <- airway
+#se
+```
+
+## Work with C. elegans data
+
+### Description of RSE object
+- Genes are in rows, experimental data in columns
+- colnames(): SSRR00XXX are the specific experimental data ID for WormBase
+- colData() gives one access to meta data for each column, such as stage, tissue
+"Sample meta-data describing the samples can be accessed using colData(), and is a DataFrame that can store any number of descriptive columns for each sample row."
+- technical_replicate_group seems to be a factor that allows one to group replicates together
+
+### Basic access
+## Commands
+- Accessing main parts of object
+	- assay
+	- rowRanges
+	- colData
+- data: Summary
+
+```{r}
+## load data object experimentSummary
+## Note the real data seems to be embedded within this "SimpleList" object
+load("E-MTAB-2812-atlasExperimentSummary.Rdata")
+
+## actual object is in a list of size 1
+## Data has already been processed to the 'gene' level, so don't need tximport/tximeta
+rseFull  <- experimentSummary$rnaseq
+metadata(rseFull)
+
+#remove some data
+keep <- (rseFull$organism_part == "organism") & (rseFull$sex == "hermaphrodite")
+rse <- rseFull[ , keep, drop = FALSE]  ## drop=FALSE prevents conversions to vectors
+
+dim(rseFull)
+dim(rse)
+head(rownames(rse))
+## Despite being a RangedSummarizedExperiment (RSE) object, the rowRanges info doesn't seem to be used
+summary(ranges(rse))
+data(rse) ## gives error 'dataset 'rse' not found'
+
+dim(rse)
+rowData(rse)
+
+## colData() returns the information about the samples which are stored in a DataFrame
+colData(rse)
+names(colData(rse))
+typeof(colData(rse))
+colData(rse)[1:3] ## get some information
+colData(rse)[4:8] ## again
+colData(rse)[8:10] ## and again
+summary(colData(rse)[[10]])
+
+## Technical Replicates != Biological Replicates
+trg  <- strtoi(as.vector(rse$technical_replicate_group))
+hist(trg, breaks = (min(trg):max(trg)))
+length(unique(trg))
+unique(rse$developmental_stage) %>% length()
+
+## Get an idea of biological replicates
+dsTable  <- table(rse$developmental_stage)
+plot(dsTable)
+
+dsTibble  <- as_tibble(dsTable) ## This doesn't work
+dplyr::summarise(tmp, n(value))
+
+dplyr::n(rse$developmental_stage)
+unique(rse$organism)
+
+hist(rse$developmental_stage)
+# here we get the names of the columns in the colData data frame
+colnames(colData(rse))
+
+
+## Access via colData names
+rse$AtlasAssayGroup
+rse$strain
+summary(rse$technical_replicate_group) %>% sort 
+
+## These are the 'assay' column names
+## for the RSE the column names are the experiment IDs 
+colnames(rse)
+## Each experiment can have multiple columns of data associated with itself
+## in this dataset we only have 'counts'
+assayNames(rse)
+head(assay(rse), 3)
+assay(rse) %>% length()
+assay(rse) %>% unique () %>% length()
+
+countdata <- round(assays(rse)[["counts"]])
+head(countdata, 1)
+countdata[1:3, c(1:3, 199:201)]
+
+colSums(countdata)
+hist(colSums(countdata))
+## create a filtered version of rse by subsetting it
+## Filter out males and try to predict their expression afterwards using residuals
+
+## Help pages for base::subset suggests not using it within scripts but use [] instead
+## This doesn't seem to work properly
+trse <- rse[ (rse$sex == "hermaphrodite" & rse$organism_part == "organism" & rse$genotype =="wild type genotype"), ]  
+
+
+
+## Use BiocGenerics::subset
+## drop argument doesn't seem to work
+## Dauer data is 3 stages and have a temperature dependent phenotype
+frse  <-  subset(rse, select = (sex == "hermaphrodite" & organism_part == "organism" & (genotype == "wild type genotype" |  genotype == "daf-2(e1370)III.")  ) )
+unique(frse$sex)
+unique(frse$age)
+unique(frse$organism_part)
+unique(frse$genotype)
+unique(frse$developmental_stage)
+unique(frse$technical_replicate_group)
+
+tmp <- unique(cbind(frse$age, frse$developmental_stage))
+
+```
+
+```r
+## try to get data frame of counts
+## "The data are accessed using the ‘assays’ function"
+## This is not correct
+tmp  <- rowData(frse)
+
+## Here I seem to be able to get one column of data
+assay(frse[,1])
+
+# Here I create a data frame from the filtered data
+fdf  <- assay(frse)
+attributes(fdf)
+dim(fdf)
+summary(fdf)
+
+fdf[1:10,1:10]
+
+```
+
+So what I need to do next is create the df but include all of the metadata in additional columns
+I then want to make the data tidy
+
+### Tidy Data
+
+```r
+library(tidyr)  #this doesn't provide tidy for RSE
+## install biobroom from github if it's not installed
+if (!require(biobroom, quietly=TRUE)) devtools::install_github("StoreyLab/biobroom")
+
+library(biobroom)
+options(biobroom.return = "data.frame") ## avoid warning about tbl_df
+fdf  <- tidy(frse, addPheno=TRUE, assay="counts")
+summary(fdf)
+
+## Check if "developmental_stage" and "technical_replicate_group" are synonyms
+tmp <- fdf[ , c("developmental_stage", "technical_replicate_group") ]
+
+## They are not
+utmp <- unique(tmp)
+
+```
+
+
+### Error in Variables Models
+#### From labbook.md for 02 Jul 2020
+- Imagine I want a multivariate form of Deming regression.
+- Demining regression is apparently a form of ['Classical Error in Variables'](https://stats.stackexchange.com/questions/54746/errors-in-variables-and-demings-multivariate-regression-assumptions) which mentions Fan 1991. 
+These models are in the broader category of ["Measurement Error Models"](https://stats.stackexchange.com/questions/66046/regression-and-variable-with-errors-modelling-problem).
+- A google search for "R cran error in variable models" returns several R packages: 
+    - [*eivtools*](https://CRAN.R-project.org/package=eivtools) uses R2Jags 
+    - [*GLSME*](https://CRAN.R-project.org/package=GLSME) doesn't use R2jags
+- As I look into this I realize that the error in the technical replicate measurements are likely correlated, but not elsewhere.
+The issue is then how to specify this in a cov matrix
+- Technical replicates may need to use the 'cluster' option in eivtools.
+
+##### GLSME
+- *Ve*: error in response variable, "typically a diagonal matrix with squared standard errors of the means along the diagonal".
+Thus, this should be a diagonal matrix with $\var(\phi)$ as its entries.
+- *D*: the design matrix which holds the data predictor variables and, if desired, a column of 1 for an intercept.
+There should be one column in D for each lifestage.
+Whether these are treated as fixed or random effects depends on the *Vd* matrix.
+It's not clear whether we should be using fixed or random effects. 
+It would seem to depend on whether we are using the raw data at the technical replicate level or the mean of these values.
+- *Vd*: "...the true variance structure for the predictor variable"
+A non-zero entry here indicates a random effect model.
+The columns in *D* "corresponding to `random effects'... will be centered on their means unless the option CenterPredictor=FALSE is used..."
+It's not yet clear what is done when CenterPredictor=FALSE.
+- *Vt* is defined as "The resposne biological residual covariance matrix" and also described as "... a matrix representing the true residual variance up to a scale parameter $\sigma^2$, that is estimated by the program..."
+So if I understand correctly, this is the error in the model itself (i.e. if the predictor and response variables were known exactly, we'd be left with this residual error).
+- *$\var[U \beta| D]$*: "a matrix representing the effectso fo measurementerror in the predictor variables (see appendix of Hanson and Bartoszek 2012)."
+Looking at HansonAndBartoszek2012, it seems to imply that this term is a function of a variance matrix *Vu* that "contains the between species covariances in the observation errors of predictors $i$ and $j$."
+To me it seems like this would be related to the lack of indepedence between the technical replicates for a gene's counts.
+- Reading more in HansonAndBartoszek2012, it discusses the vector $a$ in more detail.
+If the elements are 'fixed effects' then vec[D]-a = 0.
+Given that the data are counts which, for low values, are not normally distributed and we don't have a specific $\phi$ value corresponding to a given set of measurements (indeed the measurements are made on separate sets of organisms rather than measurements made on the same organisms at different lifestages), it seems like we want to average counts across technical replicates and use a fixed effects model.
+- Its not clear if I should use samples from the posterior such that the value of $\phi$ varies with each data point (which I'm assuming is one measurement of counts for one gene under one life stage) or the same one repeatedly.
+If I do use one $\phi$, then it seems like I would want to tell the model that these measurements are not independent, i.e. they have a cov() of 1.
+- From reading the paper, I infer that setting CenterPredictor=TRUE can lead to biases in the estimate of the intercept (which we're not including at this point), but setting it to FALSE greatly complicates the internal calculations.
+- HansonAndBartoszek2012 discuss a simplified scenarion and present the results in A.8.
+- HansonAndBartoszek2012 also cite some other work
+    - Buonacorsi2010
+    - Fuller1995
+    - Gleser1992
+
