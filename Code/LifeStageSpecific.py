@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import log
 
-matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/6LS.csv")
+matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/6LS_filter.csv")
 
 LSnames=rowHeaderList[1:]
 matrix=np.transpose(matrix)
@@ -36,7 +36,7 @@ def logify(lst):
     return [log(y,10) for y in lst]
 
 #Output format should look like this: {GeneId,LS,LS_exp,secondMax,restMean,foldDiff}
-def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=10):
+def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
     outputFinal=""
     geneIdList=[]
     LSList=[]
@@ -56,7 +56,7 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=10):
             if exp>= expMean:
                 restMean= (sum(ls)-exp)/(len(ls)-1)
                 secondMax=sorted(ls,reverse=True)[1]
-                if exp>secondMax*foldDiffcutOff:
+                if exp>restMean*foldDiffcutOff:
                     foldDiff=exp/restMean
                     geneId=rowHeaderList[k]
                     LS=columnHeaderList[i]
@@ -78,7 +78,7 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=10):
 assert len(columnHeaderList),len(matrix)
 #
 outputS=findLSGene(matrix,columnHeaderList,LSnames)
-f=open("LifeStageGenes.csv","w")
+f=open("/home/lu/AcrossTissue/csvs/LifeStageGenes.csv","w")
 f.write(outputS)
 f.close()
     
