@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import log
 
-matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/worm_collasedReplicate_6LS.csv")
+matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/6LS.csv")
 
 LSnames=rowHeaderList[1:]
 matrix=np.transpose(matrix)
