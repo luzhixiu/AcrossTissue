@@ -1,4 +1,4 @@
-inputFileDir="/home/lu/AcrossTissue/csvs/6LS.csv"
+inputFileDir="/home/lu/AcrossTissue/csvs/"
 outputFileDIr="/home/lu/AcrossTissue/csvs/6LS_filter.csv"
 f=open(inputFileDir,"r+")
 lines=f.readlines()

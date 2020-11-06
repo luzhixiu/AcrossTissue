@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import log
 
-matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/6LS_filter.csv")
+matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/6LS_collapse.csv")
 
 LSnames=rowHeaderList[1:]
 matrix=np.transpose(matrix)
@@ -78,7 +78,7 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
 assert len(columnHeaderList),len(matrix)
 #
 outputS=findLSGene(matrix,columnHeaderList,LSnames)
-f=open("/home/lu/AcrossTissue/csvs/LifeStageGenes.csv","w")
+f=open("/home/lu/AcrossTissue/csvs/LifeStageGenes_collapse.csv","w")
 f.write(outputS)
 f.close()
     

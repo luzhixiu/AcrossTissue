@@ -4,7 +4,6 @@ library("BiocParallel")
 register(MulticoreParam(4))
 
 library(SummarizedExperiment)
-load("/home/lu/AcrossTissue/RExperiment/E-MTAB-2812-atlasExperimentSummary.Rdata")
 
 rse <- experimentSummary$rnaseq
 rse
