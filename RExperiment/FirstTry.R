@@ -4,7 +4,6 @@ library("BiocParallel")
 register(MulticoreParam(4))
 
 library(SummarizedExperiment)
-load("/home/lu/AcrossTissue/RExperiment/E-MTAB-2812-atlasExperimentSummary.Rdata")
 
 rse <- experimentSummary$rnaseq
 rse
@@ -50,12 +49,7 @@ resultsNames(dds)
 dds
 dds=dds_bkup
 
-#Validate it was correct to use the list factors
-
-res <- results(dds,contrast = c("developmental_stage","4.cell.embryo.Ce","adult.Ce"))
-res
-res <- results(dds,contrast=c(0,1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
-res
+#Validate it was co
 
 
 
@@ -66,13 +60,6 @@ res
 dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
 
 
-
-
-
-
-
-
-
 #write the result to file
 countMatrix=assays(dds)$counts
 write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/worm_collasedReplicate.csv", sep=",",col.names=NA)
@@ -80,12 +67,6 @@ write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/worm_collasedReplica
 
 
 
-res
-#filter out ones with low counts, genes with the sum of counts less than 10 are removed 
-keep <- rowSums(counts(dds)) >= 10
-dds <- dds[keep,]
-rn=resultsNames(dds)
-res <- results(dds)
 
 
 
@@ -126,21 +107,3 @@ lfstages=colData(dds)$developmental_stage
 
 
 
-
-
-?meanSdPlot
-
-id_map= read.csv("/home/lu/AcrossTissue/csvs/c_elegan_geneName_WBID_Phi.csv")
-head(id_map,10)
-
-
-
-
-
-
-ntd <- normTransform(dds)
-
-library("vsn")
-
-meanSdPlot(assay(ntd),rank=F)
-?meanSdPlot
