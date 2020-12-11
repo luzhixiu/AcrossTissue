@@ -4,6 +4,7 @@ library("BiocParallel")
 register(MulticoreParam(4))
 
 library(SummarizedExperiment)
+load("/home/lu/AcrossTissue/RExperiment/E-MTAB-2812-atlasExperimentSummary.Rdata")
 
 rse <- experimentSummary$rnaseq
 rse
@@ -52,10 +53,6 @@ dds=dds_bkup
 #Validate it was co
 
 
-
-
-
-
 #collapse the techinical replicates, grouped by the developmental stages
 dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
 
@@ -65,20 +62,8 @@ countMatrix=assays(dds)$counts
 write.table(countMatrix, "/home/lu/AcrossTissue/RExperiment/worm_collasedReplicate.csv", sep=",",col.names=NA)
 
 
-
-
-
-
-
-
-
 #collapse the techinical replicates, grouped by the developmental stages
 #dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
-
-
-
-
-
 
 #collapse the techinical replicates, grouped by the developmental stages
 dds <- collapseReplicates(dds, dds$developmental_stage,dds$technical_replicate_group)
@@ -97,9 +82,6 @@ res <- results(dds)
 dds$group <- dds$developmental_stage
 dds$group <- factor(paste0(dds$developmental_stage,dds$AtlasAssayGroup))
 dds <- DESeq(dds)
-
-
-
 
 summary(res)
 lfstages=colData(dds)$developmental_stage
