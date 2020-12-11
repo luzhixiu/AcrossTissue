@@ -1,2 +1,5 @@
-Error in library(AnaCoDa) : there is no package called ‘AnaCoDa’
-Execution halted
+Loading required package: Rcpp
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+character(0)
