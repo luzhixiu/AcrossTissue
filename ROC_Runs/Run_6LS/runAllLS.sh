@@ -15,17 +15,17 @@ cp ./run.sh emb/
 
 
 
-cd "/data1/compbio/zlu21/AcrossTissue/RunResults/adult"
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/Run_6LS/adult"
 ./run.sh &
-cd "/data1/compbio/zlu21/AcrossTissue/RunResults/dauer"
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/Run_6LS/dauer"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/L1"
+cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/Run_6LS/L1"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/L2"
+cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/Run_6LS/L2"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/L3"
+cd  "/data1/compbio/zlu21/AcrossTissue/RunResults/Run_6LS/L3"
 ./run.sh &
-cd "/data1/compbio/zlu21/AcrossTissue/RunResults/emb"
+cd "/data1/compbio/zlu21/AcrossTissue/RunResults/Run_6LS/emb"
 ./run.sh &
 
 
