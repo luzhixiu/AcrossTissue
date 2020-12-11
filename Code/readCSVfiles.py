@@ -13,7 +13,7 @@ import numpy as np
 #input: csv file path
 #output: matrix of the csx, each column is a list relative to coresponding rowHeader location
 #for example, matrix[3] is a list from responding column, and rowHeader[3] describes this column 
-def readCSV(fname, hasrowHeader=True,hasColHeader=True,partialIndexList=[],readAsString=False):
+def readCSV(fname, hasRowHeader=True,hasColHeader=True,partialIndexList=[],readAsString=False):
     rowHeader=[]
     columnHeaderList=[]
     matrix=[]
@@ -22,6 +22,8 @@ def readCSV(fname, hasrowHeader=True,hasColHeader=True,partialIndexList=[],readA
     rowHeader=lines[0]
     lines=lines[1:]
     rowHeaderList=rowHeader.strip().split(",")
+
+
     nSamples=len(rowHeaderList)
     if hasColHeader:
         colSize=nSamples-1
@@ -56,6 +58,8 @@ def readCSV(fname, hasrowHeader=True,hasColHeader=True,partialIndexList=[],readA
         matrix=[matrix[index] for index in partialIndexList]
         rowHeaderList=[rowHeaderList[index] for index in partialIndexList]
         columnHeaderList=[columnHeaderList[index] for index in partialIndexList]
+
+        
     return matrix,rowHeaderList,columnHeaderList
         
         
