@@ -315,7 +315,7 @@ mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=
 #this part set steps 
 adptiveRatio=0.5
 adaptiveSamples=samples*thinning*adaptiveRatio
-mcmc$setStepsToAdapt(adaptiveSamples)
+mcmc$setStepsToAdapt(0)
 
 model <- initializeModelObject(parameter, "ROC", with.phi)
 setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
