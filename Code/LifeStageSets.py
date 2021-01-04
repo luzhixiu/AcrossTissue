@@ -13,7 +13,7 @@ from math import log
 import findSequenceById
 
 topCutOff=3000
-fname="../csvs/LifeStageGenes_collapse_6LS.csv"
+fname="../csvs/LifeStageGenes_collapse.csv"
 
 
 raw_matrix,rowHeaderList,columnHeaderList= RCF.readCSV(fname,readAsString=True)
