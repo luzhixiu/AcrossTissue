@@ -1,6 +1,6 @@
 Value,Time
-1,user.self,309.36
-2,sys.self,2.841
-3,elapsed,78.482
+1,user.self,464.143
+2,sys.self,4.02
+3,elapsed,117.642
 4,user.child,0
 5,sys.child,0
