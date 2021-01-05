@@ -1,3 +1,13 @@
+library(AnaCoDa)
+library(deming)
+library(ggplot2)
+library(cowplot)
+library(ggrepel)
+library(ggnewscale)
+
+
+
+
 getSignificantCodons<-function(df.1,df.2)
 {
   df.1[,"Significance"] <- rep("Not Significant",nrow(df.1)) 
@@ -158,7 +168,7 @@ plotDeta <-function(data,b1,b0,reg.ci=NULL,categories=c("X","Y"),ci = F,file="te
         + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         + theme(legend.position = c(0.2,0.85),legend.text=element_text(face="bold",size=8),legend.title=element_text(face="bold",size=8),legend.key.width=unit(0.2,"cm"),legend.key.height=unit(0.4,"cm"),legend.spacing.y=unit(0.1,"cm"))
         + theme(plot.title = element_text(hjust = 0.5,size=12,face="bold")))
-  #ggsave(filename = file,plot=p,device="pdf",width=6,height=6)
+  ggsave(filename = file,plot=p,device="pdf",width=6,height=6)
   return(p)
   
 }
@@ -166,6 +176,33 @@ plotDeta <-function(data,b1,b0,reg.ci=NULL,categories=c("X","Y"),ci = F,file="te
 output <- demingRegression("/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Selection/adult_Selection.csv","/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Selection/dauer_Selection.csv")
 plot <- plotDeta(output$df,b1=unname(output$Slope),b0 = unname(output$Intercept),reg.ci=output$Slope.CI,categories = c("Adult","Dauer"),ci=T,title =expression(atop("Comparison of Selection "*Delta*eta,"Adult vs. Dauer")),file=paste0(target.directory,"/scer_coil_vs_helix_sig_codon_by_mean.pdf"),range.xy=NULL)
 plot
+
+selectionDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Selection"
+
+fileList=list.files(selectionDir)
+fileList
+
+
+plotVec=vector()
+target.directory="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Graph"
+
+for (fname1 in fileList){
+  for (fname2 in fileList){
+    if (fname1==fname2){next}
+    fDir1= file.path(selectionDir,fname1)
+    fDir2=file.path(selectionDir,fname2)
+    LS1=unlist((strsplit(fname1,"\\_")))[1]
+    LS2=unlist((strsplit(fname2,"\\_")))[1]
+    print(LS1)
+    print(LS2)
+    output <- demingRegression(fDir1,fDir2)
+    plot <- plotDeta(output$df,b1=unname(output$Slope),b0 = unname(output$Intercept),reg.ci=output$Slope.CI,categories = c(LS1,LS2),ci=T,title =expression(atop("Comparison of Selection "*Delta*eta , LS1, " vs ", LS2)),file=paste0(target.directory,"/scer_coil_vs_helix_sig_codon_by_mean.pdf"),range.xy=NULL)
+    plot
+  }
+}
+
+plot
+plotVec[3]
 
 
 
