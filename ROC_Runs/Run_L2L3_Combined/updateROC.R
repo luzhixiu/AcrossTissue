@@ -27,6 +27,12 @@ adapt <- args$adapt
 samp <- args$samp
 num_threads <- args$threads
 
+#locally defined parameters
+
+init_run_number <- 2
+max_run_number <- 4
+
+# Helper functions
 createParameterOutput <- function(parameter,numMixtures,samples,mixture.labels,samples.percent.keep=1,relative.to.optimal.codon=F,report.original.ref=T)
 {
   for (i in 1:numMixtures)
@@ -104,6 +110,7 @@ geneAssignment <- rep(1:numMixtures, mixture.sizes)
 
 
 parameter <- initializeParameterObject(genome,model="ROC",sphi_init,numMixtures, geneAssignment, split.serine = TRUE, mixture.definition = mixDef)
+# Do we need to reissue this command for each restart?
 parameter$initMutationCategories("/data1/compbio/zlu21/AcrossTissue/RunResults/Crei_Mutation_NoRef.csv",1,TRUE)
 # parameter$initSelectionCategories(c(sel),1)
 
@@ -119,7 +126,9 @@ mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=
 # get model object
 model <- initializeModelObject(parameter, "ROC", with.phi)
 
-run_number <- 1
+run_number <- init_run_number
+
+if(run_number == 1){ 
 dir.create(directory)
 dir_name <- paste0(directory,"/run_",run_number)
 dir.create(dir_name)
@@ -136,6 +145,8 @@ sys.runtime<-system.time(
 
 sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
 write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
+
+print(paste0("Done run_number ", run_number, "run time info: ", sys.runtime))
 
 createParameterOutput(parameter = parameter,numMixtures = numMixtures,mixture.labels = mixture.labels,samples = samples,samples.percent.keep = percent.to.keep,relative.to.optimal.codon = F,report.original.ref = T)
 expressionValues <- getExpressionEstimates(parameter,c(1:size),samples*percent.to.keep)
@@ -206,10 +217,19 @@ done <- (z > 1.96) && param.conv
 rm(parameter)
 rm(trace)
 rm(model)
-while((!done) && (run_number <= 3))
+
+run_number <- run_number + 1
+
+} # end run_number = 1
+
+
+while((!done) && (run_number < max_run_number))
 {
   parameter<-initializeParameterObject(init.with.restart.file = paste(dir_name,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
-  run_number <- run_number + 1
+  # Restarts crash when \DeltaM is fixed in initial run
+  # Insert fix \DeltaM command here?
+  # parameter$initMutationCategories("/data1/compbio/zlu21/AcrossTissue/RunResults/Crei_Mutation_NoRef.csv",1,TRUE)
+
   dir_name <- paste0(directory,"/run_",run_number)
   dir.create(dir_name)
   dir.create(paste(dir_name,"Graphs",sep="/"))
@@ -228,6 +248,8 @@ while((!done) && (run_number <= 3))
   sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
   write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
   
+  print(paste0("Done run_number ", run_number, "run time info: ", sys.runtime))
+
   createParameterOutput(parameter = parameter,numMixtures = numMixtures,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = percent.to.keep,relative.to.optimal.codon = F,report.original.ref = T)
   
   expressionValues <- getExpressionEstimates(parameter,c(1:size),samples*percent.to.keep)
@@ -295,11 +317,19 @@ while((!done) && (run_number <= 3))
   rm(parameter)
   rm(trace)
   rm(model)
-}
+
+  run_number <- run_number + 1
+} #end run_number > 1 & < max_run_number loop
+
+print(paste0("Done printing run_number ", run_number))
+
 
 samples <- 10000
-thinning <- 5
+thinning <- thin 
 parameter<-initializeParameterObject(init.with.restart.file = paste(dir_name,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
+# Restarts crash when \DeltaM is fixed in initial run
+# Insert fix \DeltaM command here?
+# parameter$initMutationCategories("/data1/compbio/zlu21/AcrossTissue/RunResults/Crei_Mutation_NoRef.csv",1,TRUE)
 run_number <- run_number + 1
 dir_name <- paste0(directory,"/final_run")
 dir.create(dir_name)
@@ -307,6 +337,7 @@ dir.create(paste(dir_name,"Graphs",sep="/"))
 dir.create(paste(dir_name,"Restart_files",sep="/"))
 dir.create(paste(dir_name,"Parameter_est",sep="/"))
 dir.create(paste(dir_name,"R_objects",sep="/"))
+
 
 mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
                              est.expression=TRUE, est.csp=TRUE, est.hyper=TRUE,est.mix=FALSE)
@@ -326,6 +357,8 @@ sys.runtime <- system.time(
 )
 sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
 write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
+
+print(paste0("Done run_number ", run_number, "run time info: ", sys.runtime))
 
 
 createParameterOutput(parameter = parameter,numMixtures = numMixtures,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = 1,relative.to.optimal.codon = F,report.original.ref = T)
