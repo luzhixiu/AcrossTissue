@@ -1,0 +1,27 @@
+Loading required package: Rcpp
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+[1] "L2L3.fasta"
+[1] "FASTA successfully files loaded:"
+[1] "L2L3.fasta"
+Genome loaded
+200 
+Warning messages:
+1: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  1 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+2: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  2 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+3: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  2 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+4: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  1 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+5: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  2 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+6: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  2 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+7: In checkwz(wz, M = M, trace = trace, wzepsilon = control$wzepsilon) :
+  2 diagonal elements of the working weights variable 'wz' have been replaced by 1.819e-12
+Error opening file 0 to initialize mutation values.
+Error in done : object 'done' not found
+Execution halted

@@ -1,0 +1,23 @@
+Loading required package: Rcpp
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+[1] "elongating_embryo.fasta" "emb.fasta"              
+[1] "FASTA successfully files loaded:"
+[1] "elongating_embryo.fasta" "emb.fasta"              
+Genome loaded
+952 
+Warning messages:
+1: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+2: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+3: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  iterations terminated because half-step sizes are very small
+4: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+5: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
+  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
+Error opening file 0 to initialize mutation values.
+Error in done : object 'done' not found
+Execution halted

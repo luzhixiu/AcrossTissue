@@ -1,0 +1,12 @@
+Loading required package: Rcpp
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+[1] "adult.fasta"
+[1] "FASTA successfully files loaded:"
+[1] "adult.fasta"
+Genome loaded
+128 
+Error opening file 0 to initialize mutation values.
+Error in done : object 'done' not found
+Execution halted
