@@ -11,7 +11,7 @@ targetDir="/home/lu/AcrossTissue/Fastas"
 
 outputDir=targetDir
 for file in os.listdir(targetDir):
-    if ".fasta" in file:
+    if ".fasta" in file and ".csv" not in file:
         path=os.path.join(targetDir,file)
         f=open(path,"r")
         wormbaseIdList=[]
