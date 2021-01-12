@@ -8,7 +8,6 @@ Created on Tue May 19 13:01:47 2020
 
 def findSequenceByID(inputFile,idType="locus_tag"):
     geneNameList=[]
-    geneDict=dict()
     from Bio import SeqIO
     records=SeqIO.parse(inputFile, "fasta")
     cnt=0
@@ -33,9 +32,10 @@ def findSequenceByID(inputFile,idType="locus_tag"):
         
     return geneNameList
 
-geneNameList=findSequenceByID("/home/lu/Desktop/sequences/c_elegan.fasta",idType="gene")
-print len(geneNameList)
+targetFile="/home/lu/AcrossTissue/Fastas/L2L3_larva.fasta"
+geneNameList=findSequenceByID(targetFile,idType="Gn")
 
+print(geneNameList)
 
 
 import csv
