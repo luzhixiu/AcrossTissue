@@ -11,6 +11,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import log
 
+
+#A few preset options here:
+
+# Cut off of low exp (less than median) switch
+cutLowExp=False
+
+
+
+
+
+
 matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/5LS_L2L3Combined.csv")
 
 LSnames=rowHeaderList[1:]
@@ -48,12 +59,14 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
     headerStr="GeneID,LS,LS_EXP,SecondMax,RestMean,FoldDiff \n"
     outputFinal+=headerStr
     global expMedian
+    if not cutLowExp:
+        expMedian=0 #this removes the low cutoff of expression, comment this line to filter out lowely expressed genes.
     LS_Genes_Count=0
     for k in range(len(expMatrix)):
         ls=expMatrix[k]
         for i in range(len(ls)):
             exp=ls[i]
-            if exp>= expMean:
+            if exp>= expMedian:
                 restMean= (sum(ls)-exp)/(len(ls)-1)
                 secondMax=sorted(ls,reverse=True)[1]
                 if exp>restMean*foldDiffcutOff:
@@ -70,8 +83,8 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
                     outputString=geneId+","+ str(LS) + "," + str(exp) + "," + str(secondMax)+ "," + str(restMean) + "," + str(foldDiff)+ "\n" 
                     outputFinal+=outputString
     
-    expList=logify(expList)
-    foldDiffList=logify(expList)
+#    expList=logify(expList)
+#    foldDiffList=logify(expList)
     return outputFinal
         
     

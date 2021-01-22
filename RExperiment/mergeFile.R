@@ -1,8 +1,7 @@
 
 require(ggiraph)
 require(ggiraphExtra)
-require(plyr)
-
+library(dplyr)
 
 library(ggplot2)
 library(ggpubr)
@@ -55,7 +54,7 @@ ggscatter(df, x="elongating.embryo.Ce", y="PHI_Emb") + yscale("log10", .format =
 length(na.omit(df$PHI_Dauer))
 
 #ggPredict(model,se=TRUE)
-library(dplyr)
+
 
 testData=df %>%
   select(elongating.embryo.Ce, L1.larva.Ce, dauer.larva.Ce,adult.Ce,L2L3_larva)
