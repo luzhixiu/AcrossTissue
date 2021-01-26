@@ -61,7 +61,19 @@ testData=df %>%
 
 pred.int <- predict(model,testData,se=T)
 length(pred.int)
-plot(df$Phi_WholeGenome,pred.int)
+plot(df$Phi_WholeGenome,pred.int$fit)
+fitValues=as.numeric(pred.int$fit)
+
+cor(df$Phi_WholeGenome,df$adult.Ce,use="complete.obs")
+cor(df$Phi_WholeGenome,df$dauer.larva.Ce,use="complete.obs")
+cor(df$Phi_WholeGenome,df$L1.larva.Ce,use="complete.obs")
+cor(df$Phi_WholeGenome,df$L2L3_larva,use="complete.obs")
+cor(df$Phi_WholeGenome,df$elongating.embryo.Ce,use="complete.obs")
+cor(df$Phi_WholeGenome,fitValues,use="complete.obs")
+
+
+
+
 
 
 
