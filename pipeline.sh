@@ -9,9 +9,8 @@ Rscript  ./RExperiment/ProcessReads.R
 
 #From this file, we run LifeStageSpecific.py from the "Code" directory on it to find the genes we consider life stage specifif, see notes for details.
 
-#the output is  in the  x-special/nautilus-clipboard
-copy
-file:///home/lu/AcrossTissue/csvs/LifeStageGenes_collapse.csv
+
+# home/lu/AcrossTissue/csvs/LifeStageGenes_collapse.csv
 
 
 
