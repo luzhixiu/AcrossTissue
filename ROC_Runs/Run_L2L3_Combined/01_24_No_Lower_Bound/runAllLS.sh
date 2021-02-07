@@ -13,15 +13,15 @@ cp ./run.sh emb/
 
 
 
-cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Run_01_12_embryo_fix/adult"
+cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/adult"
 ./run.sh &
-cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Run_01_12_embryo_fix/dauer"
+cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/dauer"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Run_01_12_embryo_fix/L1"
+cd  "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/L1"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Run_01_12_embryo_fix/L2L3"
+cd  "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/L2L3"
 ./run.sh &
-cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Run_01_12_embryo_fix/emb"
+cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/emb"
 ./run.sh &
 
 
