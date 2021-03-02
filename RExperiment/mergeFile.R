@@ -20,6 +20,10 @@ M <- cor(df_selection[,unlist(lapply(df_selection, is.numeric))  ])
 corrplot(M, method = "number")
 
 
+testData=df %>%select(elongating.embryo.Ce, L1.larva.Ce, dauer.larva.Ce,adult.Ce,L2L3_larva)
+M_testData <- cor(testData)
+corrplot(M_testData, method = "number")
+
 
 
 

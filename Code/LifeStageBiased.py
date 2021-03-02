@@ -15,32 +15,6 @@ from math import log
 #A few preset options here:
 
 # Cut off of low exp (less than median) switch
-cutLowExp=False
-
-
-
-
-
-
-matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/5LS_L2L3Combined.csv")
-
-LSnames=rowHeaderList[1:]
-matrix=np.transpose(matrix)
-
-
-expSum=0.0
-expCount=0
-expList=[]
-for ls in matrix:
-    for exp in ls:
-        if exp==0:
-            continue
-        expSum+=exp
-        expCount+=1
-        expList.append(exp)
-expMean=expSum/expCount
-expMedian=ss.mean(expList)
-
 
 
 def logify(lst):
@@ -87,11 +61,30 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
 #    foldDiffList=logify(expList)
     return outputFinal
         
+def main():
+    cutLowExp=False
+    matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/5LS_L2L3Combined.csv")
     
-assert len(columnHeaderList),len(matrix)
-#
-outputS=findLSGene(matrix,columnHeaderList,LSnames)
-f=open("/home/lu/AcrossTissue/csvs/LifeStageGenes_collapse.csv","w")
-f.write(outputS)
-f.close()
+    LSnames=rowHeaderList[1:]
+    matrix=np.transpose(matrix)
+    
+    
+    expSum=0.0
+    expCount=0
+    expList=[]
+    for ls in matrix:
+        for exp in ls:
+            if exp==0:
+                continue
+            expSum+=exp
+            expCount+=1
+            expList.append(exp)
+    expMean=expSum/expCount
+    expMedian=ss.mean(expList)
+
+    assert len(columnHeaderList),len(matrix)
+    outputS=findLSGene(matrix,columnHeaderList,LSnames)
+    f=open("/home/lu/AcrossTissue/csvs/LifeStageGenes_collapse.csv","w")
+    f.write(outputS)
+    f.close()
     
