@@ -13,8 +13,14 @@ from math import log
 
 
 #A few preset options here:
-
-# Cut off of low exp (less than median) switch
+inputFile=""
+outputFile=""
+cutLowExp=True 
+cutLowPercentile=0.1
+fixedCutValue=0
+    
+#In code global parameter   
+matrix,rowHeaderList,columnHeaderList=[],[],[]
 
 
 def logify(lst):
@@ -30,21 +36,29 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
     restMeanList=[]
     foldDiffList=[]
     
-    headerStr="GeneID,LS,LS_EXP,SecondMax,RestMean,FoldDiff \n"
+    headerStr="GeneID,LS,LS_EXP,SecondMax,RestMean,FoldDiff\n"
     outputFinal+=headerStr
-    global expMedian
-    if not cutLowExp:
-        expMedian=0 #this removes the low cutoff of expression, comment this line to filter out lowely expressed genes.
+    global cutLowExp,cutLowPercentile
+    cutOffValue=0
+    if cutLowExp:
+        #this removes the low cutoff of expression, comment this line to filter out lowely expressed genes.
+        flatMatrix=sorted(np.array((expMatrix).flatten()))
+        cutOffValue=((flatMatrix)[int(len(flatMatrix)*cutLowPercentile)])
+    if fixedCutValue>0:
+       cutOffValue=fixedCutValue 
     LS_Genes_Count=0
     for k in range(len(expMatrix)):
         ls=expMatrix[k]
         for i in range(len(ls)):
             exp=ls[i]
-            if exp>= expMedian:
+            if exp>= cutOffValue:
                 restMean= (sum(ls)-exp)/(len(ls)-1)
                 secondMax=sorted(ls,reverse=True)[1]
-                if exp>restMean*foldDiffcutOff:
-                    foldDiff=exp/restMean
+                if exp>secondMax*foldDiffcutOff:
+                    if secondMax==0:
+                        foldDiff=float('inf')
+                    else:
+                        foldDiff=exp/secondMax
                     geneId=rowHeaderList[k]
                     LS=columnHeaderList[i]
                     LS_Genes_Count+=1
@@ -60,31 +74,23 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
 #    expList=logify(expList)
 #    foldDiffList=logify(expList)
     return outputFinal
+
+
+
+def readFile():
+    global matrix, rowHeaderList,columnHeaderList,inputFile
+    matrix,rowHeaderList,columnHeaderList= RCF.readCSV(inputFile)
+    
         
 def main():
-    cutLowExp=False
-    matrix,rowHeaderList,columnHeaderList= RCF.readCSV("/home/lu/AcrossTissue/csvs/5LS_L2L3Combined.csv")
-    
+    global matrix,rowHeaderList,columnHeaderList
+    if len(matrix)<=1:
+        readFile()
     LSnames=rowHeaderList[1:]
     matrix=np.transpose(matrix)
-    
-    
-    expSum=0.0
-    expCount=0
-    expList=[]
-    for ls in matrix:
-        for exp in ls:
-            if exp==0:
-                continue
-            expSum+=exp
-            expCount+=1
-            expList.append(exp)
-    expMean=expSum/expCount
-    expMedian=ss.mean(expList)
-
     assert len(columnHeaderList),len(matrix)
     outputS=findLSGene(matrix,columnHeaderList,LSnames)
-    f=open("/home/lu/AcrossTissue/csvs/LifeStageGenes_collapse.csv","w")
+    global outputFile
+    f=open(outputFile,"w")
     f.write(outputS)
     f.close()
-    
