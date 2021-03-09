@@ -15,6 +15,7 @@ from math import log
 #A few preset options here:
 inputFile=""
 outputFile=""
+foldDiffCutOff=2
 cutLowExp=True 
 cutLowPercentile=0.1
 fixedCutValue=0
@@ -44,6 +45,7 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
         #this removes the low cutoff of expression, comment this line to filter out lowely expressed genes.
         flatMatrix=sorted(np.array((expMatrix).flatten()))
         cutOffValue=((flatMatrix)[int(len(flatMatrix)*cutLowPercentile)])
+        print("The cutOff Value for the specified percentaile is: ",cutOffValue)
     if fixedCutValue>0:
        cutOffValue=fixedCutValue 
     LS_Genes_Count=0
@@ -54,9 +56,9 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
             if exp>= cutOffValue:
                 restMean= (sum(ls)-exp)/(len(ls)-1)
                 secondMax=sorted(ls,reverse=True)[1]
-                if exp>secondMax*foldDiffcutOff:
+                if exp>=secondMax*foldDiffcutOff:
                     if secondMax==0:
-                        foldDiff=float('inf')
+                        foldDiff=exp
                     else:
                         foldDiff=exp/secondMax
                     geneId=rowHeaderList[k]
@@ -83,13 +85,13 @@ def readFile():
     
         
 def main():
-    global matrix,rowHeaderList,columnHeaderList
+    global matrix,rowHeaderList,columnHeaderList,foldDiffCutOff
     if len(matrix)<=1:
         readFile()
     LSnames=rowHeaderList[1:]
     matrix=np.transpose(matrix)
     assert len(columnHeaderList),len(matrix)
-    outputS=findLSGene(matrix,columnHeaderList,LSnames)
+    outputS=findLSGene(matrix,columnHeaderList,LSnames,foldDiffcutOff=foldDiffCutOff)
     global outputFile
     f=open(outputFile,"w")
     f.write(outputS)
