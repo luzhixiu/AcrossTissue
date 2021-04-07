@@ -45,7 +45,7 @@ def findLSGene(expMatrix,rowHeaderList,columnHeaderList,foldDiffcutOff=2):
         #this removes the low cutoff of expression, comment this line to filter out lowely expressed genes.
         flatMatrix=sorted(np.array((expMatrix).flatten()))
         cutOffValue=((flatMatrix)[int(len(flatMatrix)*cutLowPercentile)])
-        print("The cutOff Value for the specified percentaile is: ",cutOffValue)
+        print("Low expression genes filtering for the specified percentaile is: ",cutOffValue)
     if fixedCutValue>0:
        cutOffValue=fixedCutValue 
     LS_Genes_Count=0
