@@ -64,12 +64,12 @@ model
 
 
 length(dauer)
-
 ggscatter(df, x="dauer.larva.Ce", y="PHI_Dauer") + yscale("log10", .format = TRUE)+xscale("log10", .format = TRUE)
 ggscatter(df, x="L1.larva.Ce", y="PHI_L1") + yscale("log10", .format = TRUE)+xscale("log10", .format = TRUE)
 ggscatter(df, x="adult.Ce", y="PHI_Adult") + yscale("log10", .format = TRUE)+xscale("log10", .format = TRUE)
 ggscatter(df, x="L2L3_larva", y="PHI_L2L3") + yscale("log10", .format = TRUE)+xscale("log10", .format = TRUE)
 ggscatter(df, x="elongating.embryo.Ce", y="PHI_Emb") + yscale("log10", .format = TRUE)+xscale("log10", .format = TRUE)
+
 
 length(na.omit(df$PHI_Dauer))
 
@@ -91,13 +91,15 @@ cor(df$Phi_WholeGenome,df$elongating.embryo.Ce,use="complete.obs",method="spearm
 cor(df$Phi_WholeGenome,fitValues,use="complete.obs",method="spearman")
 
 
+
+
+
 cor(df$PHI_Adult,df$adult.Ce,use="complete.obs",method="spearman")
 cor(df$PHI_Dauer,df$dauer.larva.Ce,use="complete.obs",method="spearman")
 cor(df$PHI_Emb,df$elongating.embryo.Ce,use="complete.obs",method="spearman")
 cor(df$PHI_L1,df$L1.larva.Ce,use="complete.obs",method="spearman")
 cor(df$PHI_L2L3,df$L2L3_larva,use="complete.obs",method="spearman")
-
-
+cor(df$Phi_WholeGenome,fitValues,use="complete.obs",method="spearman")
 
 #sort the df by "whole genome phi"
 df_sorted <- df[order(-df$Phi_WholeGenome),]

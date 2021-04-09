@@ -101,9 +101,7 @@ cor(df$PHI_L2L3,df$L2L3_larva,use="complete.obs",method="spearman")
 
 #sort the df by "whole genome phi"
 df_sorted <- df[order(-df$Phi_WholeGenome),]
-
 emp_mean= rowMeans(subset(df_sorted, select = c(elongating.embryo.Ce,L1.larva.Ce,dauer.larva.Ce,adult.Ce,L2L3_larva)))
-
 cor(emp_mean,df_sorted$Phi_WholeGenome,use="complete.obs",method="spearman")
 
 

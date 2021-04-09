@@ -32,7 +32,7 @@ def findSequenceByID(inputFile,idType="locus_tag"):
         
     return geneNameList
 
-targetFile="/home/lu/AcrossTissue/Fastas/L2L3_larva.fasta"
+targetFile="/home/lu/AcrossTissue/Fastas/L2L3_larva_TopFromEachGroup_300.fasta"
 geneNameList=findSequenceByID(targetFile,idType="Gn")
 
 print(geneNameList)
