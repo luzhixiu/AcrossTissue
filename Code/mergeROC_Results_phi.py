@@ -3,12 +3,13 @@ import os
 import pandas as pd
 import scipy.stats as ss
 import seaborn as sns
+import matplotlib.pyplot as plt
 inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Top_300_From_Each_Group"
 inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Fold_Diff_4"
 
 
 wholeGenomePhiPath='/home/lu/AcrossTissue/csvs/wholeGenomePhi_WBID.csv'
-empirical_LS_Path='/home/lu/AcrossTissue/csvs/5LS_phi_and_wormbaseId/merged_with_lower_bound/5LS_empirical_exp.csv'
+empirical_LS_Path='/home/lu/AcrossTissue/csvs/5LS_empirical_exp.csv'
 
 rootdir = inputDir
 
@@ -34,7 +35,12 @@ for dr in phi_result_dir_list:
 
 
 corTarget=[]            
-df_empirical=pd.read_csv(empirical_LS_Path)    
+df_empirical=pd.read_csv(empirical_LS_Path) 
+df_empirical=df_empirical.add_prefix("EMP_")
+print(df_empirical.columns)
+df_empirical=df_empirical.rename(columns={"EMP_WBID":"WBID"})
+
+
 corTarget.extend(list(df_empirical.columns))
 df = pd.read_csv(wholeGenomePhiPath)    
 
@@ -59,11 +65,20 @@ for i in range(len(fasta_file_dir_list)):
     df_sub=df_sub.rename(columns=nameConv)
     df=pd.merge(df,df_sub,on="WBID",how="outer")
 
+
 df=pd.merge(df_empirical,df,on="WBID",how="outer")
 
+corTarget.append("Phi_WholeGenome")
 target=["adult Ce","PHI_adult","elongating embryo Ce",]
 print(corTarget)
 df_cor=df[corTarget]
-cor=df_cor.corr()
-sns.heatmap(cor, annot=True)
+
+df_cor=df_cor.sort_index(axis=1)
+
+
+cor=df_cor.corr(method="spearman")
+
+sns.heatmap(cor, annot=True,cmap="magma_r",annot_kws={"size": 8})
+# plt.xticks(rotation=-25,size=5) 
+# plt.xlabel('xlabel', fontsize=1)
 print(cor)
