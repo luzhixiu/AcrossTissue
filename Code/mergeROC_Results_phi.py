@@ -2,8 +2,11 @@ from pathlib import Path
 import os
 import pandas as pd
 import scipy.stats as ss
-
+import seaborn as sns
 inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Top_300_From_Each_Group"
+inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Fold_Diff_4"
+
+
 wholeGenomePhiPath='/home/lu/AcrossTissue/csvs/wholeGenomePhi_WBID.csv'
 empirical_LS_Path='/home/lu/AcrossTissue/csvs/5LS_phi_and_wormbaseId/merged_with_lower_bound/5LS_empirical_exp.csv'
 
@@ -28,10 +31,12 @@ for dr in phi_result_dir_list:
         p=it.path
         if "fasta" in p:
             fasta_file_dir_list.append(p)
-            
-df_empirical=pd.read_csv(empirical_LS_Path)    
-df = pd.read_csv(wholeGenomePhiPath)    
 
+
+corTarget=[]            
+df_empirical=pd.read_csv(empirical_LS_Path)    
+corTarget.extend(list(df_empirical.columns))
+df = pd.read_csv(wholeGenomePhiPath)    
 
 
 for i in range(len(fasta_file_dir_list)):
@@ -50,12 +55,15 @@ for i in range(len(fasta_file_dir_list)):
     df_LS.insert(loc=0,column="WBID",value=wormbaseIdList)
     df_sub=df_LS[["WBID","PHI","Std.Dev"]]
     nameConv={'PHI':("PHI_"+name),"Std.Dev":"StdDev_"+name}
+    corTarget.append("PHI_"+name)
     df_sub=df_sub.rename(columns=nameConv)
     df=pd.merge(df,df_sub,on="WBID",how="outer")
 
 df=pd.merge(df_empirical,df,on="WBID",how="outer")
 
-target=["adult Ce","PHI_adult"]
-df_cor=df[target]
-
-print(df_cor.corr(method ='kendall'))
+target=["adult Ce","PHI_adult","elongating embryo Ce",]
+print(corTarget)
+df_cor=df[corTarget]
+cor=df_cor.corr()
+sns.heatmap(cor, annot=True)
+print(cor)
