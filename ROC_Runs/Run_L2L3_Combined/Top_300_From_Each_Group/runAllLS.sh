@@ -12,16 +12,17 @@ cp ./run.sh L2L3/
 cp ./run.sh emb/
 
 
+curDir="/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Top_300_From_Each_Group"
 
-cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/adult"
+cd "${curDir}/adult"
 ./run.sh &
-cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/dauer"
+cd "${curDir}/dauer"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/L1"
+cd  "${curDir}/L1"
 ./run.sh &
-cd  "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/L2L3"
+cd  "${curDir}/L2L3"
 ./run.sh &
-cd "/data1/compbio/zlu21/AcrossTissue/ROC_Runs/Run_L2L3_Combined/01_24_No_Lower_Bound/emb"
+cd "${curDir}/emb"
 ./run.sh &
 
 
