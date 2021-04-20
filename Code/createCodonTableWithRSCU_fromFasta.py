@@ -94,7 +94,7 @@ class customizedCUB(CodonAdaptationIndex):
 CUB=customizedCUB()   
         
 
-CUB.generate_index("/home/lu/AcrossTissue/Fastas/c_elegan.fasta")
+CUB.generate_index("/home/lu/AcrossTissue/Fastas/random_c_elegan_300.fasta")
 
 RSCU_Dict=(CUB.index)
 
@@ -105,15 +105,18 @@ fig, axs = plt.subplots(figDim, figDim,figsize=(15,15))
 c=0
 r=0        
 
+
 for aa in inverseTable:
+    colorList=list('rgbkymc')
     print(c,r)
     codonList=inverseTable[aa]
+    
     RSCU_List=[RSCU_Dict[x] for x in codonList]
     sort_index = np.flip(np.argsort(RSCU_List))
     codonList=[codonList[i] for i in sort_index]        
     RSCU_List=[RSCU_List[i] for i in sort_index]
-    
-    axs[r,c].bar(codonList,RSCU_List)
+    colorList=[colorList[i] for i in sort_index]
+    axs[r,c].bar(codonList,RSCU_List,color=colorList)
     axs[r,c].set_title(aa)
 
 

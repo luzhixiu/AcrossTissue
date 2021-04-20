@@ -106,78 +106,28 @@ def geneSequenceToProteinSequence(seq):
         aaString+=aa
     return aaString
     
-#key is the aa sequence and value is a list of codon sequences that produce same aa
-# sameAAdiffCodon=dict()
-# for geneName in sequenceDict:
-#     seq=sequenceDict[geneName]
-#     protSeq=geneSequenceToProteinSequence(seq)
-#     if protSeq in sameAAdiffCodon:
-#         if seq not in sameAAdiffCodon[protSeq]:
-#             sameAAdiffCodon[protSeq].append(seq)
-#     else:
-#         sameAAdiffCodon[protSeq]=[seq]
+# key is the aa sequence and value is a list of codon sequences that produce same aa
+sameAAdiffCodon=dict()
+for geneName in sequenceDict:
+    seq=sequenceDict[geneName]
+    protSeq=geneSequenceToProteinSequence(seq)
+    if protSeq in sameAAdiffCodon:
+        if seq not in sameAAdiffCodon[protSeq]:
+            sameAAdiffCodon[protSeq].append(seq)
+    else:
+        sameAAdiffCodon[protSeq]=[seq]
 
-# for protSeq in sameAAdiffCodon:
-#     codonCandidateList=sameAAdiffCodon[protSeq]
-#     if len(codonCandidateList)>=2:
-#         print ("AA Sequence: ")
-#         print (protSeq)
-#         print ("Codon Sequence: ")
-#         print (codonCandidateList)
+for protSeq in sameAAdiffCodon:
+    codonCandidateList=sameAAdiffCodon[protSeq]
+    if len(codonCandidateList)>=2:
+        print ("AA Sequence: ")
+        print (protSeq)
+        print ("Codon Sequence: ")
+        print (codonCandidateList)
         
     
 
     
-
-
-#This method is used to override the CAI implementation on bipopython
-#to modify it to ignore sequences that contain invalid codons instead of throwing out an error
-
-class customizedCUB(CodonAdaptationIndex):
-   
-    def _count_codons(self, fasta_file):
-        cnt=0
-        with open(fasta_file) as handle:
-
-            # make the codon dictionary local
-            self.codon_count = CodonsDict.copy()
-
-            # iterate over sequence and count all the codons in the FastaFile.
-            for cur_record in SeqIO.parse(handle, "fasta"):
-                goodSequence=True
-                # make sure the sequence is lower case
-                if str(cur_record.seq).islower():
-                    dna_sequence = str(cur_record.seq).upper()
-                else:
-                    dna_sequence = str(cur_record.seq)
-
-                for i in range(0, len(dna_sequence), 3):
-                    codon = dna_sequence[i : i + 3]
-                    if codon not in self.codon_count:
-                        goodSequence=False
-                
-                if goodSequence:
-                    cnt+=1
-                    for i in range(0, len(dna_sequence), 3):
-                        codon = dna_sequence[i : i + 3]
-                        if codon in self.codon_count:
-                            self.codon_count[codon] += 1
-        print("Number of Sequences used to create RSCU: ",cnt)
-        
-                        
-CUB=customizedCUB()   
-        
-
-CUB.generate_index("/home/lu/AcrossTissue/Fastas/c_elegan.fasta")
-
-RSCU_Dict=(CUB.index)
-
-
-sequence="ATGAAAAACAAGAATACAACCACGACTAGAAGCAGGAGTATAATCATTCAACACCAGCATCCACCCCCGCCTCGACGCCGGCGTCTACTCCTGCTTGAAGACGAGGATGCAGCCGCGGCTGGAGGCGGGGGTGTAGTCGTGGTTTACTATTCATCCTCGTCTTGCTGGTGTTTATTCTTGTTTTAGTAATGA"
-
-# print (geneSequenceToProteinSequence(sequence))
-
-
 
 
 
