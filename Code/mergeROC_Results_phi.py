@@ -5,7 +5,7 @@ import scipy.stats as ss
 import seaborn as sns
 import matplotlib.pyplot as plt
 inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Top_300_From_Each_Group"
-inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Fold_Diff_4"
+# inputDir="/home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Fold_Diff_4"
 
 
 wholeGenomePhiPath='/home/lu/AcrossTissue/csvs/wholeGenomePhi_WBID.csv'

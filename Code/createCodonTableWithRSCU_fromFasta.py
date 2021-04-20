@@ -1,49 +1,18 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar  5 13:10:24 2020
+Created on Mon Apr 19 23:02:08 2021
 
 @author: lu
 """
 
+
 import matplotlib.pyplot as plt
 import Bio.SeqUtils.CodonUsage  as BIOCUB
-from Bio.SeqUtils.CodonUsage import CodonAdaptationIndex
-from sklearn.preprocessing import minmax_scale
-import findSequenceById
 import numpy as np
-import scipy.stats as ss
-import math
-import random as rd
-import statsmodels.api as sm
+from Bio.SeqUtils.CodonUsage import CodonAdaptationIndex
+import findSequenceById
 from Bio import SeqIO
-
-def loadSequence(sequence):
-    startCodon="ATG"
-    stopCodonList=["TAG","TAA","TGA"]
-    codonList=[]
-    i=0
-    while(i<len(sequence)):
-        codon=sequence[i:i+3]
-        if len(codon)==3:
-            codonList.append(codon)
-        i+=3
-    actualCodonList=[]
-    started=False
-    for codon in codonList:
-        if codon in stopCodonList:
-            break
-        if started:
-            actualCodonList.append(codon)
-        if codon==startCodon:
-            started=True
-    codonList=actualCodonList
-   # print "codon readed successful, the number of codon in this sequence is %d"%(len(codonList))
-    return codonList
-
-
-sequenceDict=findSequenceById.findSequenceByID("/home/lu/AcrossTissue/Fastas/c_elegan.fasta",idType="gene")
-
 
 
 CodonsDict = {
@@ -64,7 +33,6 @@ CodonsDict = {
     "AGT": 0, "AGC": 0, "AGA": 0, "AGG": 0,
     "GGT": 0, "GGC": 0, "GGA": 0, "GGG": 0}
 
-    
 inverseTable=  {
     "CYS": ["TGT", "TGC"],
     "ASP": ["GAT", "GAC"],
@@ -89,49 +57,7 @@ inverseTable=  {
     "TYR": ["TAT", "TAC"],
 }
 
-codonTable=dict()
-for aa in inverseTable:
-    codonList=inverseTable[aa]
-    for codon in codonList:
-        codonTable[codon]=aa
-    
-    
 
-
-def geneSequenceToProteinSequence(seq):
-    codonList=loadSequence(seq)
-    aaString=""
-    for codon in codonList:
-        aa=codonTable[codon]
-        aaString+=aa
-    return aaString
-    
-#key is the aa sequence and value is a list of codon sequences that produce same aa
-# sameAAdiffCodon=dict()
-# for geneName in sequenceDict:
-#     seq=sequenceDict[geneName]
-#     protSeq=geneSequenceToProteinSequence(seq)
-#     if protSeq in sameAAdiffCodon:
-#         if seq not in sameAAdiffCodon[protSeq]:
-#             sameAAdiffCodon[protSeq].append(seq)
-#     else:
-#         sameAAdiffCodon[protSeq]=[seq]
-
-# for protSeq in sameAAdiffCodon:
-#     codonCandidateList=sameAAdiffCodon[protSeq]
-#     if len(codonCandidateList)>=2:
-#         print ("AA Sequence: ")
-#         print (protSeq)
-#         print ("Codon Sequence: ")
-#         print (codonCandidateList)
-        
-    
-
-    
-
-
-#This method is used to override the CAI implementation on bipopython
-#to modify it to ignore sequences that contain invalid codons instead of throwing out an error
 
 class customizedCUB(CodonAdaptationIndex):
    
@@ -173,22 +99,30 @@ CUB.generate_index("/home/lu/AcrossTissue/Fastas/c_elegan.fasta")
 RSCU_Dict=(CUB.index)
 
 
-sequence="ATGAAAAACAAGAATACAACCACGACTAGAAGCAGGAGTATAATCATTCAACACCAGCATCCACCCCCGCCTCGACGCCGGCGTCTACTCCTGCTTGAAGACGAGGATGCAGCCGCGGCTGGAGGCGGGGGTGTAGTCGTGGTTTACTATTCATCCTCGTCTTGCTGGTGTTTATTCTTGTTTTAGTAATGA"
+figDim=5
+fig, axs = plt.subplots(figDim, figDim,figsize=(15,15))
+        
+c=0
+r=0        
 
-# print (geneSequenceToProteinSequence(sequence))
+for aa in inverseTable:
+    print(c,r)
+    codonList=inverseTable[aa]
+    RSCU_List=[RSCU_Dict[x] for x in codonList]
+    sort_index = np.flip(np.argsort(RSCU_List))
+    codonList=[codonList[i] for i in sort_index]        
+    RSCU_List=[RSCU_List[i] for i in sort_index]
+    
+    axs[r,c].bar(codonList,RSCU_List)
+    axs[r,c].set_title(aa)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    c+=1
+    if c>=figDim:
+        r+=1
+        c=0
+    
+fig.tight_layout()      
+    
+    
+    
