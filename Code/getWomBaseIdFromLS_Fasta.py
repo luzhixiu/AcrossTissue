@@ -17,10 +17,11 @@ for file in os.listdir(targetDir):
         wormbaseIdList=[]
         lines=f.readlines()
         for line in lines:
-            if ('>' in line) and (len(line)<20):
+            if ('>' in line):
                 wormbaseId=line[1:].rstrip()
                 wormbaseIdList.append(wormbaseId)
         outputFileName=os.path.join(outputDir,file+".wormbaseId.csv")
+        print(wormbaseIdList[:5])
         with open(outputFileName,'w') as result_file:
             wr = csv.writer(result_file, dialect='excel')
             for item in wormbaseIdList:
