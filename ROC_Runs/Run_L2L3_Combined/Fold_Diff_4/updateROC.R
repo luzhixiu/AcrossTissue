@@ -23,18 +23,28 @@ rm(list=ls())
 ## Create list indicating which sets of parameters to estimate 
 ## Values could be "Selection", "Mutation", or both of them.
 
-nRuns = 2; # number of model fit runs 
-cspToEstimate = c("Selection")
-# Values to use for mutation
-file.mutation.values = "/data1/compbio/zlu21/AcrossTissue/RunResults/Crei_Mutation_NoRef.csv"
-
+max.runs = 2; # number of model fit runs 
 with.phi <- FALSE
 mixDef <- "allUnique"
-proportion.to.keep <- 1 ## note function uses percent.to.keep, but it's really proportion
-adptive.proportion <- 0.5 # proportion of run that uses the adaptive MCMC
+proportion.to.keep <- c(0.5, 0.5) ## note function uses percent.to.keep, but it's really proportion
+adaptive.proportion <- c(1, 0.5) # proportion of run that uses the adaptive MCMC
 initial.phi <- "random" # either "random", a function name, or files 
 initial.run.number <- 1; # uses restart files for run > 1
 run.convergence.tests <- FALSE
+
+## Values to use for mutation
+## File name within repository
+cspToEstimate = c("Selection")
+file.name = "RunResults/Crei_Mutation_NoRef.csv"
+userName = Sys.getenv("LOGNAME")
+file.mutation.values <- switch(userName,
+                               "mike" = paste0("/home/mikeg/Repositiories/AcrossTissue/", file.name),
+                               "zlu21" = paste0("/data1/compbio/zlu21/AcrossTissue", file.name)
+                               )
+
+
+
+
 ## Process arguments passed from script file
 
 ## NOTE: We should have the following command print the script name
@@ -50,7 +60,7 @@ parser$add_argument("-t","--thin",type="integer",default=20)
 parser$add_argument("-n","--threads",type="integer",default=1)
 
 args <- parser$parse_args()
-div <- args$div
+initial.divergence.steps <- args$div
 input <- args$input
 directory <- args$output
 thinning <- args$thin
@@ -158,7 +168,7 @@ if(initialPhi !="random"){
 done=FALSE; #Flag used in while() for model fits
 run.number <- initial.run.number
 
-while((!done) && (run.number <= 3))
+while((!done) && (run.number <= max.runs))
 {
 
   ## Set up directories
@@ -175,10 +185,11 @@ while((!done) && (run.number <= 3))
   if(run.number==1){
     ## initial run, not using restart files
     parameter <- initializeParameterObject(genome,model="ROC",sphi_init, numMixtures, geneAssignment, split.serine = TRUE, mixture.definition = mixDef)
+    div <-  initial.divergence.steps
   }else{
     ## use a restart file
     parameter<-initializeParameterObject(init.with.restart.file = paste(old_dir_name,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
-
+    div <-  0
   }
 
   ## Fix mutation based on values in file
@@ -186,16 +197,27 @@ while((!done) && (run.number <= 3))
   if(!("Mutation" %in% cspToEstimate) ) parameter$initMutationCategories(file.mutation.values,1,TRUE)
 
   ## Initialize MCMC object
-  mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                               est.expression=T, est.csp=TRUE, est.hyper=T,est.mix = FALSE)
+  mcmc <- initializeMCMCObject(samples=samples,
+                               thinning=thinning,
+                               adaptive.width=adaptiveWidth,
+                               est.expression=TRUE,
+                               est.csp=TRUE,
+                               est.hyper=TRUE,
+                               est.mix = FALSE)
 
   ## Get model object
   model <- initializeModelObject(parameter, "ROC", with.phi)
-
-  setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
+  setRestartSettings(mcmc,
+                     filename = paste(dir_name,"Restart_files/rstartFile.rst",sep="/"),
+                     samples = 2*adaptiveWidth,
+                     write.multiple = FALSE
+                     )
+                     
   #run mcmc on genome with parameter using model
   sys.runtime<-system.time(
-    runMCMC(mcmc, genome, model, num_threads,divergence.iteration = div)
+    runMCMC(mcmc, genome, model,
+            num_threads,
+            divergence.iteration = div)
   )
 
   print(paste0("Run ", run.number, " completed."))
@@ -211,8 +233,18 @@ while((!done) && (run.number <= 3))
   sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
   write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
 
-  createParameterOutput(parameter = parameter,numMixtures = numMixtures,mixture.labels = mixture.labels,samples = samples,samples.percent.keep = proportion.to.keep,relative.to.optimal.codon = F,report.original.ref = T)
-  expressionValues <- getExpressionEstimates(parameter,c(1:size),samples*proportion.to.keep)
+  createParameterOutput(parameter = parameter,
+                        numMixtures = numMixtures,
+                        mixture.labels = mixture.labels,
+                        samples = samples,
+                        samples.percent.keep = proportion.to.keep[run.number],
+                        relative.to.optimal.codon = F,
+                        report.original.ref = T
+                        )
+  expressionValues <- getExpressionEstimates(parameter,
+                                             c(1:size),
+                                             samples*proportion.to.keep[run.number]
+                                             )
   write.table(expressionValues,file=paste(dir_name,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = F,row.names = F)
 
   ## Create Plots
@@ -225,7 +257,7 @@ while((!done) && (run.number <= 3))
     for(what in cspToEstimate){
       plot(parameter,
            what=what,
-           samples=samples*proportion.to.keep,
+           samples=samples*proportion.to.keep[run.number],
            mixture.name=mixture.labels)
     }
     dev.off()
@@ -249,13 +281,15 @@ while((!done) && (run.number <= 3))
     if (a=="M"||a=="X"||a=="W") next
     accept.trace <- trace$getCodonSpecificAcceptanceRateTraceForAA(a)
     len <- length(accept.trace)
-    mean.acceptance <- mean(accept.trace[(len-len*proportion.to.keep):len])
+    mean.acceptance <- mean(accept.trace[(len-len*proportion.to.keep[run.number]):len])
     plot(accept.trace,main=paste0("Acceptace Rate for ",a),xlab="Samples",ylab="Acceptance Rate",type="l")
   }
-  acfCSP(parameter,csp="Selection",numMixtures = numMixtures,samples=samples*proportion.to.keep)
-  acfCSP(parameter,csp="Mutation",numMixtures = numMixtures,samples=samples*proportion.to.keep)
-  dev.off()
 
+  for(what in cspToEstimate){
+    acfCSP(parameter,csp=what,numMixtures = numMixtures,samples=samples*proportion.to.keep[run.number])
+  }
+  dev.off()
+  
   if(run.convergence.tests){
     ## Run convergence tests
     for (i in 1:numMixtures)
@@ -296,97 +330,4 @@ while((!done) && (run.number <= 3))
   print(paste0("Completed running and plotting run ", run.number)) 
   # Update run index
   run.number = run.number+1
-}
-
-
-
-
-  
-while((!done) && (run.number <= 3))
-{
-  parameter<-initializeParameterObject(init.with.restart.file = paste(dir_name,"Restart_files/rstartFile.rst_final",sep="/"),model="ROC")
-  run.number <- run.number + 1
-  dir_name <- paste0(directory,"/run_",run.number)
-  dir.create(dir_name)
-  dir.create(paste(dir_name,"Graphs",sep="/"))
-  dir.create(paste(dir_name,"Restart_files",sep="/"))
-  dir.create(paste(dir_name,"Parameter_est",sep="/"))
-  dir.create(paste(dir_name,"R_objects",sep="/"))
-  
-  mcmc <- initializeMCMCObject(samples=samples, thinning=thinning, adaptive.width=adaptiveWidth,
-                               est.expression=T, est.csp=TRUE, est.hyper=T,est.mix=FALSE)
-  
-  model <- initializeModelObject(parameter, "ROC", with.phi)
-  setRestartSettings(mcmc, paste(dir_name,"Restart_files/rstartFile.rst",sep="/"), adaptiveWidth, F)
-  sys.runtime <- system.time(
-    runMCMC(mcmc, genome, model, num_threads,div=0)
-  )
-  sys.runtime <- data.frame(Value=names(sys.runtime),Time=as.vector(sys.runtime))
-  write.table(sys.runtime,file=paste(dir_name,"mcmc_runtime.csv",sep="/"),sep=",",col.names = T,row.names = T,quote=F)
-  
-  createParameterOutput(parameter = parameter,numMixtures = numMixtures,samples = samples,mixture.labels = mixture.labels,samples.percent.keep = proportion.to.keep,relative.to.optimal.codon = F,report.original.ref = T)
-  
-  expressionValues <- getExpressionEstimates(parameter,c(1:size),samples*proportion.to.keep)
-  write.table(expressionValues,file=paste(dir_name,"Parameter_est/gene_expression.txt",sep="/"),sep=",",col.names = T,quote = F,row.names = F)
-  
-  #
-  #plots different aspects of trace
-  trace <- parameter$getTraceObject()
-  pdf(paste(dir_name,"Graphs/mcmc_traces.pdf",sep="/"))
-  plot(mcmc,what = "LogPosterior")
-  plot(trace, what = "ExpectedPhi")
-  aa <- aminoAcids()
-  for(a in aa)
-  {
-    if (a=="M"||a=="X"||a=="W") next
-    accept.trace <- trace$getCodonSpecificAcceptanceRateTraceForAA(a)
-    len <- length(accept.trace)
-    mean.acceptance <- mean(accept.trace[(len-len*proportion.to.keep):len])
-    plot(accept.trace,main=paste0("Acceptace Rate for ",a),xlab="Samples",ylab="Acceptance Rate",type="l")
-  }
-  acfCSP(parameter,csp="Selection",numMixtures = numMixtures,samples=samples*proportion.to.keep)
-  acfCSP(parameter,csp="Mutation",numMixtures = numMixtures,samples=samples*proportion.to.keep)
-  dev.off()
-  
-  
-  for (i in 1:numMixtures)
-  {
-    param.diag<-convergence.test(trace,samples=samples*proportion.to.keep,thin = thinning,what="Selection",mixture=i,frac1=0.1)
-    z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
-    if (length(z.scores) > 0)
-    {
-      param.conv <- FALSE
-    }
-    write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_eta_",i,".txt"),ncolumns = 1)
-  }
-  
-  
-  for (i in 1:numMixtures)
-  {
-    param.diag<-convergence.test(trace,samples=samples*proportion.to.keep,thin = thinning,what="Mutation",mixture=i,frac1=0.1)
-    z.scores <- param.diag$z[which(abs(param.diag$z) > 1.96)]
-    if (length(z.scores) > 0)
-    {
-      param.conv <- FALSE
-    }
-    write(param.diag$z,paste0(dir_name,"/Parameter_est/convergence_delta_m_",i,".txt"),ncolumns = 1)
-  }
-  pdf(paste(dir_name,"Graphs/Parameter_comparisons.pdf",sep="/"), width = 11, height = 12)
-  plot(parameter,what="Mutation",samples=samples*proportion.to.keep,mixture.name=mixture.labels)
-  plot(parameter,what="Selection",samples=samples*proportion.to.keep,mixture.name=mixture.labels)
-  dev.off()
-  
-  
-  pdf(paste(dir_name,"Graphs/CSP_traces_CUB_plot.pdf",sep="/"), width = 11, height = 12)
-  createTracePlots(trace=trace,model=model,genome=genome,numMixtures=numMixtures,samples=samples,samples.percent.keep = proportion.to.keep,mixture.labels = mixture.labels)
-  dev.off()
-  writeParameterObject(parameter,paste(dir_name,"R_objects/parameter.Rda",sep="/"))
-  writeMCMCObject(mcmc,file=paste(dir_name,"R_objects/mcmc.Rda",sep="/"))
-  
-  diag <- convergence.test(mcmc,samples = samples*proportion.to.keep,thin=thinning,frac1=0.1)
-  z<-abs(diag$z)
-  done <- (z > 1.96) && param.conv
-  rm(parameter)
-  rm(trace)
-  rm(model)
 }
