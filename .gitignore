@@ -7,3 +7,4 @@
 # Ignore intermediate knitr to pdf files
 *.log
 *.Rda
+.Rhistory
