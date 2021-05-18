@@ -1,5 +1,10 @@
+[1] "Loading Libraries"
 Loading required package: Rcpp
 Loading required package: VGAM
 Loading required package: stats4
 Loading required package: splines
-character(0)
+Loading required package: mvtnorm
+[1] "Clearing local object definitions prior to using script arguments"
+[1] "Working directory: /home/lu/AcrossTissue/ROC_Runs/Run_L2L3_Combined/Fold_Diff_4"
+Error: argument is missing, with no default
+Execution halted
