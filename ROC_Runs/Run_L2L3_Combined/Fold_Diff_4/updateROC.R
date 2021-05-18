@@ -44,6 +44,9 @@ file.mutation.values <- switch(userName,
                                "zlu21" = paste0("/data1/compbio/zlu21/AcrossTissue", file.name),
                                )
 
+
+
+
 ## Process arguments passed from script file
 
 ## NOTE: We should have the following command print the script name
@@ -195,8 +198,10 @@ while((!done) && (run.number <= max.runs))
   
   ## Fix mutation based on values in file
   ## May need to only evaluate for run.number = 1
-  if(!("Mutation" %in% cspToEstimate) ) parameter$initMutationCategories(file.mutation.values,1,TRUE)
-
+  if(!("Mutation" %in% cspToEstimate) ) {
+    parameter$initMutationCategories(file.mutation.values,1,TRUE)
+    print("Using mutation file from Directory: ", file.mutation.values)
+    }
   ## Initialize MCMC object
   mcmc <- initializeMCMCObject(samples = samples,
                                thinning = thinning,

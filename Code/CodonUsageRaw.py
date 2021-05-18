@@ -11,7 +11,7 @@ from scipy.stats.stats import pearsonr
 from scipy.stats.stats import spearmanr
 import matplotlib.pyplot as plt
 
-targetFastaFile="/home/lu/AcrossTissue/Fastas/adult_Ce.fasta"
+targetFastaFile="/home/lu/AcrossTissue/Fastas/c_elegan.fasta"
 
 
 codonTable = {
@@ -124,9 +124,17 @@ plt.xlabel("Correlation")
 plt.hist(correlationList,bins=20)
 plt.show()
    
-
+def testCorelation(x,y,corelationFunction):
+    import scipy.stats as ss
+    if "pearson" in corelationFunction:
+#        print ("p value %f"%stats.pearsonr(x, y)[1])
+        return  ss.pearsonr(x, y)[0]
+    elif "spearman" in corelationFunction:
+        return ss.spearmanr(x,y,nan_policy="omit")[0]
+    elif "kendall" in corelationFunction:
+        return ss.kendalltau(x,y,nan_policy="omit")[0]
     
-    
+testCorelation()
     
 
     

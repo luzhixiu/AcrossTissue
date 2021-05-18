@@ -33,13 +33,16 @@ def loadSequence(sequence):
     for codon in codonList:
         if codon in stopCodonList:
             break
+        if codon==startCodon:
+            if started:
+                break
+            else:
+                started=True        
         if started:
             actualCodonList.append(codon)
-        if codon==startCodon:
-            started=True
-    codonList=actualCodonList
+
    # print "codon readed successful, the number of codon in this sequence is %d"%(len(codonList))
-    return codonList
+    return actualCodonList
 
 
 sequenceDict=findSequenceById.findSequenceByID("/home/lu/AcrossTissue/Fastas/c_elegan.fasta",idType="gene")
@@ -106,39 +109,141 @@ def geneSequenceToProteinSequence(seq):
         aaString+=aa
     return aaString
     
-# key is the aa sequence and value is a list of codon sequences that produce same aa
-sameAAdiffCodon=dict()
+# # key is the aa sequence and value is a list of codon sequences that produce same aa
+# sameAAdiffCodon=dict()
+# for geneName in sequenceDict:
+#     seq=sequenceDict[geneName]
+#     protSeq=geneSequenceToProteinSequence(seq)
+#     if protSeq in sameAAdiffCodon:
+#         if seq not in sameAAdiffCodon[protSeq]:
+#             sameAAdiffCodon[protSeq].append(seq)
+#     else:
+#         sameAAdiffCodon[protSeq]=[seq]
+
+# for protSeq in sameAAdiffCodon:
+    
+#     codonCandidateSeqList=sameAAdiffCodon[protSeq]
+#     if len(codonCandidateSeqList)>=2:
+#         indexDict=dict()
+#         codonCandidateList=[loadSequence(seq) for seq in codonCandidateSeqList] 
+#         for i in range(len(codonCandidateList[0])):
+#             codonOptions=[]
+#             for codonList in codonCandidateList:
+#                 codon=codonList[i]
+#                 codonOptions.append(codon)
+#             if len(set(codonOptions))>1:
+#                 indexDict[i]=codonOptions
+#         print(indexDict)
+                
+#n being the number of codons, 2 for codon pair, 3 for codon triplets and so on
+def codonListToPairList(codonList,n):
+    kCodonList=[]
+    #this part can be optimized if it gets slow* 
+    for i in range(0,len(codonList)-n+1):
+        kCodon=""
+        for j in range(i,i+n):
+            kCodon+=codonList[j]
+        if len(kCodon)==n*3:
+            kCodonList.append(kCodon)
+    return kCodonList
+    
+
+codonPairList_All=[]
 for geneName in sequenceDict:
     seq=sequenceDict[geneName]
-    protSeq=geneSequenceToProteinSequence(seq)
-    if protSeq in sameAAdiffCodon:
-        if seq not in sameAAdiffCodon[protSeq]:
-            sameAAdiffCodon[protSeq].append(seq)
-    else:
-        sameAAdiffCodon[protSeq]=[seq]
+    codonList=loadSequence(seq)
+    codonPairList=codonListToPairList(codonList,2)
+    codonPairList_All.append(codonPairList)
+    
+codonPairList_Flat= [item for sublist in codonPairList_All for item in sublist]
+            
+from collections import Counter
+import operator
+codonPairCntDict_celegan=Counter(codonPairList_Flat)
+codonPairCntDict_sorted = dict( sorted(codonPairCntDict_celegan.items(), key=operator.itemgetter(1),reverse=True))
 
-for protSeq in sameAAdiffCodon:
-    codonCandidateList=sameAAdiffCodon[protSeq]
-    if len(codonCandidateList)>=2:
-        print ("AA Sequence: ")
-        print (protSeq)
-        print ("Codon Sequence: ")
-        print (codonCandidateList)
+codonKeys=codonPairCntDict_sorted.keys()
+
+codonPairCntDict_sorted_celegan=codonPairCntDict_sorted 
+
         
     
 
     
 
+sequenceDict=findSequenceById.findSequenceByID("/home/lu/AcrossTissue/Fastas/s288c.fasta")
 
 
 
+codonPairList_All=[]
+for geneName in sequenceDict:
+    seq=sequenceDict[geneName]
+    codonList=loadSequence(seq)
+    codonPairList=codonListToPairList(codonList,2)
+    codonPairList_All.append(codonPairList)
+    
+codonPairList_Flat= [item for sublist in codonPairList_All for item in sublist]
+            
+from collections import Counter
+import operator
+codonPairCntDict_yeast=Counter(codonPairList_Flat)
+
+codonPairCntDict_sorted_yeast = dict( sorted(codonPairCntDict_yeast.items(), key=lambda x: x[0].lower()) )
+
+codonPairCntDict_sorted_cel = dict( sorted(codonPairCntDict_celegan.items(), key=lambda x: x[0].lower()) )
+
+celList=[]
+yeastList=[]
 
 
 
+for key in codonPairCntDict_yeast:
+    yeastList.append(codonPairCntDict_yeast[key])
+    celList.append(codonPairCntDict_celegan[key])
+
+import scipy.stats as ss
 
 
 
+def testCorelation(x,y,corelationFunction):
+
+    if "pearson" in corelationFunction:
+#        print ("p value %f"%stats.pearsonr(x, y)[1])
+        return  ss.pearsonr(x, y)[0]
+    elif "spearman" in corelationFunction:
+        return ss.spearmanr(x,y,nan_policy="omit")[0]
+    elif "kendall" in corelationFunction:
+        return ss.kendalltau(x,y,nan_policy="omit")[0]
+    
+spearmanr=testCorelation(yeastList,celList,"spearman")
+    
+import validator
+
+validator.plotCorelation(yeastList, celList,xLabel="Yeast",yLabel="C. Elegan")
+
+yeastKeyList=[]
+celKeyList=[]
+for key in codonPairCntDict_yeast:
+    yeastList.append(codonPairCntDict_yeast[key])
+    celList.append(codonPairCntDict_celegan[key])
 
 
+codonPairCntDict_celegan_sorted_value=dict(sorted(codonPairCntDict_celegan.items(), key=lambda item: item[1],reverse=True))
+codonPairCntDict_yeast_sorted_value=dict(sorted(codonPairCntDict_yeast.items(), key=lambda item: item[1],reverse=True))
 
+celegan_ranked_codons=list(codonPairCntDict_celegan_sorted_value.keys())
+yeast_ranked_codons=list(codonPairCntDict_yeast_sorted_value.keys())
 
+# print(testCorelation(celegan_ranked_codons,yeast_ranked_codons,"spearmanr"))
+
+celegan_codon_pairt_rank_dict={k: v for v, k in enumerate(celegan_ranked_codons)}
+yeast_codon_pairt_rank_dict={k: v for v, k in enumerate(yeast_ranked_codons)}
+
+rankDiffDict=dict()
+for key in celegan_codon_pairt_rank_dict:
+    rankDiff=celegan_codon_pairt_rank_dict[key]-yeast_codon_pairt_rank_dict[key]
+    rankDiffDict[key]=rankDiff
+
+diffList=list(rankDiffDict.values())
+plt.hist(diffList)
+    
