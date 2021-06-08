@@ -14,8 +14,7 @@ Loading required package: mvtnorm
 [1] "L1_larva_Ce_foldDiff_4.fasta"
 [1] "Genome loaded\n"
 2292 
-Error opening file 0 to initialize mutation values.
-please use absolute pathAllowing divergence from initial conditions for 6 iterations.
+Allowing divergence from initial conditions for 6 iterations.
 
 maxGrouping: 22
 Type: 
@@ -26,900 +25,900 @@ Starting MCMC
 	Starting MCMC with 10000 iterations
 	Adapting will stop after 10000 steps
 Status at thinned sample (iteration): 10 (100)
-	 current logPosterior: -945253 
-	 current logLikelihood: -943415
-	 current stdDevSynthesisRate estimate for selection category 0: 1.03341
+	 current logPosterior: -958848 
+	 current logLikelihood: -954135
+	 current stdDevSynthesisRate estimate for selection category 0: 0.624613
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 20 (200)
-	 current logPosterior: -943528 
-	 current logLikelihood: -941544
-	 current stdDevSynthesisRate estimate for selection category 0: 1.07181
+	 current logPosterior: -943748 
+	 current logLikelihood: -939275
+	 current stdDevSynthesisRate estimate for selection category 0: 0.57168
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 30 (300)
-	 current logPosterior: -942319 
-	 current logLikelihood: -940158
-	 current stdDevSynthesisRate estimate for selection category 0: 1.09727
+	 current logPosterior: -943385 
+	 current logLikelihood: -939178
+	 current stdDevSynthesisRate estimate for selection category 0: 0.555113
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 40 (400)
-	 current logPosterior: -941470 
-	 current logLikelihood: -939338
-	 current stdDevSynthesisRate estimate for selection category 0: 1.12109
+	 current logPosterior: -943236 
+	 current logLikelihood: -939249
+	 current stdDevSynthesisRate estimate for selection category 0: 0.518914
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 50 (500)
-	 current logPosterior: -940668 
-	 current logLikelihood: -938401
-	 current stdDevSynthesisRate estimate for selection category 0: 1.11629
+	 current logPosterior: -942737 
+	 current logLikelihood: -939161
+	 current stdDevSynthesisRate estimate for selection category 0: 0.460696
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 60 (600)
-	 current logPosterior: -940403 
-	 current logLikelihood: -938133
-	 current stdDevSynthesisRate estimate for selection category 0: 1.1271
+	 current logPosterior: -942488 
+	 current logLikelihood: -939229
+	 current stdDevSynthesisRate estimate for selection category 0: 0.446257
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 70 (700)
-	 current logPosterior: -939918 
-	 current logLikelihood: -937735
-	 current stdDevSynthesisRate estimate for selection category 0: 1.11507
+	 current logPosterior: -941985 
+	 current logLikelihood: -939138
+	 current stdDevSynthesisRate estimate for selection category 0: 0.39727
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 80 (800)
-	 current logPosterior: -939775 
-	 current logLikelihood: -937613
-	 current stdDevSynthesisRate estimate for selection category 0: 1.09105
+	 current logPosterior: -941554 
+	 current logLikelihood: -939221
+	 current stdDevSynthesisRate estimate for selection category 0: 0.352439
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 90 (900)
-	 current logPosterior: -939608 
-	 current logLikelihood: -937485
-	 current stdDevSynthesisRate estimate for selection category 0: 1.07307
+	 current logPosterior: -940951 
+	 current logLikelihood: -939205
+	 current stdDevSynthesisRate estimate for selection category 0: 0.309272
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 100 (1000)
-	 current logPosterior: -939705 
-	 current logLikelihood: -937543
-	 current stdDevSynthesisRate estimate for selection category 0: 1.04755
+	 current logPosterior: -940289 
+	 current logLikelihood: -939230
+	 current stdDevSynthesisRate estimate for selection category 0: 0.253379
 	 current stdDevSynthesisRate proposal width: 0.1
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.049
-	C:	0.159
-	D:	0.093
-	E:	0.082
-	F:	0.111
-	G:	0.045
-	H:	0.165
-	I:	0.045
-	K:	0.097
-	L:	0.041
-	N:	0.092
-	P:	0.061
-	Q:	0.111
-	R:	0.03
-	S:	0.039
-	T:	0.042
-	V:	0.042
-	Y:	0.118
-	Z:	0.189
+	A:	0.074
+	C:	0.256
+	D:	0.168
+	E:	0.182
+	F:	0.178
+	G:	0.075
+	H:	0.244
+	I:	0.076
+	K:	0.189
+	L:	0.099
+	N:	0.176
+	P:	0.094
+	Q:	0.202
+	R:	0.046
+	S:	0.089
+	T:	0.07
+	V:	0.075
+	Y:	0.197
+	Z:	0.247
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 0
-	 acceptance rate above upper target of 0.325: 2292
+	 acceptance rates below lower target of 0.225: 3
+	 acceptance rate above upper target of 0.325: 2263
 Status at thinned sample (iteration): 110 (1100)
-	 current logPosterior: -939642 
-	 current logLikelihood: -937443
-	 current stdDevSynthesisRate estimate for selection category 0: 0.998724
+	 current logPosterior: -939835 
+	 current logLikelihood: -939231
+	 current stdDevSynthesisRate estimate for selection category 0: 0.228942
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 120 (1200)
-	 current logPosterior: -939517 
-	 current logLikelihood: -937345
-	 current stdDevSynthesisRate estimate for selection category 0: 0.993808
+	 current logPosterior: -939587 
+	 current logLikelihood: -939173
+	 current stdDevSynthesisRate estimate for selection category 0: 0.219608
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 130 (1300)
-	 current logPosterior: -939461 
-	 current logLikelihood: -937278
-	 current stdDevSynthesisRate estimate for selection category 0: 0.925124
+	 current logPosterior: -939476 
+	 current logLikelihood: -939162
+	 current stdDevSynthesisRate estimate for selection category 0: 0.214383
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 140 (1400)
-	 current logPosterior: -939430 
-	 current logLikelihood: -937380
-	 current stdDevSynthesisRate estimate for selection category 0: 0.866834
+	 current logPosterior: -939388 
+	 current logLikelihood: -939163
+	 current stdDevSynthesisRate estimate for selection category 0: 0.210341
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 150 (1500)
-	 current logPosterior: -939289 
-	 current logLikelihood: -937236
-	 current stdDevSynthesisRate estimate for selection category 0: 0.811219
+	 current logPosterior: -939336 
+	 current logLikelihood: -939178
+	 current stdDevSynthesisRate estimate for selection category 0: 0.207773
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 160 (1600)
-	 current logPosterior: -939239 
-	 current logLikelihood: -937194
-	 current stdDevSynthesisRate estimate for selection category 0: 0.788389
+	 current logPosterior: -939296 
+	 current logLikelihood: -939148
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199255
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 170 (1700)
-	 current logPosterior: -939136 
-	 current logLikelihood: -937101
-	 current stdDevSynthesisRate estimate for selection category 0: 0.76226
+	 current logPosterior: -939318 
+	 current logLikelihood: -939188
+	 current stdDevSynthesisRate estimate for selection category 0: 0.206661
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 180 (1800)
-	 current logPosterior: -939130 
-	 current logLikelihood: -937148
-	 current stdDevSynthesisRate estimate for selection category 0: 0.7538
+	 current logPosterior: -939260 
+	 current logLikelihood: -939144
+	 current stdDevSynthesisRate estimate for selection category 0: 0.207284
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 190 (1900)
-	 current logPosterior: -939097 
-	 current logLikelihood: -937139
-	 current stdDevSynthesisRate estimate for selection category 0: 0.726696
+	 current logPosterior: -939177 
+	 current logLikelihood: -939085
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203115
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 200 (2000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 200 (2000)
-	 current logPosterior: -939062 
-	 current logLikelihood: -937135
-	 current stdDevSynthesisRate estimate for selection category 0: 0.701281
+	 current logPosterior: -939183 
+	 current logLikelihood: -939186
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200294
 	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.006
-	C:	0.127
-	D:	0.048
-	E:	0.046
-	F:	0.094
-	G:	0.012
-	H:	0.134
-	I:	0.009
-	K:	0.043
-	L:	0.006
-	N:	0.089
-	P:	0.01
-	Q:	0.072
-	R:	0.006
-	S:	0.005
-	T:	0.008
-	V:	0.006
-	Y:	0.103
-	Z:	0.177
+	A:	0.021
+	C:	0.355
+	D:	0.118
+	E:	0.21
+	F:	0.212
+	G:	0.023
+	H:	0.302
+	I:	0.049
+	K:	0.188
+	L:	0.016
+	N:	0.224
+	P:	0.018
+	Q:	0.222
+	R:	0.017
+	S:	0.021
+	T:	0.019
+	V:	0.017
+	Y:	0.268
+	Z:	0.319
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 0
-	 acceptance rate above upper target of 0.325: 2292
+	 acceptance rates below lower target of 0.225: 8
+	 acceptance rate above upper target of 0.325: 2170
 Status at thinned sample (iteration): 210 (2100)
-	 current logPosterior: -938941 
-	 current logLikelihood: -937013
-	 current stdDevSynthesisRate estimate for selection category 0: 0.669241
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939095 
+	 current logLikelihood: -939173
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196936
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 220 (2200)
-	 current logPosterior: -938924 
-	 current logLikelihood: -937061
-	 current stdDevSynthesisRate estimate for selection category 0: 0.618725
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939018 
+	 current logLikelihood: -939121
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199748
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 230 (2300)
-	 current logPosterior: -939014 
-	 current logLikelihood: -937102
-	 current stdDevSynthesisRate estimate for selection category 0: 0.649307
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938961 
+	 current logLikelihood: -939082
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194656
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 240 (2400)
-	 current logPosterior: -938903 
-	 current logLikelihood: -937028
-	 current stdDevSynthesisRate estimate for selection category 0: 0.599309
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939053 
+	 current logLikelihood: -939162
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198143
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 250 (2500)
-	 current logPosterior: -938797 
-	 current logLikelihood: -936947
-	 current stdDevSynthesisRate estimate for selection category 0: 0.60822
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939063 
+	 current logLikelihood: -939162
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194554
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 260 (2600)
-	 current logPosterior: -938883 
-	 current logLikelihood: -937020
-	 current stdDevSynthesisRate estimate for selection category 0: 0.620369
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939019 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193016
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 270 (2700)
-	 current logPosterior: -938800 
-	 current logLikelihood: -936974
-	 current stdDevSynthesisRate estimate for selection category 0: 0.58958
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938919 
+	 current logLikelihood: -939028
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195838
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 280 (2800)
-	 current logPosterior: -938855 
-	 current logLikelihood: -937051
-	 current stdDevSynthesisRate estimate for selection category 0: 0.597541
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938923 
+	 current logLikelihood: -939052
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196179
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 290 (2900)
-	 current logPosterior: -938785 
-	 current logLikelihood: -936980
-	 current stdDevSynthesisRate estimate for selection category 0: 0.603439
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938946 
+	 current logLikelihood: -939067
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197617
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 300 (3000)
-	 current logPosterior: -938838 
-	 current logLikelihood: -937054
-	 current stdDevSynthesisRate estimate for selection category 0: 0.576997
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938974 
+	 current logLikelihood: -939096
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201576
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.02
-	C:	0.197
-	D:	0.106
-	E:	0.083
-	F:	0.137
-	G:	0.012
-	H:	0.201
-	I:	0.026
-	K:	0.079
-	L:	0.008
-	N:	0.135
-	P:	0.013
-	Q:	0.121
-	R:	0.009
-	S:	0.01
-	T:	0.012
-	V:	0.012
-	Y:	0.145
-	Z:	0.194
+	A:	0.033
+	C:	0.317
+	D:	0.174
+	E:	0.229
+	F:	0.198
+	G:	0.061
+	H:	0.332
+	I:	0.082
+	K:	0.19
+	L:	0.006
+	N:	0.253
+	P:	0.023
+	Q:	0.222
+	R:	0.035
+	S:	0.033
+	T:	0.044
+	V:	0.022
+	Y:	0.232
+	Z:	0.333
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 1
-	 acceptance rate above upper target of 0.325: 2272
+	 acceptance rates below lower target of 0.225: 2
+	 acceptance rate above upper target of 0.325: 1915
 Status at thinned sample (iteration): 310 (3100)
-	 current logPosterior: -938797 
-	 current logLikelihood: -937060
-	 current stdDevSynthesisRate estimate for selection category 0: 0.567753
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938967 
+	 current logLikelihood: -939106
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196639
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 320 (3200)
-	 current logPosterior: -938710 
-	 current logLikelihood: -937007
-	 current stdDevSynthesisRate estimate for selection category 0: 0.554785
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938959 
+	 current logLikelihood: -939110
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204186
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 330 (3300)
-	 current logPosterior: -938668 
-	 current logLikelihood: -936943
-	 current stdDevSynthesisRate estimate for selection category 0: 0.525384
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939028 
+	 current logLikelihood: -939165
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193763
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 340 (3400)
-	 current logPosterior: -938573 
-	 current logLikelihood: -936928
-	 current stdDevSynthesisRate estimate for selection category 0: 0.524977
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938980 
+	 current logLikelihood: -939114
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193686
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 350 (3500)
-	 current logPosterior: -938651 
-	 current logLikelihood: -936949
-	 current stdDevSynthesisRate estimate for selection category 0: 0.55183
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939011 
+	 current logLikelihood: -939145
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19794
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 360 (3600)
-	 current logPosterior: -938639 
-	 current logLikelihood: -936952
-	 current stdDevSynthesisRate estimate for selection category 0: 0.537159
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938997 
+	 current logLikelihood: -939118
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20267
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 370 (3700)
-	 current logPosterior: -938582 
-	 current logLikelihood: -936922
-	 current stdDevSynthesisRate estimate for selection category 0: 0.532427
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938970 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202231
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 380 (3800)
-	 current logPosterior: -938603 
-	 current logLikelihood: -936980
-	 current stdDevSynthesisRate estimate for selection category 0: 0.516682
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938959 
+	 current logLikelihood: -939076
+	 current stdDevSynthesisRate estimate for selection category 0: 0.207043
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 390 (3900)
-	 current logPosterior: -938598 
-	 current logLikelihood: -936927
-	 current stdDevSynthesisRate estimate for selection category 0: 0.542177
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938985 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195762
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 400 (4000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 400 (4000)
-	 current logPosterior: -938485 
-	 current logLikelihood: -936833
-	 current stdDevSynthesisRate estimate for selection category 0: 0.523692
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938959 
+	 current logLikelihood: -939103
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202801
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.029
-	C:	0.204
-	D:	0.209
-	E:	0.128
-	F:	0.213
-	G:	0.055
-	H:	0.239
-	I:	0.063
-	K:	0.146
-	L:	0.011
-	N:	0.232
-	P:	0.023
-	Q:	0.191
-	R:	0.014
-	S:	0.02
-	T:	0.027
-	V:	0.012
-	Y:	0.222
-	Z:	0.193
+	A:	0.06
+	C:	0.321
+	D:	0.262
+	E:	0.215
+	F:	0.251
+	G:	0.101
+	H:	0.325
+	I:	0.166
+	K:	0.202
+	L:	0.007
+	N:	0.211
+	P:	0.051
+	Q:	0.274
+	R:	0.059
+	S:	0.046
+	T:	0.053
+	V:	0.051
+	Y:	0.294
+	Z:	0.321
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 2
-	 acceptance rate above upper target of 0.325: 2201
+	 acceptance rates below lower target of 0.225: 7
+	 acceptance rate above upper target of 0.325: 1337
 Status at thinned sample (iteration): 410 (4100)
-	 current logPosterior: -938534 
-	 current logLikelihood: -936977
-	 current stdDevSynthesisRate estimate for selection category 0: 0.485822
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939022 
+	 current logLikelihood: -939181
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19528
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 420 (4200)
-	 current logPosterior: -938482 
-	 current logLikelihood: -936938
-	 current stdDevSynthesisRate estimate for selection category 0: 0.481972
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938963 
+	 current logLikelihood: -939098
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201164
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 430 (4300)
-	 current logPosterior: -938514 
-	 current logLikelihood: -936988
-	 current stdDevSynthesisRate estimate for selection category 0: 0.492864
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938912 
+	 current logLikelihood: -939046
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202878
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 440 (4400)
-	 current logPosterior: -938461 
-	 current logLikelihood: -936946
-	 current stdDevSynthesisRate estimate for selection category 0: 0.479374
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938940 
+	 current logLikelihood: -939076
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20665
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 450 (4500)
-	 current logPosterior: -938425 
-	 current logLikelihood: -936909
-	 current stdDevSynthesisRate estimate for selection category 0: 0.477128
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938937 
+	 current logLikelihood: -939086
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205134
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 460 (4600)
-	 current logPosterior: -938421 
-	 current logLikelihood: -936883
-	 current stdDevSynthesisRate estimate for selection category 0: 0.498237
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938988 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196231
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 470 (4700)
-	 current logPosterior: -938374 
-	 current logLikelihood: -936912
-	 current stdDevSynthesisRate estimate for selection category 0: 0.458263
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939007 
+	 current logLikelihood: -939145
+	 current stdDevSynthesisRate estimate for selection category 0: 0.191312
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 480 (4800)
-	 current logPosterior: -938383 
-	 current logLikelihood: -936874
-	 current stdDevSynthesisRate estimate for selection category 0: 0.484254
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -939024 
+	 current logLikelihood: -939135
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201254
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 490 (4900)
-	 current logPosterior: -938442 
-	 current logLikelihood: -936881
-	 current stdDevSynthesisRate estimate for selection category 0: 0.50494
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938927 
+	 current logLikelihood: -939072
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198987
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 500 (5000)
-	 current logPosterior: -938404 
-	 current logLikelihood: -936882
-	 current stdDevSynthesisRate estimate for selection category 0: 0.495876
-	 current stdDevSynthesisRate proposal width: 0.064
+	 current logPosterior: -938957 
+	 current logLikelihood: -939073
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202269
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.051
-	C:	0.189
-	D:	0.205
-	E:	0.199
-	F:	0.194
-	G:	0.104
-	H:	0.23
-	I:	0.096
-	K:	0.203
-	L:	0.009
-	N:	0.212
-	P:	0.053
-	Q:	0.215
-	R:	0.034
-	S:	0.07
-	T:	0.046
-	V:	0.047
-	Y:	0.208
-	Z:	0.19
+	A:	0.122
+	C:	0.329
+	D:	0.224
+	E:	0.217
+	F:	0.234
+	G:	0.195
+	H:	0.323
+	I:	0.256
+	K:	0.219
+	L:	0.016
+	N:	0.224
+	P:	0.085
+	Q:	0.291
+	R:	0.121
+	S:	0.084
+	T:	0.123
+	V:	0.081
+	Y:	0.288
+	Z:	0.318
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 5
-	 acceptance rate above upper target of 0.325: 2056
+	 acceptance rates below lower target of 0.225: 9
+	 acceptance rate above upper target of 0.325: 668
 Status at thinned sample (iteration): 510 (5100)
-	 current logPosterior: -938385 
-	 current logLikelihood: -936908
-	 current stdDevSynthesisRate estimate for selection category 0: 0.48596
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938934 
+	 current logLikelihood: -939077
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199526
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 520 (5200)
-	 current logPosterior: -938403 
-	 current logLikelihood: -936927
-	 current stdDevSynthesisRate estimate for selection category 0: 0.475066
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938944 
+	 current logLikelihood: -939065
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201916
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 530 (5300)
-	 current logPosterior: -938407 
-	 current logLikelihood: -936963
-	 current stdDevSynthesisRate estimate for selection category 0: 0.459756
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938922 
+	 current logLikelihood: -939035
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192898
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 540 (5400)
-	 current logPosterior: -938302 
-	 current logLikelihood: -936849
-	 current stdDevSynthesisRate estimate for selection category 0: 0.463191
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938950 
+	 current logLikelihood: -939091
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195999
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 550 (5500)
-	 current logPosterior: -938271 
-	 current logLikelihood: -936828
-	 current stdDevSynthesisRate estimate for selection category 0: 0.457737
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938959 
+	 current logLikelihood: -939081
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199083
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 560 (5600)
-	 current logPosterior: -938327 
-	 current logLikelihood: -936929
-	 current stdDevSynthesisRate estimate for selection category 0: 0.461491
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938990 
+	 current logLikelihood: -939126
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196571
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 570 (5700)
-	 current logPosterior: -938325 
-	 current logLikelihood: -936909
-	 current stdDevSynthesisRate estimate for selection category 0: 0.467765
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938928 
+	 current logLikelihood: -939075
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202772
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 580 (5800)
-	 current logPosterior: -938371 
-	 current logLikelihood: -936936
-	 current stdDevSynthesisRate estimate for selection category 0: 0.46532
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938981 
+	 current logLikelihood: -939119
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200512
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 590 (5900)
-	 current logPosterior: -938327 
-	 current logLikelihood: -936862
-	 current stdDevSynthesisRate estimate for selection category 0: 0.478429
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938896 
+	 current logLikelihood: -939047
+	 current stdDevSynthesisRate estimate for selection category 0: 0.210254
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 600 (6000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 600 (6000)
-	 current logPosterior: -938334 
-	 current logLikelihood: -936885
-	 current stdDevSynthesisRate estimate for selection category 0: 0.475762
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938955 
+	 current logLikelihood: -939077
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201107
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.102
-	C:	0.231
-	D:	0.194
-	E:	0.185
-	F:	0.215
-	G:	0.125
-	H:	0.245
-	I:	0.151
-	K:	0.197
-	L:	0.023
-	N:	0.246
-	P:	0.105
-	Q:	0.189
-	R:	0.027
-	S:	0.11
-	T:	0.079
-	V:	0.109
-	Y:	0.213
-	Z:	0.193
+	A:	0.179
+	C:	0.327
+	D:	0.261
+	E:	0.23
+	F:	0.232
+	G:	0.185
+	H:	0.321
+	I:	0.246
+	K:	0.214
+	L:	0.038
+	N:	0.238
+	P:	0.157
+	Q:	0.217
+	R:	0.255
+	S:	0.132
+	T:	0.196
+	V:	0.174
+	Y:	0.288
+	Z:	0.306
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 12
-	 acceptance rate above upper target of 0.325: 1756
+	 acceptance rates below lower target of 0.225: 41
+	 acceptance rate above upper target of 0.325: 346
 Status at thinned sample (iteration): 610 (6100)
-	 current logPosterior: -938329 
-	 current logLikelihood: -936869
-	 current stdDevSynthesisRate estimate for selection category 0: 0.477596
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939004 
+	 current logLikelihood: -939154
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200393
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 620 (6200)
-	 current logPosterior: -938352 
-	 current logLikelihood: -936887
-	 current stdDevSynthesisRate estimate for selection category 0: 0.492236
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938963 
+	 current logLikelihood: -939089
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200958
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 630 (6300)
-	 current logPosterior: -938418 
-	 current logLikelihood: -936920
-	 current stdDevSynthesisRate estimate for selection category 0: 0.493086
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938974 
+	 current logLikelihood: -939130
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19402
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 640 (6400)
-	 current logPosterior: -938428 
-	 current logLikelihood: -936908
-	 current stdDevSynthesisRate estimate for selection category 0: 0.504145
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938951 
+	 current logLikelihood: -939063
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205355
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 650 (6500)
-	 current logPosterior: -938354 
-	 current logLikelihood: -936851
-	 current stdDevSynthesisRate estimate for selection category 0: 0.500298
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939002 
+	 current logLikelihood: -939116
+	 current stdDevSynthesisRate estimate for selection category 0: 0.206098
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 660 (6600)
-	 current logPosterior: -938349 
-	 current logLikelihood: -936834
-	 current stdDevSynthesisRate estimate for selection category 0: 0.47543
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938961 
+	 current logLikelihood: -939078
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199854
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 670 (6700)
-	 current logPosterior: -938352 
-	 current logLikelihood: -936875
-	 current stdDevSynthesisRate estimate for selection category 0: 0.461841
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938939 
+	 current logLikelihood: -939069
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195786
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 680 (6800)
-	 current logPosterior: -938357 
-	 current logLikelihood: -936886
-	 current stdDevSynthesisRate estimate for selection category 0: 0.46903
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938947 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200485
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 690 (6900)
-	 current logPosterior: -938321 
-	 current logLikelihood: -936908
-	 current stdDevSynthesisRate estimate for selection category 0: 0.461434
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938908 
+	 current logLikelihood: -939048
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199381
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 700 (7000)
-	 current logPosterior: -938342 
-	 current logLikelihood: -936928
-	 current stdDevSynthesisRate estimate for selection category 0: 0.463586
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938929 
+	 current logLikelihood: -939051
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200131
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.119
-	C:	0.231
-	D:	0.213
-	E:	0.194
-	F:	0.199
-	G:	0.166
-	H:	0.227
-	I:	0.207
-	K:	0.196
-	L:	0.045
-	N:	0.23
-	P:	0.115
-	Q:	0.183
-	R:	0.036
-	S:	0.106
-	T:	0.115
-	V:	0.132
-	Y:	0.228
-	Z:	0.218
+	A:	0.176
+	C:	0.341
+	D:	0.222
+	E:	0.232
+	F:	0.225
+	G:	0.175
+	H:	0.317
+	I:	0.218
+	K:	0.204
+	L:	0.081
+	N:	0.238
+	P:	0.249
+	Q:	0.266
+	R:	0.206
+	S:	0.223
+	T:	0.191
+	V:	0.266
+	Y:	0.275
+	Z:	0.319
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 6
-	 acceptance rate above upper target of 0.325: 1410
+	 acceptance rates below lower target of 0.225: 102
+	 acceptance rate above upper target of 0.325: 274
 Status at thinned sample (iteration): 710 (7100)
-	 current logPosterior: -938315 
-	 current logLikelihood: -936913
-	 current stdDevSynthesisRate estimate for selection category 0: 0.446908
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938992 
+	 current logLikelihood: -939120
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199156
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 720 (7200)
-	 current logPosterior: -938293 
-	 current logLikelihood: -936938
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448525
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938976 
+	 current logLikelihood: -939110
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195804
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 730 (7300)
-	 current logPosterior: -938235 
-	 current logLikelihood: -936863
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448404
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938962 
+	 current logLikelihood: -939118
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20602
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 740 (7400)
-	 current logPosterior: -938222 
-	 current logLikelihood: -936844
-	 current stdDevSynthesisRate estimate for selection category 0: 0.438711
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939003 
+	 current logLikelihood: -939146
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199098
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 750 (7500)
-	 current logPosterior: -938251 
-	 current logLikelihood: -936936
-	 current stdDevSynthesisRate estimate for selection category 0: 0.427632
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938960 
+	 current logLikelihood: -939108
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198483
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 760 (7600)
-	 current logPosterior: -938319 
-	 current logLikelihood: -936975
-	 current stdDevSynthesisRate estimate for selection category 0: 0.450364
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938981 
+	 current logLikelihood: -939097
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202874
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 770 (7700)
-	 current logPosterior: -938326 
-	 current logLikelihood: -936939
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448288
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939011 
+	 current logLikelihood: -939085
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200993
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 780 (7800)
-	 current logPosterior: -938249 
-	 current logLikelihood: -936892
-	 current stdDevSynthesisRate estimate for selection category 0: 0.452355
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938983 
+	 current logLikelihood: -939116
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200192
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 790 (7900)
-	 current logPosterior: -938252 
-	 current logLikelihood: -936874
-	 current stdDevSynthesisRate estimate for selection category 0: 0.463316
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938999 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194071
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 800 (8000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 800 (8000)
-	 current logPosterior: -938258 
-	 current logLikelihood: -936908
-	 current stdDevSynthesisRate estimate for selection category 0: 0.452136
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939007 
+	 current logLikelihood: -939126
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197897
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.126
-	C:	0.22
-	D:	0.251
-	E:	0.176
-	F:	0.255
-	G:	0.203
-	H:	0.215
-	I:	0.17
-	K:	0.195
-	L:	0.045
-	N:	0.241
-	P:	0.134
-	Q:	0.187
-	R:	0.095
-	S:	0.137
-	T:	0.122
-	V:	0.182
-	Y:	0.245
-	Z:	0.199
+	A:	0.195
+	C:	0.317
+	D:	0.242
+	E:	0.216
+	F:	0.22
+	G:	0.161
+	H:	0.302
+	I:	0.244
+	K:	0.23
+	L:	0.13
+	N:	0.283
+	P:	0.216
+	Q:	0.274
+	R:	0.249
+	S:	0.213
+	T:	0.165
+	V:	0.229
+	Y:	0.243
+	Z:	0.34
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 54
-	 acceptance rate above upper target of 0.325: 814
+	 acceptance rates below lower target of 0.225: 80
+	 acceptance rate above upper target of 0.325: 117
 Status at thinned sample (iteration): 810 (8100)
-	 current logPosterior: -938328 
-	 current logLikelihood: -936924
-	 current stdDevSynthesisRate estimate for selection category 0: 0.449989
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939003 
+	 current logLikelihood: -939139
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203662
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 820 (8200)
-	 current logPosterior: -938230 
-	 current logLikelihood: -936877
-	 current stdDevSynthesisRate estimate for selection category 0: 0.436864
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939016 
+	 current logLikelihood: -939137
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196864
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 830 (8300)
-	 current logPosterior: -938298 
-	 current logLikelihood: -936952
-	 current stdDevSynthesisRate estimate for selection category 0: 0.455258
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938960 
+	 current logLikelihood: -939093
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194175
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 840 (8400)
-	 current logPosterior: -938314 
-	 current logLikelihood: -936936
-	 current stdDevSynthesisRate estimate for selection category 0: 0.447835
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938966 
+	 current logLikelihood: -939090
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192935
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 850 (8500)
-	 current logPosterior: -938236 
-	 current logLikelihood: -936870
-	 current stdDevSynthesisRate estimate for selection category 0: 0.452886
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939000 
+	 current logLikelihood: -939128
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200459
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 860 (8600)
-	 current logPosterior: -938270 
-	 current logLikelihood: -936933
-	 current stdDevSynthesisRate estimate for selection category 0: 0.44069
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938928 
+	 current logLikelihood: -939038
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200696
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 870 (8700)
-	 current logPosterior: -938268 
-	 current logLikelihood: -936904
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448296
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938963 
+	 current logLikelihood: -939100
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193265
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 880 (8800)
-	 current logPosterior: -938219 
-	 current logLikelihood: -936805
-	 current stdDevSynthesisRate estimate for selection category 0: 0.466549
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938959 
+	 current logLikelihood: -939093
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20129
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 890 (8900)
-	 current logPosterior: -938219 
-	 current logLikelihood: -936856
-	 current stdDevSynthesisRate estimate for selection category 0: 0.45634
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938953 
+	 current logLikelihood: -939100
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197635
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 900 (9000)
-	 current logPosterior: -938301 
-	 current logLikelihood: -936952
-	 current stdDevSynthesisRate estimate for selection category 0: 0.435299
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938971 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19637
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.187
-	C:	0.223
-	D:	0.216
-	E:	0.187
-	F:	0.227
-	G:	0.141
-	H:	0.245
-	I:	0.193
-	K:	0.204
-	L:	0.058
-	N:	0.242
-	P:	0.105
-	Q:	0.224
-	R:	0.111
-	S:	0.174
-	T:	0.124
-	V:	0.18
-	Y:	0.217
-	Z:	0.191
+	A:	0.188
+	C:	0.316
+	D:	0.242
+	E:	0.196
+	F:	0.228
+	G:	0.25
+	H:	0.333
+	I:	0.233
+	K:	0.236
+	L:	0.188
+	N:	0.247
+	P:	0.236
+	Q:	0.257
+	R:	0.188
+	S:	0.204
+	T:	0.276
+	V:	0.223
+	Y:	0.257
+	Z:	0.315
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 116
-	 acceptance rate above upper target of 0.325: 401
+	 acceptance rates below lower target of 0.225: 74
+	 acceptance rate above upper target of 0.325: 97
 Status at thinned sample (iteration): 910 (9100)
-	 current logPosterior: -938185 
-	 current logLikelihood: -936835
-	 current stdDevSynthesisRate estimate for selection category 0: 0.431936
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938974 
+	 current logLikelihood: -939119
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197789
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 920 (9200)
-	 current logPosterior: -938135 
-	 current logLikelihood: -936816
-	 current stdDevSynthesisRate estimate for selection category 0: 0.432554
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938958 
+	 current logLikelihood: -939085
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197212
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 930 (9300)
-	 current logPosterior: -938154 
-	 current logLikelihood: -936911
-	 current stdDevSynthesisRate estimate for selection category 0: 0.434318
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938959 
+	 current logLikelihood: -939073
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202964
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 940 (9400)
-	 current logPosterior: -938103 
-	 current logLikelihood: -936887
-	 current stdDevSynthesisRate estimate for selection category 0: 0.428284
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938973 
+	 current logLikelihood: -939160
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194189
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 950 (9500)
-	 current logPosterior: -938138 
-	 current logLikelihood: -936853
-	 current stdDevSynthesisRate estimate for selection category 0: 0.44131
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938974 
+	 current logLikelihood: -939086
+	 current stdDevSynthesisRate estimate for selection category 0: 0.191569
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 960 (9600)
-	 current logPosterior: -938225 
-	 current logLikelihood: -936896
-	 current stdDevSynthesisRate estimate for selection category 0: 0.455339
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938979 
+	 current logLikelihood: -939120
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197689
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 970 (9700)
-	 current logPosterior: -938122 
-	 current logLikelihood: -936850
-	 current stdDevSynthesisRate estimate for selection category 0: 0.424663
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938945 
+	 current logLikelihood: -939099
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19993
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 980 (9800)
-	 current logPosterior: -938163 
-	 current logLikelihood: -936886
-	 current stdDevSynthesisRate estimate for selection category 0: 0.435706
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938983 
+	 current logLikelihood: -939094
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199475
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 990 (9900)
-	 current logPosterior: -938139 
-	 current logLikelihood: -936875
-	 current stdDevSynthesisRate estimate for selection category 0: 0.429671
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938912 
+	 current logLikelihood: -939085
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193751
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 1000 (10000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 1000 (10000)
-	 current logPosterior: -938109 
-	 current logLikelihood: -936850
-	 current stdDevSynthesisRate estimate for selection category 0: 0.453875
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938995 
+	 current logLikelihood: -939119
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19858
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.19
-	C:	0.224
-	D:	0.214
-	E:	0.203
-	F:	0.245
-	G:	0.183
-	H:	0.233
-	I:	0.179
-	K:	0.213
-	L:	0.077
-	N:	0.265
-	P:	0.124
-	Q:	0.2
-	R:	0.094
-	S:	0.165
-	T:	0.155
-	V:	0.164
-	Y:	0.242
-	Z:	0.198
+	A:	0.174
+	C:	0.335
+	D:	0.238
+	E:	0.206
+	F:	0.231
+	G:	0.259
+	H:	0.281
+	I:	0.247
+	K:	0.236
+	L:	0.166
+	N:	0.206
+	P:	0.219
+	Q:	0.247
+	R:	0.231
+	S:	0.216
+	T:	0.256
+	V:	0.239
+	Y:	0.271
+	Z:	0.354
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 134
-	 acceptance rate above upper target of 0.325: 76
+	 acceptance rates below lower target of 0.225: 92
+	 acceptance rate above upper target of 0.325: 88
 Begin writing restart file
 End writing restart file
 leaving MCMC loop
@@ -928,8 +927,7 @@ leaving MCMC loop
 [1] "Printing Traces"
 [1] "Completed running and plotting run 1"
 read
-0Error opening file 0 to initialize mutation values.
-please use absolute pathAllowing divergence from initial conditions for 0 iterations.
+0Allowing divergence from initial conditions for 0 iterations.
 
 maxGrouping: 22
 Type: 
@@ -940,950 +938,950 @@ Starting MCMC
 	Starting MCMC with 10000 iterations
 	Adapting will stop after 5000 steps
 Status at thinned sample (iteration): 10 (100)
-	 current logPosterior: -938191 
-	 current logLikelihood: -936905
-	 current stdDevSynthesisRate estimate for selection category 0: 0.444688
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939001 
+	 current logLikelihood: -939139
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19689
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 20 (200)
-	 current logPosterior: -938239 
-	 current logLikelihood: -936964
-	 current stdDevSynthesisRate estimate for selection category 0: 0.445287
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938961 
+	 current logLikelihood: -939080
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200653
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 30 (300)
-	 current logPosterior: -938175 
-	 current logLikelihood: -936847
-	 current stdDevSynthesisRate estimate for selection category 0: 0.453489
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938962 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197737
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 40 (400)
-	 current logPosterior: -938209 
-	 current logLikelihood: -936868
-	 current stdDevSynthesisRate estimate for selection category 0: 0.457894
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938981 
+	 current logLikelihood: -939119
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201136
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 50 (500)
-	 current logPosterior: -938136 
-	 current logLikelihood: -936816
-	 current stdDevSynthesisRate estimate for selection category 0: 0.4476
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938955 
+	 current logLikelihood: -939100
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196274
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 60 (600)
-	 current logPosterior: -938221 
-	 current logLikelihood: -936895
-	 current stdDevSynthesisRate estimate for selection category 0: 0.449883
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939009 
+	 current logLikelihood: -939134
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195762
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 70 (700)
-	 current logPosterior: -938164 
-	 current logLikelihood: -936864
-	 current stdDevSynthesisRate estimate for selection category 0: 0.444811
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938917 
+	 current logLikelihood: -939049
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202023
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 80 (800)
-	 current logPosterior: -938221 
-	 current logLikelihood: -936883
-	 current stdDevSynthesisRate estimate for selection category 0: 0.44309
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938961 
+	 current logLikelihood: -939105
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205178
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 90 (900)
-	 current logPosterior: -938153 
-	 current logLikelihood: -936820
-	 current stdDevSynthesisRate estimate for selection category 0: 0.454587
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938881 
+	 current logLikelihood: -939038
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198695
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 100 (1000)
-	 current logPosterior: -938209 
-	 current logLikelihood: -936868
-	 current stdDevSynthesisRate estimate for selection category 0: 0.454459
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938930 
+	 current logLikelihood: -939065
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193305
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.15
-	C:	0.231
-	D:	0.227
-	E:	0.197
-	F:	0.222
-	G:	0.151
-	H:	0.236
-	I:	0.146
-	K:	0.217
-	L:	0.083
-	N:	0.255
-	P:	0.141
-	Q:	0.22
-	R:	0.096
-	S:	0.169
-	T:	0.178
-	V:	0.171
-	Y:	0.255
-	Z:	0.199
+	A:	0.262
+	C:	0.325
+	D:	0.243
+	E:	0.216
+	F:	0.252
+	G:	0.291
+	H:	0.315
+	I:	0.271
+	K:	0.222
+	L:	0.227
+	N:	0.272
+	P:	0.208
+	Q:	0.272
+	R:	0.219
+	S:	0.22
+	T:	0.285
+	V:	0.233
+	Y:	0.276
+	Z:	0.329
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 156
-	 acceptance rate above upper target of 0.325: 229
+	 acceptance rates below lower target of 0.225: 111
+	 acceptance rate above upper target of 0.325: 100
 Status at thinned sample (iteration): 110 (1100)
-	 current logPosterior: -938217 
-	 current logLikelihood: -936865
-	 current stdDevSynthesisRate estimate for selection category 0: 0.441252
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938956 
+	 current logLikelihood: -939101
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199327
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 120 (1200)
-	 current logPosterior: -938218 
-	 current logLikelihood: -936896
-	 current stdDevSynthesisRate estimate for selection category 0: 0.424544
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939001 
+	 current logLikelihood: -939137
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200965
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 130 (1300)
-	 current logPosterior: -938225 
-	 current logLikelihood: -936906
-	 current stdDevSynthesisRate estimate for selection category 0: 0.442134
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938938 
+	 current logLikelihood: -939102
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200023
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 140 (1400)
-	 current logPosterior: -938192 
-	 current logLikelihood: -936884
-	 current stdDevSynthesisRate estimate for selection category 0: 0.449797
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939022 
+	 current logLikelihood: -939140
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196564
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 150 (1500)
-	 current logPosterior: -938159 
-	 current logLikelihood: -936835
-	 current stdDevSynthesisRate estimate for selection category 0: 0.466874
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938912 
+	 current logLikelihood: -939082
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197402
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 160 (1600)
-	 current logPosterior: -938182 
-	 current logLikelihood: -936891
-	 current stdDevSynthesisRate estimate for selection category 0: 0.453837
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938941 
+	 current logLikelihood: -939080
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198374
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 170 (1700)
-	 current logPosterior: -938228 
-	 current logLikelihood: -936909
-	 current stdDevSynthesisRate estimate for selection category 0: 0.457598
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938925 
+	 current logLikelihood: -939029
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19585
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 180 (1800)
-	 current logPosterior: -938159 
-	 current logLikelihood: -936848
-	 current stdDevSynthesisRate estimate for selection category 0: 0.446489
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938973 
+	 current logLikelihood: -939091
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199786
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 190 (1900)
-	 current logPosterior: -938123 
-	 current logLikelihood: -936822
-	 current stdDevSynthesisRate estimate for selection category 0: 0.434518
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938942 
+	 current logLikelihood: -939062
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198049
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 200 (2000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 200 (2000)
-	 current logPosterior: -938179 
-	 current logLikelihood: -936863
-	 current stdDevSynthesisRate estimate for selection category 0: 0.446753
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938976 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202223
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.187
-	C:	0.23
-	D:	0.223
-	E:	0.192
-	F:	0.209
-	G:	0.128
-	H:	0.231
-	I:	0.216
+	A:	0.267
+	C:	0.352
+	D:	0.277
+	E:	0.2
+	F:	0.228
+	G:	0.326
+	H:	0.316
+	I:	0.228
 	K:	0.198
-	L:	0.077
-	N:	0.237
-	P:	0.161
-	Q:	0.221
-	R:	0.087
-	S:	0.143
-	T:	0.176
-	V:	0.171
-	Y:	0.204
-	Z:	0.196
+	L:	0.198
+	N:	0.213
+	P:	0.238
+	Q:	0.248
+	R:	0.222
+	S:	0.221
+	T:	0.264
+	V:	0.264
+	Y:	0.285
+	Z:	0.349
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 86
-	 acceptance rate above upper target of 0.325: 72
+	 acceptance rates below lower target of 0.225: 68
+	 acceptance rate above upper target of 0.325: 55
 Status at thinned sample (iteration): 210 (2100)
-	 current logPosterior: -938222 
-	 current logLikelihood: -936914
-	 current stdDevSynthesisRate estimate for selection category 0: 0.456599
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938972 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198308
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 220 (2200)
-	 current logPosterior: -938252 
-	 current logLikelihood: -936927
-	 current stdDevSynthesisRate estimate for selection category 0: 0.441252
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938956 
+	 current logLikelihood: -939079
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195878
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 230 (2300)
-	 current logPosterior: -938206 
-	 current logLikelihood: -936907
-	 current stdDevSynthesisRate estimate for selection category 0: 0.446329
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938928 
+	 current logLikelihood: -939051
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201863
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 240 (2400)
-	 current logPosterior: -938213 
-	 current logLikelihood: -936891
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448855
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938907 
+	 current logLikelihood: -939054
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196458
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 250 (2500)
-	 current logPosterior: -938175 
-	 current logLikelihood: -936852
-	 current stdDevSynthesisRate estimate for selection category 0: 0.434015
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939001 
+	 current logLikelihood: -939150
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199509
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 260 (2600)
-	 current logPosterior: -938108 
-	 current logLikelihood: -936803
-	 current stdDevSynthesisRate estimate for selection category 0: 0.442603
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938993 
+	 current logLikelihood: -939103
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196732
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 270 (2700)
-	 current logPosterior: -938224 
-	 current logLikelihood: -936934
-	 current stdDevSynthesisRate estimate for selection category 0: 0.453655
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938982 
+	 current logLikelihood: -939116
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200927
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 280 (2800)
-	 current logPosterior: -938243 
-	 current logLikelihood: -936870
-	 current stdDevSynthesisRate estimate for selection category 0: 0.451757
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938988 
+	 current logLikelihood: -939110
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196925
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 290 (2900)
-	 current logPosterior: -938221 
-	 current logLikelihood: -936866
-	 current stdDevSynthesisRate estimate for selection category 0: 0.444073
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938942 
+	 current logLikelihood: -939083
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202519
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 300 (3000)
-	 current logPosterior: -938289 
-	 current logLikelihood: -936915
-	 current stdDevSynthesisRate estimate for selection category 0: 0.472799
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938957 
+	 current logLikelihood: -939126
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199124
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.161
-	C:	0.232
-	D:	0.218
-	E:	0.189
-	F:	0.213
-	G:	0.107
-	H:	0.249
-	I:	0.211
-	K:	0.23
-	L:	0.095
-	N:	0.246
-	P:	0.133
-	Q:	0.211
-	R:	0.085
-	S:	0.16
-	T:	0.175
-	V:	0.203
-	Y:	0.24
-	Z:	0.212
+	A:	0.267
+	C:	0.323
+	D:	0.247
+	E:	0.209
+	F:	0.209
+	G:	0.281
+	H:	0.304
+	I:	0.265
+	K:	0.221
+	L:	0.191
+	N:	0.236
+	P:	0.209
+	Q:	0.259
+	R:	0.208
+	S:	0.208
+	T:	0.247
+	V:	0.259
+	Y:	0.295
+	Z:	0.33
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 92
-	 acceptance rate above upper target of 0.325: 137
+	 acceptance rates below lower target of 0.225: 111
+	 acceptance rate above upper target of 0.325: 112
 Status at thinned sample (iteration): 310 (3100)
-	 current logPosterior: -938243 
-	 current logLikelihood: -936909
-	 current stdDevSynthesisRate estimate for selection category 0: 0.463589
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938948 
+	 current logLikelihood: -939117
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194462
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 320 (3200)
-	 current logPosterior: -938218 
-	 current logLikelihood: -936900
-	 current stdDevSynthesisRate estimate for selection category 0: 0.451655
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938934 
+	 current logLikelihood: -939056
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203015
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 330 (3300)
-	 current logPosterior: -938256 
-	 current logLikelihood: -936898
-	 current stdDevSynthesisRate estimate for selection category 0: 0.46935
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938957 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195821
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 340 (3400)
-	 current logPosterior: -938248 
-	 current logLikelihood: -936898
-	 current stdDevSynthesisRate estimate for selection category 0: 0.444203
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938904 
+	 current logLikelihood: -939067
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197924
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 350 (3500)
-	 current logPosterior: -938175 
-	 current logLikelihood: -936876
-	 current stdDevSynthesisRate estimate for selection category 0: 0.445123
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938976 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202617
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 360 (3600)
-	 current logPosterior: -938193 
-	 current logLikelihood: -936865
-	 current stdDevSynthesisRate estimate for selection category 0: 0.458133
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939001 
+	 current logLikelihood: -939120
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198159
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 370 (3700)
-	 current logPosterior: -938157 
-	 current logLikelihood: -936808
-	 current stdDevSynthesisRate estimate for selection category 0: 0.443582
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938982 
+	 current logLikelihood: -939120
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198498
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 380 (3800)
-	 current logPosterior: -938130 
-	 current logLikelihood: -936841
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448235
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939011 
+	 current logLikelihood: -939140
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200295
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 390 (3900)
-	 current logPosterior: -938175 
-	 current logLikelihood: -936886
-	 current stdDevSynthesisRate estimate for selection category 0: 0.45641
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938938 
+	 current logLikelihood: -939071
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201093
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 400 (4000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 400 (4000)
-	 current logPosterior: -938182 
-	 current logLikelihood: -936888
-	 current stdDevSynthesisRate estimate for selection category 0: 0.445079
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938933 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20068
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.15
-	C:	0.228
-	D:	0.245
-	E:	0.184
-	F:	0.237
-	G:	0.156
-	H:	0.244
-	I:	0.234
-	K:	0.211
-	L:	0.067
-	N:	0.263
-	P:	0.148
-	Q:	0.22
-	R:	0.084
-	S:	0.169
-	T:	0.141
-	V:	0.177
-	Y:	0.22
-	Z:	0.212
+	A:	0.275
+	C:	0.325
+	D:	0.248
+	E:	0.212
+	F:	0.224
+	G:	0.262
+	H:	0.29
+	I:	0.244
+	K:	0.239
+	L:	0.237
+	N:	0.236
+	P:	0.239
+	Q:	0.239
+	R:	0.183
+	S:	0.224
+	T:	0.265
+	V:	0.24
+	Y:	0.277
+	Z:	0.342
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 75
-	 acceptance rate above upper target of 0.325: 71
+	 acceptance rates below lower target of 0.225: 77
+	 acceptance rate above upper target of 0.325: 51
 Status at thinned sample (iteration): 410 (4100)
-	 current logPosterior: -938180 
-	 current logLikelihood: -936888
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448064
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938979 
+	 current logLikelihood: -939108
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198582
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 420 (4200)
-	 current logPosterior: -938175 
-	 current logLikelihood: -936889
-	 current stdDevSynthesisRate estimate for selection category 0: 0.432257
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938907 
+	 current logLikelihood: -939064
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198635
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 430 (4300)
-	 current logPosterior: -938135 
-	 current logLikelihood: -936805
-	 current stdDevSynthesisRate estimate for selection category 0: 0.430907
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938959 
+	 current logLikelihood: -939105
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195981
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 440 (4400)
-	 current logPosterior: -938165 
-	 current logLikelihood: -936852
-	 current stdDevSynthesisRate estimate for selection category 0: 0.437961
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938932 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198941
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 450 (4500)
-	 current logPosterior: -938240 
-	 current logLikelihood: -936982
-	 current stdDevSynthesisRate estimate for selection category 0: 0.438296
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938961 
+	 current logLikelihood: -939119
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193236
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 460 (4600)
-	 current logPosterior: -938197 
-	 current logLikelihood: -936891
-	 current stdDevSynthesisRate estimate for selection category 0: 0.438112
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938960 
+	 current logLikelihood: -939099
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195117
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 470 (4700)
-	 current logPosterior: -938156 
-	 current logLikelihood: -936880
-	 current stdDevSynthesisRate estimate for selection category 0: 0.435686
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939010 
+	 current logLikelihood: -939108
+	 current stdDevSynthesisRate estimate for selection category 0: 0.208693
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 480 (4800)
-	 current logPosterior: -938122 
-	 current logLikelihood: -936845
-	 current stdDevSynthesisRate estimate for selection category 0: 0.435307
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938998 
+	 current logLikelihood: -939127
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198141
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 490 (4900)
-	 current logPosterior: -938184 
-	 current logLikelihood: -936900
-	 current stdDevSynthesisRate estimate for selection category 0: 0.441214
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -938951 
+	 current logLikelihood: -939049
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19803
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 500 (5000)
-	 current logPosterior: -938183 
-	 current logLikelihood: -936853
-	 current stdDevSynthesisRate estimate for selection category 0: 0.451744
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current logPosterior: -939008 
+	 current logLikelihood: -939130
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204025
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.146
-	C:	0.216
-	D:	0.228
-	E:	0.181
-	F:	0.24
-	G:	0.157
-	H:	0.226
-	I:	0.201
-	K:	0.23
-	L:	0.103
-	N:	0.24
-	P:	0.165
-	Q:	0.191
-	R:	0.081
-	S:	0.138
-	T:	0.162
-	V:	0.188
-	Y:	0.238
-	Z:	0.2
+	A:	0.263
+	C:	0.326
+	D:	0.24
+	E:	0.198
+	F:	0.246
+	G:	0.246
+	H:	0.299
+	I:	0.256
+	K:	0.209
+	L:	0.227
+	N:	0.237
+	P:	0.215
+	Q:	0.245
+	R:	0.235
+	S:	0.214
+	T:	0.227
+	V:	0.22
+	Y:	0.268
+	Z:	0.315
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 117
-	 acceptance rate above upper target of 0.325: 36
+	 acceptance rates below lower target of 0.225: 52
+	 acceptance rate above upper target of 0.325: 28
 Status at thinned sample (iteration): 510 (5100)
-	 current logPosterior: -938236 
-	 current logLikelihood: -936918
+	 current logPosterior: -938930 
+	 current logLikelihood: -939054
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.435561
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196787
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 520 (5200)
-	 current logPosterior: -938212 
-	 current logLikelihood: -936899
+	 current logPosterior: -938985 
+	 current logLikelihood: -939104
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.441237
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201625
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 530 (5300)
-	 current logPosterior: -938295 
-	 current logLikelihood: -936934
+	 current logPosterior: -938966 
+	 current logLikelihood: -939103
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.441272
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199463
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 540 (5400)
-	 current logPosterior: -938243 
-	 current logLikelihood: -936904
+	 current logPosterior: -938956 
+	 current logLikelihood: -939111
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.437355
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196121
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 550 (5500)
-	 current logPosterior: -938214 
-	 current logLikelihood: -936910
+	 current logPosterior: -938939 
+	 current logLikelihood: -939085
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.440958
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201578
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 560 (5600)
-	 current logPosterior: -938236 
-	 current logLikelihood: -936933
+	 current logPosterior: -938972 
+	 current logLikelihood: -939115
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.448342
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205327
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 570 (5700)
-	 current logPosterior: -938207 
-	 current logLikelihood: -936901
+	 current logPosterior: -939002 
+	 current logLikelihood: -939140
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.440715
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193946
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 580 (5800)
-	 current logPosterior: -938235 
-	 current logLikelihood: -936899
+	 current logPosterior: -938967 
+	 current logLikelihood: -939089
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.442973
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199429
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 590 (5900)
-	 current logPosterior: -938241 
-	 current logLikelihood: -936910
+	 current logPosterior: -938946 
+	 current logLikelihood: -939076
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.434698
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200492
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 600 (6000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 600 (6000)
-	 current logPosterior: -938186 
-	 current logLikelihood: -936858
+	 current logPosterior: -939030 
+	 current logLikelihood: -939162
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.4468
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20352
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.19
-	C:	0.232
-	D:	0.23
-	E:	0.191
-	F:	0.225
-	G:	0.18
-	H:	0.25
-	I:	0.2
-	K:	0.222
-	L:	0.082
-	N:	0.248
-	P:	0.137
-	Q:	0.201
-	R:	0.067
-	S:	0.178
-	T:	0.158
-	V:	0.182
-	Y:	0.247
-	Z:	0.212
+	A:	0.278
+	C:	0.337
+	D:	0.224
+	E:	0.203
+	F:	0.235
+	G:	0.276
+	H:	0.33
+	I:	0.242
+	K:	0.2
+	L:	0.25
+	N:	0.242
+	P:	0.231
+	Q:	0.268
+	R:	0.207
+	S:	0.241
+	T:	0.279
+	V:	0.237
+	Y:	0.276
+	Z:	0.347
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 89
-	 acceptance rate above upper target of 0.325: 74
+	 acceptance rates below lower target of 0.225: 116
+	 acceptance rate above upper target of 0.325: 102
 Status at thinned sample (iteration): 610 (6100)
-	 current logPosterior: -938206 
-	 current logLikelihood: -936872
+	 current logPosterior: -939030 
+	 current logLikelihood: -939185
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.460539
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197379
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 620 (6200)
-	 current logPosterior: -938271 
-	 current logLikelihood: -936961
+	 current logPosterior: -938920 
+	 current logLikelihood: -939061
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.450264
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 630 (6300)
-	 current logPosterior: -938235 
-	 current logLikelihood: -936827
+	 current logPosterior: -938946 
+	 current logLikelihood: -939087
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.465916
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204554
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 640 (6400)
-	 current logPosterior: -938296 
-	 current logLikelihood: -936950
+	 current logPosterior: -938940 
+	 current logLikelihood: -939099
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.45694
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195789
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 650 (6500)
-	 current logPosterior: -938217 
-	 current logLikelihood: -936878
+	 current logPosterior: -938947 
+	 current logLikelihood: -939087
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.454098
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193498
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 660 (6600)
-	 current logPosterior: -938205 
-	 current logLikelihood: -936874
+	 current logPosterior: -938960 
+	 current logLikelihood: -939097
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.452384
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200076
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 670 (6700)
-	 current logPosterior: -938260 
-	 current logLikelihood: -936860
+	 current logPosterior: -938960 
+	 current logLikelihood: -939077
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.461438
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195133
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 680 (6800)
-	 current logPosterior: -938282 
-	 current logLikelihood: -936884
+	 current logPosterior: -939010 
+	 current logLikelihood: -939115
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.466406
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198423
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 690 (6900)
-	 current logPosterior: -938311 
-	 current logLikelihood: -936941
+	 current logPosterior: -938958 
+	 current logLikelihood: -939101
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.475944
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197352
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 700 (7000)
-	 current logPosterior: -938297 
-	 current logLikelihood: -936908
+	 current logPosterior: -938943 
+	 current logLikelihood: -939091
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.470575
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196088
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.188
-	C:	0.234
-	D:	0.214
-	E:	0.194
-	F:	0.234
-	G:	0.14
-	H:	0.256
-	I:	0.233
-	K:	0.19
-	L:	0.092
-	N:	0.234
-	P:	0.162
-	Q:	0.195
-	R:	0.085
-	S:	0.165
-	T:	0.157
-	V:	0.164
-	Y:	0.213
-	Z:	0.197
+	A:	0.259
+	C:	0.343
+	D:	0.221
+	E:	0.22
+	F:	0.239
+	G:	0.268
+	H:	0.309
+	I:	0.231
+	K:	0.214
+	L:	0.239
+	N:	0.238
+	P:	0.251
+	Q:	0.227
+	R:	0.203
+	S:	0.245
+	T:	0.259
+	V:	0.219
+	Y:	0.257
+	Z:	0.368
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 97
-	 acceptance rate above upper target of 0.325: 243
+	 acceptance rates below lower target of 0.225: 121
+	 acceptance rate above upper target of 0.325: 113
 Status at thinned sample (iteration): 710 (7100)
-	 current logPosterior: -938288 
-	 current logLikelihood: -936884
+	 current logPosterior: -938984 
+	 current logLikelihood: -939103
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.466668
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197213
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 720 (7200)
-	 current logPosterior: -938284 
-	 current logLikelihood: -936902
+	 current logPosterior: -938972 
+	 current logLikelihood: -939095
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.446718
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203004
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 730 (7300)
-	 current logPosterior: -938337 
-	 current logLikelihood: -936937
+	 current logPosterior: -938990 
+	 current logLikelihood: -939073
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.442521
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196962
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 740 (7400)
-	 current logPosterior: -938315 
-	 current logLikelihood: -936911
+	 current logPosterior: -938933 
+	 current logLikelihood: -939091
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.449708
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203503
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 750 (7500)
-	 current logPosterior: -938289 
-	 current logLikelihood: -936905
+	 current logPosterior: -938933 
+	 current logLikelihood: -939057
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.44375
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199995
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 760 (7600)
-	 current logPosterior: -938227 
-	 current logLikelihood: -936895
+	 current logPosterior: -938956 
+	 current logLikelihood: -939104
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.426309
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202272
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 770 (7700)
-	 current logPosterior: -938262 
-	 current logLikelihood: -936890
+	 current logPosterior: -939004 
+	 current logLikelihood: -939111
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.449291
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.207298
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 780 (7800)
-	 current logPosterior: -938250 
-	 current logLikelihood: -936894
+	 current logPosterior: -938917 
+	 current logLikelihood: -939070
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.440595
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195678
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 790 (7900)
-	 current logPosterior: -938185 
-	 current logLikelihood: -936847
+	 current logPosterior: -938946 
+	 current logLikelihood: -939081
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.428832
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200625
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 800 (8000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 800 (8000)
-	 current logPosterior: -938207 
-	 current logLikelihood: -936946
+	 current logPosterior: -939032 
+	 current logLikelihood: -939147
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.415159
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201332
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.174
-	C:	0.256
-	D:	0.228
-	E:	0.172
-	F:	0.216
-	G:	0.174
-	H:	0.227
-	I:	0.202
-	K:	0.223
-	L:	0.1
-	N:	0.238
-	P:	0.147
-	Q:	0.209
-	R:	0.077
-	S:	0.172
-	T:	0.171
-	V:	0.184
-	Y:	0.254
-	Z:	0.22
+	A:	0.268
+	C:	0.298
+	D:	0.26
+	E:	0.218
+	F:	0.18
+	G:	0.287
+	H:	0.329
+	I:	0.221
+	K:	0.241
+	L:	0.209
+	N:	0.253
+	P:	0.252
+	Q:	0.265
+	R:	0.216
+	S:	0.248
+	T:	0.258
+	V:	0.239
+	Y:	0.269
+	Z:	0.338
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 141
-	 acceptance rate above upper target of 0.325: 172
+	 acceptance rates below lower target of 0.225: 146
+	 acceptance rate above upper target of 0.325: 148
 Status at thinned sample (iteration): 810 (8100)
-	 current logPosterior: -938163 
-	 current logLikelihood: -936844
+	 current logPosterior: -938956 
+	 current logLikelihood: -939104
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.436569
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197847
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 820 (8200)
-	 current logPosterior: -938127 
-	 current logLikelihood: -936821
+	 current logPosterior: -938968 
+	 current logLikelihood: -939111
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.440746
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200598
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 830 (8300)
-	 current logPosterior: -938156 
-	 current logLikelihood: -936887
+	 current logPosterior: -939022 
+	 current logLikelihood: -939167
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.422001
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19496
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 840 (8400)
-	 current logPosterior: -938120 
-	 current logLikelihood: -936897
+	 current logPosterior: -938987 
+	 current logLikelihood: -939100
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.426777
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200619
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 850 (8500)
-	 current logPosterior: -938153 
-	 current logLikelihood: -936902
+	 current logPosterior: -938952 
+	 current logLikelihood: -939086
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.435073
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199216
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 860 (8600)
-	 current logPosterior: -938112 
-	 current logLikelihood: -936886
+	 current logPosterior: -938931 
+	 current logLikelihood: -939084
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.428006
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200859
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 870 (8700)
-	 current logPosterior: -938132 
-	 current logLikelihood: -936924
+	 current logPosterior: -938965 
+	 current logLikelihood: -939116
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.433698
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200251
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 880 (8800)
-	 current logPosterior: -938066 
-	 current logLikelihood: -936893
+	 current logPosterior: -938937 
+	 current logLikelihood: -939114
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.423143
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.1965
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 890 (8900)
-	 current logPosterior: -938004 
-	 current logLikelihood: -936769
+	 current logPosterior: -938997 
+	 current logLikelihood: -939102
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.416561
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.206021
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 900 (9000)
-	 current logPosterior: -938090 
-	 current logLikelihood: -936892
+	 current logPosterior: -938950 
+	 current logLikelihood: -939091
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.411867
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201631
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.184
-	C:	0.219
-	D:	0.24
-	E:	0.205
-	F:	0.233
-	G:	0.169
-	H:	0.23
-	I:	0.194
-	K:	0.2
-	L:	0.093
-	N:	0.232
-	P:	0.147
-	Q:	0.212
-	R:	0.062
-	S:	0.165
-	T:	0.172
-	V:	0.184
-	Y:	0.22
-	Z:	0.2
+	A:	0.303
+	C:	0.353
+	D:	0.245
+	E:	0.218
+	F:	0.237
+	G:	0.266
+	H:	0.312
+	I:	0.242
+	K:	0.222
+	L:	0.228
+	N:	0.242
+	P:	0.228
+	Q:	0.261
+	R:	0.239
+	S:	0.217
+	T:	0.261
+	V:	0.252
+	Y:	0.281
+	Z:	0.338
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 260
-	 acceptance rate above upper target of 0.325: 97
+	 acceptance rates below lower target of 0.225: 163
+	 acceptance rate above upper target of 0.325: 159
 Status at thinned sample (iteration): 910 (9100)
-	 current logPosterior: -938053 
-	 current logLikelihood: -936856
+	 current logPosterior: -938957 
+	 current logLikelihood: -939108
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.411858
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198314
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 920 (9200)
-	 current logPosterior: -938016 
-	 current logLikelihood: -936842
+	 current logPosterior: -938931 
+	 current logLikelihood: -939068
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.416054
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200448
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 930 (9300)
-	 current logPosterior: -937995 
-	 current logLikelihood: -936823
+	 current logPosterior: -938956 
+	 current logLikelihood: -939080
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.397744
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.1987
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 940 (9400)
-	 current logPosterior: -938011 
-	 current logLikelihood: -936877
+	 current logPosterior: -938958 
+	 current logLikelihood: -939062
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.397149
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19645
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 950 (9500)
-	 current logPosterior: -938019 
-	 current logLikelihood: -936843
+	 current logPosterior: -938916 
+	 current logLikelihood: -939062
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.418729
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201667
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 960 (9600)
-	 current logPosterior: -938075 
-	 current logLikelihood: -936885
+	 current logPosterior: -939005 
+	 current logLikelihood: -939103
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.431472
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193477
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 970 (9700)
-	 current logPosterior: -938100 
-	 current logLikelihood: -936910
+	 current logPosterior: -938959 
+	 current logLikelihood: -939105
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.418508
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197174
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 980 (9800)
-	 current logPosterior: -938079 
-	 current logLikelihood: -936860
+	 current logPosterior: -939007 
+	 current logLikelihood: -939147
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.427208
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198151
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Status at thinned sample (iteration): 990 (9900)
-	 current logPosterior: -938064 
-	 current logLikelihood: -936899
+	 current logPosterior: -938961 
+	 current logLikelihood: -939082
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.405907
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201148
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Begin saving restart file(s) at sample (iteration): 1000 (10000)
 Begin writing restart file
 End writing restart file
 Status at thinned sample (iteration): 1000 (10000)
-	 current logPosterior: -938082 
-	 current logLikelihood: -936867
+	 current logPosterior: -938970 
+	 current logLikelihood: -939109
 No longer adapting
-	 current stdDevSynthesisRate estimate for selection category 0: 0.418469
-	 current stdDevSynthesisRate proposal width: 0.0768
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19674
+	 current stdDevSynthesisRate proposal width: 0.08
 	 current Mixture element probability for element 0: 1
 Acceptance rates for Codon Specific Parameters
 Target range: 0.175-0.375 
 Adjustment range: < 0.225 or > 0.325 
 	AA	Acc.Rat
-	A:	0.201
-	C:	0.242
-	D:	0.234
-	E:	0.191
-	F:	0.23
-	G:	0.157
-	H:	0.229
-	I:	0.236
-	K:	0.219
-	L:	0.084
-	N:	0.25
-	P:	0.14
-	Q:	0.189
-	R:	0.104
-	S:	0.172
-	T:	0.172
-	V:	0.203
-	Y:	0.218
-	Z:	0.24
+	A:	0.261
+	C:	0.343
+	D:	0.239
+	E:	0.228
+	F:	0.226
+	G:	0.293
+	H:	0.317
+	I:	0.233
+	K:	0.235
+	L:	0.23
+	N:	0.236
+	P:	0.226
+	Q:	0.253
+	R:	0.24
+	S:	0.201
+	T:	0.288
+	V:	0.236
+	Y:	0.285
+	Z:	0.331
 Acceptance rate for synthesis rate:
 Target range: 0.225-0.325 
 Adjustment range: < 0.225 or > 0.325 
-	 acceptance rates below lower target of 0.225: 343
-	 acceptance rate above upper target of 0.325: 64
+	 acceptance rates below lower target of 0.225: 186
+	 acceptance rate above upper target of 0.325: 183
 Begin writing restart file
 End writing restart file
 leaving MCMC loop
@@ -1891,12 +1889,1472 @@ leaving MCMC loop
 [1] "Writing objects."
 [1] "Printing Traces"
 [1] "Completed running and plotting run 2"
-Warning messages:
-1: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
-  iterations terminated because half-step sizes are very small
-2: In vglm.fitter(x = x, y = y, w = w, offset = offset, Xm2 = Xm2,  :
-  some quantities such as z, residuals, SEs may be inaccurate due to convergence at a half-step
-3: In plot.Rcpp_MCMCAlgorithm(mcmc, what = "LogPosterior") :
-  No window was given, zooming in at last 10% of trace
-4: In plot.Rcpp_MCMCAlgorithm(mcmc, what = "LogPosterior") :
-  No window was given, zooming in at last 10% of trace
+read
+0Allowing divergence from initial conditions for 0 iterations.
+
+maxGrouping: 22
+Type: 
+Starting MCMC
+	Estimate Codon Specific Parameters? TRUE 
+	Estimate Hyper Parameters? TRUE 
+	Estimate Synthesis rates? TRUE 
+	Starting MCMC with 10000 iterations
+	Adapting will stop after 5000 steps
+Status at thinned sample (iteration): 10 (100)
+	 current logPosterior: -938946 
+	 current logLikelihood: -939092
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199732
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 20 (200)
+	 current logPosterior: -938949 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202967
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 30 (300)
+	 current logPosterior: -938958 
+	 current logLikelihood: -939062
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199019
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 40 (400)
+	 current logPosterior: -938987 
+	 current logLikelihood: -939123
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199091
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 50 (500)
+	 current logPosterior: -938938 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198452
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 60 (600)
+	 current logPosterior: -938985 
+	 current logLikelihood: -939118
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197972
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 70 (700)
+	 current logPosterior: -939007 
+	 current logLikelihood: -939153
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195209
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 80 (800)
+	 current logPosterior: -938948 
+	 current logLikelihood: -939094
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202505
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 90 (900)
+	 current logPosterior: -938952 
+	 current logLikelihood: -939058
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201126
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 100 (1000)
+	 current logPosterior: -938938 
+	 current logLikelihood: -939048
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198082
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.273
+	C:	0.324
+	D:	0.26
+	E:	0.219
+	F:	0.241
+	G:	0.263
+	H:	0.314
+	I:	0.221
+	K:	0.205
+	L:	0.235
+	N:	0.239
+	P:	0.259
+	Q:	0.244
+	R:	0.221
+	S:	0.185
+	T:	0.279
+	V:	0.238
+	Y:	0.275
+	Z:	0.337
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 160
+	 acceptance rate above upper target of 0.325: 164
+Status at thinned sample (iteration): 110 (1100)
+	 current logPosterior: -938944 
+	 current logLikelihood: -939090
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200935
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 120 (1200)
+	 current logPosterior: -938946 
+	 current logLikelihood: -939081
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197941
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 130 (1300)
+	 current logPosterior: -938896 
+	 current logLikelihood: -939040
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197915
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 140 (1400)
+	 current logPosterior: -938936 
+	 current logLikelihood: -939085
+	 current stdDevSynthesisRate estimate for selection category 0: 0.208692
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 150 (1500)
+	 current logPosterior: -938980 
+	 current logLikelihood: -939113
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201279
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 160 (1600)
+	 current logPosterior: -939013 
+	 current logLikelihood: -939149
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200808
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 170 (1700)
+	 current logPosterior: -938897 
+	 current logLikelihood: -939027
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200102
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 180 (1800)
+	 current logPosterior: -938946 
+	 current logLikelihood: -939069
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198612
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 190 (1900)
+	 current logPosterior: -938935 
+	 current logLikelihood: -939075
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195986
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 200 (2000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 200 (2000)
+	 current logPosterior: -938993 
+	 current logLikelihood: -939164
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19579
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.296
+	C:	0.328
+	D:	0.272
+	E:	0.237
+	F:	0.228
+	G:	0.268
+	H:	0.315
+	I:	0.231
+	K:	0.249
+	L:	0.242
+	N:	0.23
+	P:	0.241
+	Q:	0.248
+	R:	0.206
+	S:	0.248
+	T:	0.289
+	V:	0.259
+	Y:	0.294
+	Z:	0.342
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 87
+	 acceptance rate above upper target of 0.325: 81
+Status at thinned sample (iteration): 210 (2100)
+	 current logPosterior: -938975 
+	 current logLikelihood: -939112
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199453
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 220 (2200)
+	 current logPosterior: -938942 
+	 current logLikelihood: -939101
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196295
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 230 (2300)
+	 current logPosterior: -938953 
+	 current logLikelihood: -939074
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19682
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 240 (2400)
+	 current logPosterior: -938967 
+	 current logLikelihood: -939107
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201983
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 250 (2500)
+	 current logPosterior: -938954 
+	 current logLikelihood: -939109
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192687
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 260 (2600)
+	 current logPosterior: -939004 
+	 current logLikelihood: -939117
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201913
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 270 (2700)
+	 current logPosterior: -938920 
+	 current logLikelihood: -939061
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198343
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 280 (2800)
+	 current logPosterior: -938941 
+	 current logLikelihood: -939091
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195794
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 290 (2900)
+	 current logPosterior: -938954 
+	 current logLikelihood: -939049
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195653
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 300 (3000)
+	 current logPosterior: -938960 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198693
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.297
+	C:	0.318
+	D:	0.24
+	E:	0.188
+	F:	0.227
+	G:	0.281
+	H:	0.329
+	I:	0.237
+	K:	0.211
+	L:	0.227
+	N:	0.242
+	P:	0.242
+	Q:	0.246
+	R:	0.205
+	S:	0.193
+	T:	0.283
+	V:	0.238
+	Y:	0.28
+	Z:	0.338
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 76
+	 acceptance rate above upper target of 0.325: 72
+Status at thinned sample (iteration): 310 (3100)
+	 current logPosterior: -938952 
+	 current logLikelihood: -939119
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19755
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 320 (3200)
+	 current logPosterior: -938906 
+	 current logLikelihood: -939054
+	 current stdDevSynthesisRate estimate for selection category 0: 0.206531
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 330 (3300)
+	 current logPosterior: -938948 
+	 current logLikelihood: -939089
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19763
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 340 (3400)
+	 current logPosterior: -938912 
+	 current logLikelihood: -939072
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194356
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 350 (3500)
+	 current logPosterior: -938945 
+	 current logLikelihood: -939072
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198284
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 360 (3600)
+	 current logPosterior: -938949 
+	 current logLikelihood: -939090
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200566
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 370 (3700)
+	 current logPosterior: -938997 
+	 current logLikelihood: -939168
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200849
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 380 (3800)
+	 current logPosterior: -938966 
+	 current logLikelihood: -939090
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198076
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 390 (3900)
+	 current logPosterior: -938942 
+	 current logLikelihood: -939074
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195871
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 400 (4000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 400 (4000)
+	 current logPosterior: -938982 
+	 current logLikelihood: -939108
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199319
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.271
+	C:	0.338
+	D:	0.248
+	E:	0.217
+	F:	0.25
+	G:	0.269
+	H:	0.307
+	I:	0.223
+	K:	0.196
+	L:	0.242
+	N:	0.243
+	P:	0.212
+	Q:	0.229
+	R:	0.2
+	S:	0.215
+	T:	0.238
+	V:	0.252
+	Y:	0.277
+	Z:	0.326
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 64
+	 acceptance rate above upper target of 0.325: 62
+Status at thinned sample (iteration): 410 (4100)
+	 current logPosterior: -938924 
+	 current logLikelihood: -939048
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194476
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 420 (4200)
+	 current logPosterior: -938945 
+	 current logLikelihood: -939066
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196604
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 430 (4300)
+	 current logPosterior: -938941 
+	 current logLikelihood: -939056
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203806
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 440 (4400)
+	 current logPosterior: -938913 
+	 current logLikelihood: -939041
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192546
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 450 (4500)
+	 current logPosterior: -938987 
+	 current logLikelihood: -939116
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196711
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 460 (4600)
+	 current logPosterior: -938930 
+	 current logLikelihood: -939047
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200452
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 470 (4700)
+	 current logPosterior: -938993 
+	 current logLikelihood: -939096
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197618
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 480 (4800)
+	 current logPosterior: -938914 
+	 current logLikelihood: -939079
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195628
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 490 (4900)
+	 current logPosterior: -938996 
+	 current logLikelihood: -939094
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202158
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 500 (5000)
+	 current logPosterior: -938970 
+	 current logLikelihood: -939103
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19684
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.275
+	C:	0.313
+	D:	0.255
+	E:	0.22
+	F:	0.229
+	G:	0.283
+	H:	0.313
+	I:	0.26
+	K:	0.229
+	L:	0.234
+	N:	0.234
+	P:	0.217
+	Q:	0.264
+	R:	0.23
+	S:	0.232
+	T:	0.227
+	V:	0.232
+	Y:	0.28
+	Z:	0.33
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 69
+	 acceptance rate above upper target of 0.325: 40
+Status at thinned sample (iteration): 510 (5100)
+	 current logPosterior: -938967 
+	 current logLikelihood: -939067
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20592
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 520 (5200)
+	 current logPosterior: -938939 
+	 current logLikelihood: -939123
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197926
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 530 (5300)
+	 current logPosterior: -939012 
+	 current logLikelihood: -939119
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199476
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 540 (5400)
+	 current logPosterior: -938991 
+	 current logLikelihood: -939147
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205595
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 550 (5500)
+	 current logPosterior: -938964 
+	 current logLikelihood: -939104
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204541
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 560 (5600)
+	 current logPosterior: -938977 
+	 current logLikelihood: -939141
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19894
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 570 (5700)
+	 current logPosterior: -938967 
+	 current logLikelihood: -939099
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199084
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 580 (5800)
+	 current logPosterior: -938893 
+	 current logLikelihood: -939044
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20239
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 590 (5900)
+	 current logPosterior: -938960 
+	 current logLikelihood: -939088
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203292
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 600 (6000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 600 (6000)
+	 current logPosterior: -938910 
+	 current logLikelihood: -939045
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19899
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.265
+	C:	0.333
+	D:	0.23
+	E:	0.205
+	F:	0.228
+	G:	0.285
+	H:	0.311
+	I:	0.234
+	K:	0.214
+	L:	0.29
+	N:	0.227
+	P:	0.256
+	Q:	0.262
+	R:	0.21
+	S:	0.217
+	T:	0.264
+	V:	0.252
+	Y:	0.268
+	Z:	0.34
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 73
+	 acceptance rate above upper target of 0.325: 59
+Status at thinned sample (iteration): 610 (6100)
+	 current logPosterior: -938964 
+	 current logLikelihood: -939125
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192673
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 620 (6200)
+	 current logPosterior: -938984 
+	 current logLikelihood: -939126
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194317
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 630 (6300)
+	 current logPosterior: -938907 
+	 current logLikelihood: -939063
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199164
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 640 (6400)
+	 current logPosterior: -938905 
+	 current logLikelihood: -939067
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.189739
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 650 (6500)
+	 current logPosterior: -939018 
+	 current logLikelihood: -939113
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20223
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 660 (6600)
+	 current logPosterior: -938990 
+	 current logLikelihood: -939080
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202723
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 670 (6700)
+	 current logPosterior: -938937 
+	 current logLikelihood: -939121
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197421
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 680 (6800)
+	 current logPosterior: -938993 
+	 current logLikelihood: -939109
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194627
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 690 (6900)
+	 current logPosterior: -938999 
+	 current logLikelihood: -939132
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196954
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 700 (7000)
+	 current logPosterior: -938944 
+	 current logLikelihood: -939086
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201081
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.237
+	C:	0.319
+	D:	0.24
+	E:	0.255
+	F:	0.224
+	G:	0.267
+	H:	0.333
+	I:	0.208
+	K:	0.209
+	L:	0.239
+	N:	0.248
+	P:	0.249
+	Q:	0.258
+	R:	0.214
+	S:	0.226
+	T:	0.268
+	V:	0.236
+	Y:	0.278
+	Z:	0.368
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 71
+	 acceptance rate above upper target of 0.325: 67
+Status at thinned sample (iteration): 710 (7100)
+	 current logPosterior: -938922 
+	 current logLikelihood: -939062
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199929
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 720 (7200)
+	 current logPosterior: -938993 
+	 current logLikelihood: -939107
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202042
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 730 (7300)
+	 current logPosterior: -938923 
+	 current logLikelihood: -939060
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199933
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 740 (7400)
+	 current logPosterior: -939013 
+	 current logLikelihood: -939111
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204558
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 750 (7500)
+	 current logPosterior: -939008 
+	 current logLikelihood: -939144
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199964
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 760 (7600)
+	 current logPosterior: -938916 
+	 current logLikelihood: -939057
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202275
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 770 (7700)
+	 current logPosterior: -938955 
+	 current logLikelihood: -939080
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196861
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 780 (7800)
+	 current logPosterior: -938990 
+	 current logLikelihood: -939096
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19804
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 790 (7900)
+	 current logPosterior: -939038 
+	 current logLikelihood: -939120
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199849
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 800 (8000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 800 (8000)
+	 current logPosterior: -938948 
+	 current logLikelihood: -939067
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20093
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.273
+	C:	0.347
+	D:	0.215
+	E:	0.231
+	F:	0.213
+	G:	0.28
+	H:	0.338
+	I:	0.238
+	K:	0.227
+	L:	0.257
+	N:	0.211
+	P:	0.227
+	Q:	0.246
+	R:	0.218
+	S:	0.225
+	T:	0.245
+	V:	0.222
+	Y:	0.304
+	Z:	0.342
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 114
+	 acceptance rate above upper target of 0.325: 97
+Status at thinned sample (iteration): 810 (8100)
+	 current logPosterior: -938967 
+	 current logLikelihood: -939131
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201074
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 820 (8200)
+	 current logPosterior: -939013 
+	 current logLikelihood: -939148
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20115
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 830 (8300)
+	 current logPosterior: -938967 
+	 current logLikelihood: -939111
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192415
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 840 (8400)
+	 current logPosterior: -938995 
+	 current logLikelihood: -939100
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201798
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 850 (8500)
+	 current logPosterior: -938960 
+	 current logLikelihood: -939050
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200644
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 860 (8600)
+	 current logPosterior: -938996 
+	 current logLikelihood: -939104
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199612
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 870 (8700)
+	 current logPosterior: -938987 
+	 current logLikelihood: -939122
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204222
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 880 (8800)
+	 current logPosterior: -938972 
+	 current logLikelihood: -939126
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199579
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 890 (8900)
+	 current logPosterior: -938976 
+	 current logLikelihood: -939124
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204544
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 900 (9000)
+	 current logPosterior: -938973 
+	 current logLikelihood: -939098
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203591
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.252
+	C:	0.334
+	D:	0.261
+	E:	0.239
+	F:	0.222
+	G:	0.259
+	H:	0.304
+	I:	0.228
+	K:	0.204
+	L:	0.22
+	N:	0.21
+	P:	0.208
+	Q:	0.242
+	R:	0.214
+	S:	0.231
+	T:	0.25
+	V:	0.237
+	Y:	0.289
+	Z:	0.328
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 111
+	 acceptance rate above upper target of 0.325: 100
+Status at thinned sample (iteration): 910 (9100)
+	 current logPosterior: -938993 
+	 current logLikelihood: -939080
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199948
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 920 (9200)
+	 current logPosterior: -939029 
+	 current logLikelihood: -939178
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198235
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 930 (9300)
+	 current logPosterior: -938967 
+	 current logLikelihood: -939121
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197613
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 940 (9400)
+	 current logPosterior: -938979 
+	 current logLikelihood: -939114
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199753
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 950 (9500)
+	 current logPosterior: -939001 
+	 current logLikelihood: -939116
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201101
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 960 (9600)
+	 current logPosterior: -938968 
+	 current logLikelihood: -939090
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202001
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 970 (9700)
+	 current logPosterior: -938910 
+	 current logLikelihood: -939067
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201057
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 980 (9800)
+	 current logPosterior: -938869 
+	 current logLikelihood: -939022
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198704
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 990 (9900)
+	 current logPosterior: -938921 
+	 current logLikelihood: -939038
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197697
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 1000 (10000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 1000 (10000)
+	 current logPosterior: -938933 
+	 current logLikelihood: -939086
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196656
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.244
+	C:	0.348
+	D:	0.261
+	E:	0.213
+	F:	0.229
+	G:	0.307
+	H:	0.319
+	I:	0.226
+	K:	0.229
+	L:	0.206
+	N:	0.231
+	P:	0.235
+	Q:	0.232
+	R:	0.215
+	S:	0.229
+	T:	0.272
+	V:	0.243
+	Y:	0.286
+	Z:	0.349
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 122
+	 acceptance rate above upper target of 0.325: 97
+Begin writing restart file
+End writing restart file
+leaving MCMC loop
+[1] "Run 3 completed."
+[1] "Writing objects."
+[1] "Printing Traces"
+[1] "Completed running and plotting run 3"
+read
+0Allowing divergence from initial conditions for 0 iterations.
+
+maxGrouping: 22
+Type: 
+Starting MCMC
+	Estimate Codon Specific Parameters? TRUE 
+	Estimate Hyper Parameters? TRUE 
+	Estimate Synthesis rates? TRUE 
+	Starting MCMC with 10000 iterations
+	Adapting will stop after 5000 steps
+Status at thinned sample (iteration): 10 (100)
+	 current logPosterior: -938974 
+	 current logLikelihood: -939112
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197713
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 20 (200)
+	 current logPosterior: -938922 
+	 current logLikelihood: -939009
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198216
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 30 (300)
+	 current logPosterior: -938974 
+	 current logLikelihood: -939108
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199835
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 40 (400)
+	 current logPosterior: -939005 
+	 current logLikelihood: -939133
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197656
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 50 (500)
+	 current logPosterior: -938981 
+	 current logLikelihood: -939102
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20238
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 60 (600)
+	 current logPosterior: -938952 
+	 current logLikelihood: -939052
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203133
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 70 (700)
+	 current logPosterior: -939005 
+	 current logLikelihood: -939103
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197357
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 80 (800)
+	 current logPosterior: -938986 
+	 current logLikelihood: -939145
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195228
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 90 (900)
+	 current logPosterior: -938973 
+	 current logLikelihood: -939116
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197624
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 100 (1000)
+	 current logPosterior: -938902 
+	 current logLikelihood: -939031
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201325
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.279
+	C:	0.33
+	D:	0.245
+	E:	0.203
+	F:	0.22
+	G:	0.264
+	H:	0.3
+	I:	0.242
+	K:	0.241
+	L:	0.25
+	N:	0.234
+	P:	0.225
+	Q:	0.242
+	R:	0.226
+	S:	0.217
+	T:	0.272
+	V:	0.235
+	Y:	0.279
+	Z:	0.341
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 114
+	 acceptance rate above upper target of 0.325: 98
+Status at thinned sample (iteration): 110 (1100)
+	 current logPosterior: -938970 
+	 current logLikelihood: -939110
+	 current stdDevSynthesisRate estimate for selection category 0: 0.195967
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 120 (1200)
+	 current logPosterior: -938940 
+	 current logLikelihood: -939105
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198586
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 130 (1300)
+	 current logPosterior: -938989 
+	 current logLikelihood: -939129
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201444
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 140 (1400)
+	 current logPosterior: -939025 
+	 current logLikelihood: -939148
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198571
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 150 (1500)
+	 current logPosterior: -938927 
+	 current logLikelihood: -939094
+	 current stdDevSynthesisRate estimate for selection category 0: 0.191338
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 160 (1600)
+	 current logPosterior: -938899 
+	 current logLikelihood: -939048
+	 current stdDevSynthesisRate estimate for selection category 0: 0.193173
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 170 (1700)
+	 current logPosterior: -938929 
+	 current logLikelihood: -939099
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202926
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 180 (1800)
+	 current logPosterior: -938977 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20694
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 190 (1900)
+	 current logPosterior: -938952 
+	 current logLikelihood: -939089
+	 current stdDevSynthesisRate estimate for selection category 0: 0.194997
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 200 (2000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 200 (2000)
+	 current logPosterior: -938996 
+	 current logLikelihood: -939091
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203737
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.265
+	C:	0.332
+	D:	0.25
+	E:	0.208
+	F:	0.231
+	G:	0.282
+	H:	0.313
+	I:	0.215
+	K:	0.224
+	L:	0.198
+	N:	0.214
+	P:	0.228
+	Q:	0.252
+	R:	0.185
+	S:	0.212
+	T:	0.264
+	V:	0.204
+	Y:	0.263
+	Z:	0.351
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 75
+	 acceptance rate above upper target of 0.325: 46
+Status at thinned sample (iteration): 210 (2100)
+	 current logPosterior: -938961 
+	 current logLikelihood: -939084
+	 current stdDevSynthesisRate estimate for selection category 0: 0.209962
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 220 (2200)
+	 current logPosterior: -939013 
+	 current logLikelihood: -939123
+	 current stdDevSynthesisRate estimate for selection category 0: 0.2003
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 230 (2300)
+	 current logPosterior: -938928 
+	 current logLikelihood: -939077
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192852
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 240 (2400)
+	 current logPosterior: -938958 
+	 current logLikelihood: -939117
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201188
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 250 (2500)
+	 current logPosterior: -939005 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.203184
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 260 (2600)
+	 current logPosterior: -938995 
+	 current logLikelihood: -939132
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204029
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 270 (2700)
+	 current logPosterior: -938956 
+	 current logLikelihood: -939109
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201315
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 280 (2800)
+	 current logPosterior: -938953 
+	 current logLikelihood: -939105
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196826
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 290 (2900)
+	 current logPosterior: -938929 
+	 current logLikelihood: -939076
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202261
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 300 (3000)
+	 current logPosterior: -938987 
+	 current logLikelihood: -939125
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197667
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.289
+	C:	0.315
+	D:	0.246
+	E:	0.207
+	F:	0.228
+	G:	0.265
+	H:	0.312
+	I:	0.238
+	K:	0.242
+	L:	0.24
+	N:	0.252
+	P:	0.244
+	Q:	0.261
+	R:	0.195
+	S:	0.247
+	T:	0.3
+	V:	0.257
+	Y:	0.25
+	Z:	0.317
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 81
+	 acceptance rate above upper target of 0.325: 83
+Status at thinned sample (iteration): 310 (3100)
+	 current logPosterior: -938936 
+	 current logLikelihood: -939102
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196915
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 320 (3200)
+	 current logPosterior: -938971 
+	 current logLikelihood: -939088
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200315
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 330 (3300)
+	 current logPosterior: -939008 
+	 current logLikelihood: -939114
+	 current stdDevSynthesisRate estimate for selection category 0: 0.20142
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 340 (3400)
+	 current logPosterior: -938911 
+	 current logLikelihood: -939041
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202409
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 350 (3500)
+	 current logPosterior: -938923 
+	 current logLikelihood: -939019
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197632
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 360 (3600)
+	 current logPosterior: -938934 
+	 current logLikelihood: -939055
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198537
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 370 (3700)
+	 current logPosterior: -938937 
+	 current logLikelihood: -939026
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204023
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 380 (3800)
+	 current logPosterior: -938999 
+	 current logLikelihood: -939134
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199634
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 390 (3900)
+	 current logPosterior: -938918 
+	 current logLikelihood: -939052
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200927
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Begin saving restart file(s) at sample (iteration): 400 (4000)
+Begin writing restart file
+End writing restart file
+Status at thinned sample (iteration): 400 (4000)
+	 current logPosterior: -938991 
+	 current logLikelihood: -939112
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204249
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.27
+	C:	0.288
+	D:	0.266
+	E:	0.222
+	F:	0.204
+	G:	0.282
+	H:	0.345
+	I:	0.211
+	K:	0.233
+	L:	0.231
+	N:	0.232
+	P:	0.222
+	Q:	0.252
+	R:	0.214
+	S:	0.249
+	T:	0.244
+	V:	0.244
+	Y:	0.282
+	Z:	0.347
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 62
+	 acceptance rate above upper target of 0.325: 49
+Status at thinned sample (iteration): 410 (4100)
+	 current logPosterior: -938963 
+	 current logLikelihood: -939081
+	 current stdDevSynthesisRate estimate for selection category 0: 0.197317
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 420 (4200)
+	 current logPosterior: -938990 
+	 current logLikelihood: -939127
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200749
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 430 (4300)
+	 current logPosterior: -938963 
+	 current logLikelihood: -939095
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205139
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 440 (4400)
+	 current logPosterior: -938931 
+	 current logLikelihood: -939063
+	 current stdDevSynthesisRate estimate for selection category 0: 0.19508
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 450 (4500)
+	 current logPosterior: -938973 
+	 current logLikelihood: -939090
+	 current stdDevSynthesisRate estimate for selection category 0: 0.200787
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 460 (4600)
+	 current logPosterior: -939026 
+	 current logLikelihood: -939161
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198676
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 470 (4700)
+	 current logPosterior: -939017 
+	 current logLikelihood: -939122
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201218
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 480 (4800)
+	 current logPosterior: -938997 
+	 current logLikelihood: -939143
+	 current stdDevSynthesisRate estimate for selection category 0: 0.205489
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 490 (4900)
+	 current logPosterior: -938983 
+	 current logLikelihood: -939109
+	 current stdDevSynthesisRate estimate for selection category 0: 0.196083
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 500 (5000)
+	 current logPosterior: -938981 
+	 current logLikelihood: -939121
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199473
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Acceptance rates for Codon Specific Parameters
+Target range: 0.175-0.375 
+Adjustment range: < 0.225 or > 0.325 
+	AA	Acc.Rat
+	A:	0.257
+	C:	0.334
+	D:	0.231
+	E:	0.216
+	F:	0.223
+	G:	0.29
+	H:	0.309
+	I:	0.208
+	K:	0.214
+	L:	0.214
+	N:	0.254
+	P:	0.22
+	Q:	0.247
+	R:	0.232
+	S:	0.21
+	T:	0.282
+	V:	0.25
+	Y:	0.307
+	Z:	0.346
+Acceptance rate for synthesis rate:
+Target range: 0.225-0.325 
+Adjustment range: < 0.225 or > 0.325 
+	 acceptance rates below lower target of 0.225: 73
+	 acceptance rate above upper target of 0.325: 41
+Status at thinned sample (iteration): 510 (5100)
+	 current logPosterior: -938970 
+	 current logLikelihood: -939107
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.202289
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 520 (5200)
+	 current logPosterior: -938995 
+	 current logLikelihood: -939111
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.198779
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 530 (5300)
+	 current logPosterior: -938919 
+	 current logLikelihood: -939060
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.204256
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 540 (5400)
+	 current logPosterior: -938900 
+	 current logLikelihood: -939081
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192518
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 550 (5500)
+	 current logPosterior: -938885 
+	 current logLikelihood: -939013
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.199785
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 560 (5600)
+	 current logPosterior: -938974 
+	 current logLikelihood: -939109
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.192559
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1
+Status at thinned sample (iteration): 570 (5700)
+	 current logPosterior: -939040 
+	 current logLikelihood: -939128
+No longer adapting
+	 current stdDevSynthesisRate estimate for selection category 0: 0.201199
+	 current stdDevSynthesisRate proposal width: 0.08
+	 current Mixture element probability for element 0: 1

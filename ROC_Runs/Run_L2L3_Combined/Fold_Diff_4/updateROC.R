@@ -24,7 +24,7 @@ print(paste0("Working directory: ", getwd()))
 ## Could be overwritten by parameters passed when calling script
 
 initial.run.number <- 1; # uses restart files for run > 1
-max.runs <- 2 # number of model fit runs
+max.runs <- 5 # number of model fit runs
 with.phi <- FALSE
 initialPhi <- "random" ## work in progress
 mixDef <- "allUnique"
@@ -41,7 +41,7 @@ file.name = "RunResults/Crei_Mutation_NoRef.csv"
 userName = Sys.getenv("LOGNAME")
 file.mutation.values <- switch(userName,
                                "mikeg" = paste0("/home/mikeg/Repositories/AcrossTissue/", file.name),
-                               "zlu21" = paste0("/data1/compbio/zlu21/AcrossTissue", file.name),
+                               "zlu21" = paste0("/data1/compbio/zlu21/AcrossTissue/", file.name),
                                )
 
 
@@ -200,7 +200,6 @@ while((!done) && (run.number <= max.runs))
   ## May need to only evaluate for run.number = 1
   if(!("Mutation" %in% cspToEstimate) ) {
     parameter$initMutationCategories(file.mutation.values,1,TRUE)
-    print("Using mutation file from Directory: ", file.mutation.values)
     }
   ## Initialize MCMC object
   mcmc <- initializeMCMCObject(samples = samples,
