@@ -284,6 +284,7 @@ while((!done) && (run.number <= max.runs))
   pdf(paste(dir_name,"Graphs/mcmc_traces.pdf",sep="/"))
   plot(mcmc, what = "LogPosterior")
   plot(trace, what = "ExpectedPhi")
+  plot(trace, what = "sPhi")
   aa <- aminoAcids()
 
   for(a in aa)
