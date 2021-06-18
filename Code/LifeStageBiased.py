@@ -6,7 +6,7 @@ Created on Tue Sep 22 15:18:34 2020
 @author: lu
 """
 import statistics as ss
-import readCSVfiles as RCF
+from Code import readCSVfiles as RCF
 import numpy as np
 import matplotlib.pyplot as plt
 from math import log
